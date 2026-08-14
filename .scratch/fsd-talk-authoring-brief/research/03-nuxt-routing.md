@@ -1,5 +1,7 @@
 # Nuxt file-based routing 與 FSD 的現行整合方式
 
+> **Fixture verification update (2026-08-14):** Ticket「驗證 Nuxt 4 整合 fixture」已用 Nuxt 4.5.2 實測下方 integration seam。設定可採用，但先前草圖中的 `src/app/app.vue` 推論已被否決；source-root app component 應為 `src/app.vue`。精確版本、通過指令與產物證據見 [Nuxt 4 整合 fixture 驗證](./10-nuxt4-fixture-verification.md)。
+
 研究日期：2026-08-14
 
 版本基準：Nuxt 官方文件 v4.5.2；FSD 官網目前公開的 NuxtJS guide（FSD v2.1 文件站）

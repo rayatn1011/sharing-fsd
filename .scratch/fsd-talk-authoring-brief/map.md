@@ -25,6 +25,7 @@
 - [驗證 Nuxt file-based routing 與 FSD 的現行整合方式](./issues/03-verify-nuxt-routing-integration.md) — Nuxt route entry 是 framework adapter，FSD Page 是 application module；以薄 adapter 經 Public API 接線，但 Nuxt 4 的精確設定仍需 fixture 驗證。
 - [把官方 TanStack Query guidance 轉譯為 Vue Query 案例](./issues/04-adapt-tanstack-query-to-vue.md) — Query ownership 與 cache contract 可沿用，Vue reactive inputs 與 Nuxt SSR QueryClient lifecycle 必須作為框架接縫另外設計。
 - [設計 Nuxt UI 表單的邊界壓力測試](./issues/05-prototype-nuxt-ui-form-boundary.md) — 以第二個非表單 consumer 被迫繼承 form 與資料來源政策的瞬間，對照只重用受控 UI control 的責任分界。
+- [驗證 Nuxt 4 整合 fixture](./issues/10-verify-nuxt4-integration-fixture.md) — Nuxt 4.5.2 實測確認 custom `srcDir`、App-layer routes/layouts、內建 `@` 與 FSD Page Public API 可通過 prepare、typecheck、production build。
 
 ## Not yet specified
 
