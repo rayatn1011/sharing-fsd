@@ -2710,6 +2710,1042 @@ const StableRuleCorrection: Page = () => (
   </CaseFrame>
 );
 
+const AuthScopeCard = ({
+  eyebrow,
+  title,
+  detail,
+  accent = false,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: ReactNode;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      width: 500,
+      height: 210,
+      padding: '28px 30px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      border: `2px ${accent ? 'dashed' : 'solid'} ${
+        accent ? 'var(--osd-accent)' : palette.borderStrong
+      }`,
+      borderRadius: 18,
+      background: accent ? palette.accentSoft : palette.whiteSoft,
+    }}
+  >
+    <div
+      style={{
+        color: accent ? 'var(--osd-accent)' : palette.muted,
+        fontSize: 22,
+        fontWeight: 800,
+        letterSpacing: '0.08em',
+      }}
+    >
+      {eyebrow}
+    </div>
+    <strong style={{ color: palette.textSoft, fontSize: 34, lineHeight: 1.15 }}>{title}</strong>
+    <div style={{ color: palette.muted, fontSize: 24, fontWeight: 600, lineHeight: 1.4 }}>
+      {detail}
+    </div>
+  </div>
+);
+
+const AuthOwnershipMistake: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="案例三：Login behavior 錯誤擁有 app-wide token"
+        lead="一次登入行為的 boundary，被延伸成整個 application 的 auth state owner。"
+      />
+
+      <section
+        aria-label="features login 同時包住 login behavior 與 app-wide token 的錯誤責任邊界"
+        style={{ flex: 1, display: 'grid', placeItems: 'center' }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            position: 'relative',
+            width: 1320,
+            height: 400,
+            padding: '96px 56px 42px',
+            borderColor: palette.borderStrong,
+            borderStyle: 'dashed',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 34,
+              top: 22,
+              color: palette.textSoft,
+              fontFamily: fonts.mono,
+              fontSize: 24,
+              fontWeight: 800,
+            }}
+          >
+            features/login/ · ONE FEATURE BOUNDARY
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              right: 34,
+              top: 20,
+              padding: '8px 14px',
+              border: `1px dashed ${palette.accentLine}`,
+              borderRadius: 999,
+              color: 'var(--osd-accent)',
+              fontSize: 22,
+              fontWeight: 800,
+            }}
+          >
+            OWNER MISMATCH · !
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 42 }}>
+            <AuthScopeCard
+              eyebrow="USER ACTION"
+              title="Login behavior"
+              detail="取得憑證、處理登入結果"
+            />
+            <div
+              style={{
+                width: 106,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 8,
+                color: 'var(--osd-accent)',
+                fontSize: 22,
+                fontWeight: 800,
+                textAlign: 'center',
+              }}
+            >
+              <span>stores</span>
+              <span aria-hidden="true" style={{ fontSize: 42, lineHeight: 0.8 }}>
+                →
+              </span>
+            </div>
+            <AuthScopeCard
+              eyebrow="APP-WIDE STATE"
+              title="Token"
+              detail="生命週期跨越單次登入行為"
+              accent
+            />
+          </div>
+
+          <div
+            style={{
+              position: 'absolute',
+              left: 300,
+              bottom: 18,
+              width: 720,
+              color: palette.textSoft,
+              fontSize: 24,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            行為的完成點 <span style={{ color: palette.dim, padding: '0 12px' }}>≠</span>
+            狀態的 owner
+          </div>
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const FailurePathCard = ({
+  eyebrow,
+  title,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 690,
+      height: 376,
+      padding: '32px 34px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 22,
+      borderColor: palette.borderStrong,
+      borderStyle: 'dashed',
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+      <strong style={{ color: palette.textSoft, fontSize: 34 }}>{title}</strong>
+      <span style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.07em' }}>
+        {eyebrow}
+      </span>
+    </div>
+    {children}
+  </div>
+);
+
+const FailureDependencyRow = ({
+  consumer,
+  destination,
+}: {
+  consumer: string;
+  destination: string;
+}) => (
+  <div
+    style={{
+      height: 82,
+      display: 'grid',
+      gridTemplateColumns: '210px 120px 1fr',
+      alignItems: 'center',
+      gap: 14,
+    }}
+  >
+    <div
+      style={{
+        padding: '15px 17px',
+        border: `1px solid ${palette.borderStrong}`,
+        borderRadius: 14,
+        background: palette.whiteSoft,
+        color: palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 700,
+        textAlign: 'center',
+      }}
+    >
+      {consumer}
+    </div>
+    <div
+      style={{
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+        textAlign: 'center',
+      }}
+    >
+      <span>import</span>
+      <div aria-hidden="true" style={{ marginTop: 3, fontSize: 31, lineHeight: 0.8 }}>
+        ┄→
+      </div>
+    </div>
+    <div
+      style={{
+        padding: '15px 17px',
+        border: `1px dashed ${palette.accentLine}`,
+        borderRadius: 14,
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 700,
+        textAlign: 'center',
+      }}
+    >
+      {destination}
+    </div>
+  </div>
+);
+
+const TokenCopyRow = ({
+  owner,
+  value,
+  status,
+}: {
+  owner: string;
+  value: string;
+  status: string;
+}) => (
+  <div
+    style={{
+      height: 82,
+      display: 'grid',
+      gridTemplateColumns: '210px 150px 1fr',
+      alignItems: 'center',
+      gap: 14,
+      padding: '0 18px',
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 14,
+      background: palette.whiteSoft,
+    }}
+  >
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22 }}>{owner}</strong>
+    <span style={{ color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+      {value}
+    </span>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{status}</span>
+  </div>
+);
+
+const AuthOwnershipConsequence: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="其他 consumers，只剩反向依賴或各自複製"
+        lead="Token owner 藏在 login feature，會同時破壞依賴方向與狀態一致性。"
+      />
+
+      <section
+        aria-label="其他 feature 與 shared api 反向依賴 features login，或各自複製 token state 的兩種後果"
+        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 44 }}
+      >
+        <FailurePathCard eyebrow="STATIC DEPENDENCY" title="反向依賴 login">
+          <FailureDependencyRow consumer="other feature" destination="features/login/token" />
+          <FailureDependencyRow consumer="shared/api" destination="features/login/token" />
+          <div style={{ color: palette.muted, fontSize: 23, fontWeight: 700, textAlign: 'center' }}>
+            lower infrastructure 被迫知道 higher feature
+          </div>
+        </FailurePathCard>
+
+        <FailurePathCard eyebrow="STATE COPIES" title="各自維護 token">
+          <TokenCopyRow owner="consumer A" value="token · copy A" status="獨立更新" />
+          <TokenCopyRow owner="consumer B" value="token · copy B" status="一致性無 owner" />
+          <div style={{ color: palette.muted, fontSize: 23, fontWeight: 700, textAlign: 'center' }}>
+            同一個 auth truth，開始出現多個版本
+          </div>
+        </FailurePathCard>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const AuthConsumerBox = ({
+  eyebrow,
+  title,
+  detail,
+  style,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  style: CSSProperties;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      ...style,
+      position: 'absolute',
+      width: 520,
+      height: 160,
+      padding: '20px 28px',
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      {eyebrow}
+    </div>
+    <strong style={{ display: 'block', marginTop: 8, color: palette.textSoft, fontSize: 30 }}>
+      {title}
+    </strong>
+    <div style={{ marginTop: 5, color: palette.muted, fontSize: 22, fontWeight: 600, lineHeight: 1.4 }}>{detail}</div>
+  </div>
+);
+
+const AuthOwnershipCorrection: Page = () => (
+  <CaseFrame categoryLabel="現行官方 guidance／匿名真實案例" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="Login 使用 auth state；不擁有它"
+        lead="本案例的 simple token／session，由穩定的 shared/auth boundary 承接。"
+      />
+
+      <section
+        aria-label="Login 與其他 authenticated flows 向下依賴 shared auth Public API 的 ownership correction"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 500"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%' }}
+        >
+          <path d="M430 170 L690 286" fill="none" stroke="var(--osd-accent)" strokeWidth="4" strokeDasharray="11 10" />
+          <path d="M1250 170 L990 286" fill="none" stroke="var(--osd-accent)" strokeWidth="4" strokeDasharray="11 10" />
+          <path d="M672 270 L692 287 L666 292" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M1008 270 L988 287 L1014 292" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+        </svg>
+
+        <AuthConsumerBox
+          eyebrow="USER ACTION"
+          title="features/login/"
+          detail="登入成功後，使用 auth contract 更新狀態"
+          style={{ left: 170, top: 10 }}
+        />
+        <AuthConsumerBox
+          eyebrow="OTHER AUTHENTICATED FLOWS"
+          title="其他 consumers"
+          detail="透過同一 contract 讀取 current state"
+          style={{ right: 170, top: 10 }}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
+            left: 496,
+            top: 205,
+            zIndex: 3,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          depend on Public API
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            right: 496,
+            top: 205,
+            zIndex: 3,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          depend on Public API
+        </div>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 365,
+            top: 286,
+            zIndex: 3,
+            width: 950,
+            height: 166,
+            padding: '58px 34px 24px',
+            borderColor: 'var(--osd-accent)',
+            background: palette.accentSoft,
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 25,
+              top: -22,
+              width: 900,
+              padding: '8px 13px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 22,
+              fontWeight: 800,
+            }}
+          >
+            PUBLIC API · shared/auth
+          </div>
+          <strong style={{ color: 'var(--osd-accent)', fontSize: 34 }}>Auth state owner</strong>
+          <div style={{ marginTop: 13, color: palette.textSoft, fontSize: 25, fontWeight: 700 }}>
+            current token　·　minimal session
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            right: 8,
+            bottom: 0,
+            padding: '9px 15px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          本案選擇 <span style={{ color: palette.dim, padding: '0 8px' }}>≠</span> 所有 auth domain 的唯一答案
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const WiringBox = ({
+  eyebrow,
+  title,
+  detail,
+  style,
+  accent = false,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: ReactNode;
+  style: CSSProperties;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      ...style,
+      position: 'absolute',
+      padding: '20px 24px',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      background: accent ? palette.accentSoft : `linear-gradient(145deg, ${palette.panelStrong}, ${palette.panel})`,
+    }}
+  >
+    <div
+      style={{
+        color: accent ? 'var(--osd-accent)' : palette.muted,
+        fontSize: 22,
+        fontWeight: 800,
+        letterSpacing: '0.08em',
+      }}
+    >
+      {eyebrow}
+    </div>
+    <strong
+      style={{
+        display: 'block',
+        marginTop: 7,
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontSize: 29,
+      }}
+    >
+      {title}
+    </strong>
+    <div style={{ marginTop: 6, color: palette.textSoft, fontSize: 22, fontWeight: 600, lineHeight: 1.4 }}>
+      {detail}
+    </div>
+  </div>
+);
+
+const AuthWiring: Page = () => (
+  <CaseFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 20 }}>
+      <PageHeading
+        title="App 接線；每次 request 才讀最新 token"
+        lead="app.use()／provide-inject 是 composition mechanism，不是新的 auth owner。"
+      />
+
+      <section
+        aria-label="App composition root 將 current token provider 接給 shared api，interceptor 每次 request 讀 shared auth 最新 token"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 500"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%' }}
+        >
+          <defs>
+            <marker
+              id="auth-static-arrow"
+              viewBox="0 0 22 22"
+              refX="20"
+              refY="11"
+              markerWidth="22"
+              markerHeight="22"
+              markerUnits="userSpaceOnUse"
+              orient="auto"
+            >
+              <path d="M2 2 L20 11 L2 20" fill="none" stroke={palette.borderStrong} strokeWidth="3" />
+            </marker>
+          </defs>
+          <path d="M650 132 L340 205" fill="none" stroke={palette.borderStrong} strokeWidth="3" strokeDasharray="10 10" markerEnd="url(#auth-static-arrow)" />
+          <path d="M1030 132 L1340 205" fill="none" stroke={palette.borderStrong} strokeWidth="3" strokeDasharray="10 10" markerEnd="url(#auth-static-arrow)" />
+          <path d="M840 132 L840 220" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M826 204 L840 222 L854 204" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M1140 280 L980 280" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M996 267 L978 280 L996 293" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M700 280 L540 280" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M556 267 L538 280 L556 293" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+        </svg>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 360,
+            top: 0,
+            zIndex: 3,
+            width: 960,
+            height: 132,
+            padding: '16px 24px',
+            borderColor: palette.borderStrong,
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+              APP · COMPOSITION ROOT
+            </div>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <span style={{ padding: '7px 10px', border: `1px solid ${palette.borderStrong}`, borderRadius: 999, color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800, whiteSpace: 'nowrap' }}>Vue Plugin · app.use()</span>
+              <span style={{ padding: '7px 10px', border: `1px dashed ${palette.accentLine}`, borderRadius: 999, color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 800, whiteSpace: 'nowrap' }}>provide / inject</span>
+            </div>
+          </div>
+          <strong style={{ display: 'block', marginTop: 7, color: palette.textSoft, fontSize: 28 }}>
+            wire getToken provider
+          </strong>
+        </div>
+
+        <div style={{ position: 'absolute', left: 432, top: 168, zIndex: 4, color: palette.muted, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+          import contract
+        </div>
+        <div style={{ position: 'absolute', right: 432, top: 168, zIndex: 4, color: palette.muted, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+          import contract
+        </div>
+        <div style={{ position: 'absolute', left: 860, top: 168, zIndex: 4, color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+          wire once
+        </div>
+
+        <WiringBox
+          eyebrow="AUTH STATE OWNER"
+          title="shared/auth"
+          detail="current token · minimal session"
+          style={{ left: 70, top: 246, zIndex: 3, width: 470, height: 156 }}
+        />
+        <WiringBox
+          eyebrow="TOKEN PROVIDER"
+          title="getToken()"
+          detail="returns current value"
+          style={{ left: 700, top: 258, zIndex: 3, width: 280, height: 160, textAlign: 'center' }}
+          accent
+        />
+        <WiringBox
+          eyebrow="API INFRASTRUCTURE"
+          title="shared/api"
+          detail="request interceptor · Authorization"
+          style={{ right: 70, top: 246, zIndex: 3, width: 470, height: 156 }}
+        />
+
+        <div style={{ position: 'absolute', left: 548, top: 295, zIndex: 4, color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+          read latest
+        </div>
+        <div style={{ position: 'absolute', right: 548, top: 295, zIndex: 4, color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+          per request
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            left: 440,
+            bottom: 0,
+            width: 800,
+            padding: '10px 18px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 22,
+            fontWeight: 800,
+            textAlign: 'center',
+          }}
+        >
+          setup-time token snapshot　<span style={{ color: palette.dim }}>×</span>　request-time current read　<span style={{ color: 'var(--osd-accent)' }}>✓</span>
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const FrameworkFrame = ({
+  children,
+  categoryLabel = '現行官方 guidance／講者詮釋',
+  categorySymbol = '◈',
+}: {
+  children: ReactNode;
+  categoryLabel?: string;
+  categorySymbol?: string;
+}) => (
+  <PageFrame section="FRAMEWORK SEAMS" categoryLabel={categoryLabel} categorySymbol={categorySymbol}>
+    {children}
+  </PageFrame>
+);
+
+const ResponsibilityRow = ({ label, detail }: { label: string; detail: string }) => (
+  <div
+    style={{
+      minHeight: 72,
+      padding: '14px 18px',
+      display: 'grid',
+      gridTemplateColumns: '210px 1fr',
+      alignItems: 'center',
+      gap: 18,
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 14,
+      background: palette.whiteSoft,
+    }}
+  >
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22 }}>{label}</strong>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{detail}</span>
+  </div>
+);
+
+const PageResponsibilityCard = ({
+  eyebrow,
+  path,
+  accent = false,
+  children,
+}: {
+  eyebrow: string;
+  path: string;
+  accent?: boolean;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 690,
+      height: 388,
+      padding: '30px 32px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 17,
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.055)' : undefined,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+      <span style={{ color: accent ? 'var(--osd-accent)' : palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+        {eyebrow}
+      </span>
+      <span style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+        {path}
+      </span>
+    </div>
+    {children}
+  </div>
+);
+
+const NuxtNamingSeam: Page = () => (
+  <FrameworkFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <PageHeading
+        title="Nuxt page 與 FSD Page：同名，責任不同"
+        lead="一個描述 framework route manifest；一個封裝 application page module。"
+      />
+
+      <section
+        aria-label="Nuxt route manifest 與 FSD Page application module 的責任對照"
+        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 44 }}
+      >
+        <PageResponsibilityCard eyebrow="FRAMEWORK-OWNED ROUTE" path="app/routes/[id].vue">
+          <ResponsibilityRow label="file path" detail="決定 URL 與 dynamic params" />
+          <ResponsibilityRow label="definePageMeta" detail="layout 與 route metadata" />
+          <ResponsibilityRow label="adapter" detail="把 params 轉成 page input" />
+        </PageResponsibilityCard>
+
+        <div aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 56, fontWeight: 700 }}>
+          ≠
+        </div>
+
+        <PageResponsibilityCard eyebrow="APPLICATION-OWNED PAGE" path="pages/product/" accent>
+          <ResponsibilityRow label="composition" detail="組裝 page UI 與 lower layers" />
+          <ResponsibilityRow label="page state" detail="query、validation、local policy" />
+          <ResponsibilityRow label="business rules" detail="屬於這個 page 的行為" />
+        </PageResponsibilityCard>
+      </section>
+    </div>
+  </FrameworkFrame>
+);
+
+const RouteCodeLine = ({ children, accent = false }: { children: ReactNode; accent?: boolean }) => (
+  <div
+    style={{
+      color: accent ? 'var(--osd-accent)' : palette.textSoft,
+      fontFamily: fonts.mono,
+      fontSize: 23,
+      fontWeight: 700,
+      lineHeight: 1.5,
+      whiteSpace: 'nowrap',
+    }}
+  >
+    {children}
+  </div>
+);
+
+const AdapterArrow = ({ label, runtime = false }: { label: string; runtime?: boolean }) => (
+  <div style={{ width: 250, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9 }}>
+    <span
+      style={{
+        color: runtime ? 'var(--osd-accent)' : palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+        textAlign: 'center',
+      }}
+    >
+      {label}
+    </span>
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+      <span
+        aria-hidden="true"
+        style={{
+          flex: 1,
+          borderTop: `3px ${runtime ? 'solid' : 'dashed'} ${
+            runtime ? 'var(--osd-accent)' : palette.borderStrong
+          }`,
+        }}
+      />
+      <span
+        aria-hidden="true"
+        style={{ color: runtime ? 'var(--osd-accent)' : palette.textSoft, fontSize: 32, lineHeight: 0.8 }}
+      >
+        ›
+      </span>
+    </div>
+  </div>
+);
+
+const NuxtRouteAdapter: Page = () => (
+  <FrameworkFrame categoryLabel="現行官方 guidance" categorySymbol="◆">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <PageHeading
+        title="薄 route adapter，守住 Page boundary"
+        lead="Nuxt entry 經具名 Public API 接線；business behavior 不留在 scanner 目錄。"
+      />
+
+      <section
+        aria-label="Nuxt route adapter 經 FSD Page Public API 靜態依賴並 render application page"
+        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32 }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            width: 610,
+            height: 340,
+            padding: '30px 32px',
+            borderColor: palette.borderStrong,
+            borderStyle: 'dashed',
+          }}
+        >
+          <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+            NUXT ROUTE ADAPTER · src/app/routes/index.vue
+          </div>
+          <div style={{ marginTop: 30, padding: '22px 24px', border: `1px solid ${palette.borderStrong}`, borderRadius: 14, background: '#040821' }}>
+            <RouteCodeLine accent>{"import { HomePage } from '@/pages/home'"}</RouteCodeLine>
+            <RouteCodeLine>{"definePageMeta({ layout: 'default' })"}</RouteCodeLine>
+            <RouteCodeLine>{'<template><HomePage /></template>'}</RouteCodeLine>
+          </div>
+          <div style={{ marginTop: 24, color: palette.muted, fontSize: 22, fontWeight: 700 }}>
+            URL contract · Nuxt metadata · input adapter
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 52 }}>
+          <AdapterArrow label="static import · via Public API" />
+          <AdapterArrow label="runtime flow · render page" runtime />
+        </div>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'relative',
+            width: 560,
+            height: 340,
+            padding: '78px 34px 30px',
+            borderColor: 'var(--osd-accent)',
+            background: palette.accentSoft,
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 28,
+              top: -22,
+              width: 504,
+              padding: '8px 13px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 22,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            PUBLIC API · @/pages/home
+          </div>
+          <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+            FSD PAGE MODULE
+          </div>
+          <strong style={{ display: 'block', marginTop: 14, color: 'var(--osd-accent)', fontSize: 36 }}>
+            HomePage
+          </strong>
+          <div style={{ marginTop: 26, color: palette.textSoft, fontSize: 26, fontWeight: 700, lineHeight: 1.55 }}>
+            page composition
+            <br />
+            page-specific state
+            <br />
+            business rules
+          </div>
+        </div>
+      </section>
+
+      <div
+        style={{
+          alignSelf: 'center',
+          padding: '10px 18px',
+          border: `1px dashed ${palette.accentLine}`,
+          borderRadius: 999,
+          color: palette.textSoft,
+          fontSize: 22,
+          fontWeight: 800,
+        }}
+      >
+        framework directory <span style={{ color: palette.dim, padding: '0 8px' }}>≠</span> business owner
+      </div>
+    </div>
+  </FrameworkFrame>
+);
+
+const ConfigLine = ({ children, accent = false }: { children: ReactNode; accent?: boolean }) => (
+  <div
+    style={{
+      color: accent ? 'var(--osd-accent)' : palette.textSoft,
+      fontFamily: fonts.mono,
+      fontSize: 25,
+      fontWeight: 700,
+      lineHeight: 1.48,
+      whiteSpace: 'pre',
+    }}
+  >
+    {children}
+  </div>
+);
+
+const SnapshotCheck = ({ command }: { command: string }) => (
+  <div
+    style={{
+      height: 64,
+      padding: '0 20px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 14,
+      background: palette.whiteSoft,
+    }}
+  >
+    <span style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 23, fontWeight: 700 }}>
+      {command}
+    </span>
+    <span style={{ color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 22, fontWeight: 900 }}>
+      PASS · ✓
+    </span>
+  </div>
+);
+
+const EvidencePill = ({ eyebrow, value }: { eyebrow: string; value: string }) => (
+  <div
+    style={{
+      minWidth: 330,
+      padding: '12px 18px',
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 999,
+      background: palette.whiteSoft,
+      textAlign: 'center',
+    }}
+  >
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.06em' }}>
+      {eyebrow} ·{' '}
+    </span>
+    <span style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+      {value}
+    </span>
+  </div>
+);
+
+const NuxtFixtureEvidence: Page = () => (
+  <FrameworkFrame categoryLabel="已驗證版本 snapshot" categorySymbol="■">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="Nuxt 4.5.2 fixture：這條 seam 有 build evidence"
+        lead="2026-08-14 snapshot；不是唯一 Nuxt 4 config，也不是 deployment certification。"
+      />
+
+      <section style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 38 }}>
+          <div
+            style={{
+              ...panelStyle,
+              width: 700,
+              height: 356,
+              padding: '28px 32px',
+              borderColor: palette.borderStrong,
+            }}
+          >
+            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+              nuxt.config.ts · VERIFIED CONFIG
+            </div>
+            <div style={{ marginTop: 22, padding: '18px 22px', border: `1px solid ${palette.borderStrong}`, borderRadius: 14, background: '#040821' }}>
+              <ConfigLine accent>{"srcDir: 'src/',"}</ConfigLine>
+              <ConfigLine>{"dir: { app: 'app',"}</ConfigLine>
+              <ConfigLine>{"  pages: 'app/routes',"}</ConfigLine>
+              <ConfigLine>{"  layouts: 'app/layouts' },"}</ConfigLine>
+              <ConfigLine>{'// src/app/routes/index.vue'}</ConfigLine>
+              <ConfigLine accent>{"import { HomePage } from '@/pages/home'"}</ConfigLine>
+            </div>
+          </div>
+
+          <div
+            style={{
+              ...panelStyle,
+              width: 700,
+              height: 356,
+              padding: '28px 32px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 15,
+              borderColor: 'var(--osd-accent)',
+              boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+              <span style={{ color: 'var(--osd-accent)', fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+                SNAPSHOT PASS 防線
+              </span>
+              <span style={{ color: palette.muted, fontSize: 22, fontWeight: 800 }}>
+                Nuxt 4.5.2 · TS 6.0.3
+              </span>
+            </div>
+            <SnapshotCheck command="prepare" />
+            <SnapshotCheck command="typecheck" />
+            <SnapshotCheck command="production build" />
+            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 700, textAlign: 'right' }}>
+              vue-tsc 3.3.9 · production output inspected
+            </div>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18 }}>
+          <EvidencePill eyebrow="SOURCE ROOT" value="src/app.vue" />
+          <EvidencePill eyebrow="BUILT-IN @" value="@ → src/" />
+          <EvidencePill eyebrow="ROUTE ENTRY" value="@/pages/home" />
+          <div
+            style={{
+              minWidth: 430,
+              padding: '12px 18px',
+              border: `1px dashed ${palette.accentLine}`,
+              borderRadius: 999,
+              color: palette.textSoft,
+              fontSize: 22,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            NEXT · server-state / cache seam
+          </div>
+        </div>
+      </section>
+    </div>
+  </FrameworkFrame>
+);
+
 export const notes: (string | undefined)[] = [
   `Message:
 一段程式碼該放哪裡，不只是路徑選擇，而是長期協作與理解成本。
@@ -3142,6 +4178,174 @@ Possible Q&A:
 
 Safety boundary:
 「完整 schema 留本地、只下沉穩定 field rule」是符合 current guidance 的講者詮釋，不是 fsd.how 明文處方；不把 shared field rule 等同 Shared layer，不把完整 schema 一起下沉，也不提前實作或說明 Ticket 14 的 auth 解法。`,
+
+  `Message:
+案例三的原始錯誤，是讓 Login feature 擁有生命週期跨越單次登入行為的 app-wide token。
+
+Context:
+這是匿名親身事實：token 曾由 login feature 持有。畫面只呈現已核准的責任錯置，不揭露產品、登入流程、storage、refresh 或 current-user 實作。Login behavior 取得憑證並更新 auth state 可以是合理行為；錯的是因此把 application-wide state ownership 一起收進單一 feature。
+
+Transition:
+承接前頁「app-wide auth state 究竟由誰擁有」的問題，這頁先固定原始決策：行為與狀態被放進同一 feature boundary。下一頁沿著這個 owner mismatch，看其他 consumers 與 API infrastructure 會被迫付出什麼代價。
+
+Required details:
+明講兩個 lifecycle：login 是一次 user action；token 會被後續 authenticated requests 與 flows 使用。實線 stores 箭頭只表示登入結果在 runtime 寫入 token，不表示這個 owner 正確。
+
+Timing:
+65 秒（23:00–24:05）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的主案例三親身事實；.scratch/fsd-talk-authoring-brief/spec.md 的頁 19 map 與 auth truth table（authoring scope 查核：2026-08-14）；https://fsd.how/docs/guides/examples/auth/（current live docs 查核：2026-08-14；scope：login action 與 app-wide token placement）。本頁的事件因果來自匿名親身事實，不是 fsd.how 官方案例。
+
+Possible Q&A:
+問：Login 寫入 token，不就代表它擁有 token？答：不一定；行為可以呼叫 auth contract 更新狀態，但 owner 應由狀態的 scope、lifecycle 與 consumers 決定。
+
+Safety boundary:
+不補造產品、登入 UI、storage、refresh、session 欄位或事故；不把一次匿名事件概括成所有 Login feature 都不能觸碰 token，也不提前宣稱 shared/auth 是所有 auth domain 的唯一答案。`,
+
+  `Message:
+Token owner 藏在 Login feature，其他 features 與 shared API client 只剩反向依賴，或各自維護狀態副本。
+
+Context:
+匿名親身因果可公開的範圍是「其他功能與共用 Axios client 也需要同一狀態」。畫面中的 other feature、consumer A／B 是一般結構示意，不是原事件的實際功能名稱或數量；copy A／B 只用來顯示副本沒有單一一致性 owner，不是實際版本紀錄。
+
+Transition:
+承接前頁錯置的 owner，這頁把依賴與 state consistency 的後果分成兩條路。兩條都不好，所以下一頁回到最根本的問題：哪個 lower boundary 才能讓 login 與其他 consumers 合法依賴？
+
+Required details:
+左側虛線只表示 static import：other feature 與 shared/api 反向知道 features/login。右側是另一種失敗選擇：各 consumer 維護 token copy；本頁不宣稱副本一定已造成特定 runtime bug。
+
+Timing:
+70 秒（24:05–25:15）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的主案例三因果；.scratch/fsd-talk-authoring-brief/spec.md 的頁 20 map 與 truth table（查核：2026-08-14）；https://fsd.how/docs/guides/examples/auth/（current live docs 查核：2026-08-14；scope：不建議在 single feature/page 放 app-wide token、另一 feature 與 API requests 的 dependency problem）。
+
+Possible Q&A:
+問：用 localStorage 就沒有依賴問題了嗎？答：storage 可讓 lower code 讀值，但仍需明確 owner、key／refresh policy 與測試 boundary；它不是自動完成 architecture ownership。
+
+Safety boundary:
+不把 other feature、consumer A／B、profile、permission 或 authenticated API 名稱說成全部原事件細節；不宣稱一定形成 circular dependency、token stale 事故或安全漏洞，也不把所有複製一律視為錯。`,
+
+  `Message:
+本案例把 simple token／minimal session 放進穩定的 shared/auth boundary；login 與其他 consumers 都向下依賴它。
+
+Context:
+這一頁同時包含匿名案例修正與 current official guidance。shared/auth 是本案例對簡單 auth state 的具體選擇；fsd.how 也接受 current user／session Entity 等其他 placement，尤其當 profile domain 與複雜 business state 有真實重用時。畫面中的其他 consumers 是一般結構示意。
+
+Transition:
+承接反向依賴與副本問題，這頁先修正 ownership：讓高層 login behavior 與其他 flows 共同依賴穩定 lower contract。下一頁再處理另一個問題：App 如何把 current token 接給 shared/api，而不製造 stale snapshot？
+
+Required details:
+虛線箭頭表示 static dependency，且先穿過 shared/auth Public API。Login 可以讀寫 auth contract，但不擁有 state；simple token／minimal session 是本案例 scope，不建立 universal User store。
+
+Timing:
+80 秒（25:15–26:35）。
+
+Sources:
+https://fsd.how/docs/guides/examples/auth/（current live docs 查核：2026-08-14；scope：Shared 或 Entity placement、Login action、pages／features 不宜擁有 app-wide token）；https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：Shared auth／API infrastructure 與 downward dependency）；.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的主案例三修正決定。
+
+Possible Q&A:
+問：Auth 一定放 shared/auth 嗎？答：不是；simple token／minimal session 適合這個 lower infrastructure boundary，若 current-user／profile domain 與 business logic 已形成穩定 Entity，owner 可以不同。
+
+Safety boundary:
+不把 shared/auth 說成所有 auth domain 的唯一官方答案，不把 token 等同完整 User domain，不宣稱畫面上的其他 consumers 是親身事件全部細節，也不把 Shared 說成可以承載任意 business logic。`,
+
+  `Message:
+App composition root 將 current-token provider 接給 shared/api；request interceptor 每次 request 才呼叫 provider 取得最新 token。
+
+Context:
+本頁的 ownership 仍在 shared/auth；App 只負責組裝具體依賴，shared/api 只負責 HTTP infrastructure。選定的 Vue 落點是 app.use(plugin, options) 安裝 plugin，install(app, options) 可用 app.provide() 暴露 API instance，descendant components 再 inject()；getToken provider 由 App 以 options／configuration 接給 client。這些都是 composition mechanics，不是新的 auth owner。
+
+Transition:
+承接 shared/auth ownership，這頁補齊 API client 的 runtime wiring：不是在 App 啟動時複製 token，而是每次 request 讀 current value。Auth 案例完成後，下一頁把同一個「framework entry 不等於 business owner」判斷帶到 Nuxt routing seam。
+
+Required details:
+先指出虛線是 App 對兩個 Shared contracts 的 static imports；實線是 runtime call flow。每次 request：interceptor 呼叫 getToken()，provider 再讀 current auth state。禁止把 setup-time token value capture 成 snapshot。Vue Plugin／app.use()／provide-inject 是可選 composition mechanism；FSD 不要求使用它們。
+
+Timing:
+85 秒（26:35–28:00）。
+
+Sources:
+https://fsd.how/docs/guides/examples/auth/ 與 https://fsd.how/docs/guides/examples/api-requests/（current live docs 查核：2026-08-14；scope：auth placement、API client、provider/context/injection alternatives；exact getToken getter 是相容的講者轉譯）；https://vuejs.org/api/application.html#app-use、https://vuejs.org/guide/reusability/plugins.html、https://vuejs.org/guide/components/provide-inject.html#app-level-provide（Context7 /websites/vuejs，查核：2026-08-14；scope：Vue 3 app.use、plugin install、app.provide 與 inject mechanics）；https://github.com/axios/axios/blob/v1.x/docs/pages/advanced/headers.md 與 https://github.com/axios/axios/blob/v1.x/docs/pages/advanced/authentication.md（Context7 /axios/axios，查核：2026-08-14；version scope：Axios v1.x request interceptor 與 request-time dynamic Authorization header）。
+
+Possible Q&A:
+問：既然 shared/auth 與 shared/api 都在 Shared，為什麼還要 DI？答：本案例用 provider 解耦 storage／client、方便測試與替換；若 auth owner 在 Entity，App wiring 還能避免 Shared 反向 import。這不是所有 Shared segments 間唯一合法做法。
+
+Safety boundary:
+getToken callback shape、Vue Plugin wiring 與 request-time interceptor 是符合官方 mechanics 的講者實作，不是 fsd.how 明文硬規則；不把 app.use() 說成 DI 本身，不暗示 Axios 直接 inject()，也不宣稱 provider 能自動處理 refresh race、SSR 或安全儲存。`,
+
+  `Message:
+Nuxt page 是 framework-owned route manifest；FSD Page 是 application-owned page module，同名不代表同一責任。
+
+Context:
+左側聚焦 Nuxt scanner 與 compiler 需要的 contract：file path／dynamic params、definePageMeta、必要 adapter。右側聚焦 FSD Page slice：page composition、page-specific state／queries／validation 與 business rules。「route manifest」對「application module」是本演講對兩份 official guidance 的責任整理，不是 Nuxt 或 FSD 的逐字術語。
+
+Transition:
+承接 Auth 案例的 composition root：framework mechanism 可以接線，但不因此取得 business ownership。這頁先把兩個 pages 名稱拆開；下一頁再用薄 route adapter 與具名 Public API 把它們接回來。
+
+Required details:
+Nuxt route entry 可保留 URL contract、Nuxt metadata 與 params adaptation；FSD Page 可包含 page UI、state、queries、validation 與 rules。這是 lifecycle／ownership seam，不只是避免 folder name collision。
+
+Timing:
+45 秒（28:00–28:45）。
+
+Sources:
+https://nuxt.com/docs/4.x/getting-started/routing/ 與 https://nuxt.com/docs/4.x/directory-structure/app/pages（Context7 /websites/nuxt_4_x，current 4.x docs 查核：2026-08-14；scope：file-based route generation、page metadata／route contract）；https://fsd.how/docs/guides/tech/with-nuxtjs/ 與 https://fsd.how/docs/reference/layers/（current live docs 查核：2026-08-14；scope：Nuxt pages name conflict、FSD Pages responsibility）；.scratch/fsd-talk-authoring-brief/research/03-nuxt-routing.md 的 source comparison。
+
+Possible Q&A:
+問：為什麼不直接把所有 page logic 留在 Nuxt page file？答：可以，但 route topology 會同時成為 application module boundary；薄 adapter 讓 URL lifecycle 與 page business evolution 可分開 review。
+
+Safety boundary:
+不把 app/routes 說成 Nuxt 4 default；它是後續 fixture 的 custom seam。不把 FSD Page 縮成單一 component，也不把 fsd.how Nuxt guide 中版本未標示且互相不一致的 exact config 當成 Nuxt 4.5.2 證據。`,
+
+  `Message:
+薄 Nuxt route adapter 只保留 framework contract，並經 FSD Page Public API import／render application module。
+
+Context:
+左側三行 code 是經 fixture 驗證的 seam 摘要：route entry 從 @/pages/home 取得 HomePage，保留 definePageMeta，再 render component。右側 Public API 明確標在 FSD Page boundary 上；route 不 deep import ui/home-page.vue。虛線表示 static import，實線表示 runtime render flow。
+
+Transition:
+承接兩種 page 責任，這頁展示如何不犧牲任何一邊：Nuxt convention 繼續掌握 route，FSD Page 繼續掌握 application behavior。下一頁用 Nuxt 4.5.2 fixture 證明 custom directories、alias 與 production build module graph 確實接得起來。
+
+Required details:
+Route entry 不必零程式碼；URL contract、definePageMeta 與必要 param translation 可以留下，但 business orchestration 不應留在 scanner directory。Public API 是 static module contract，不是 runtime security gate。
+
+Timing:
+55 秒（28:45–29:40）。
+
+Sources:
+https://fsd.how/docs/guides/tech/with-nuxtjs/（current live docs 查核：2026-08-14；scope：thin route entry 從 FSD Page Public API import／render）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：slice contract、explicit exports、避免 deep import）；https://nuxt.com/docs/4.x/getting-started/routing/ 與 https://nuxt.com/docs/4.x/directory-structure/app/pages（Context7 /websites/nuxt_4_x，查核：2026-08-14；scope：route files 與 metadata）；.scratch/fsd-talk-authoring-brief/research/10-nuxt4-fixture-verification.md 的 exact route adapter。
+
+Possible Q&A:
+問：這不是重複兩份 page 嗎？答：不是；route file 是 framework manifest／adapter，FSD Page 是 application module，兩者有不同 owner 與 lifecycle。
+
+Safety boundary:
+不要求 route entry 完全零邏輯，不 deep import FSD internals，不宣稱所有 layout 都屬於 App，也不把 @/pages/home 說成 Nuxt 4 的唯一 project layout。`,
+
+  `Message:
+Nuxt 4.5.2 fixture 已驗證 custom directories、source-root app.vue、內建 @ alias、Public API route import 與 production build seam。
+
+Context:
+這是 dated evidence snapshot。左側六行 code 同時顯示 srcDir、dir.app／pages／layouts 與 route 經 @/pages/home Public API import；下方 evidence chips補上 source-root src/app.vue 與 @ 指向 src。右側 PASS 防線來自同一 fixture 的 prepare、typecheck 與 production build，並檢查 generated types／manifest／chunks。
+
+Transition:
+承接薄 adapter 的 architecture design，這頁補上版本化 executable evidence。Routing seam 接好後，下一頁才會進入 server-state／cache seam；本頁只做轉場，不提前講 query factory、cache key、reactive input 或 SSR policy。
+
+Required details:
+精確版本為 Nuxt 4.5.2、TypeScript 6.0.3、vue-tsc 3.3.9。正確 app component 是 source-root src/app.vue，不是 src/app/app.vue。內建 @ 在 fixture generated config 指向 src；route import 經 FSD Page Public API。三個 PASS 證明 scanner、generated types、module graph 與 production compiler 可接通。
+
+Timing:
+50 秒（29:40–30:30）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/research/10-nuxt4-fixture-verification.md（verified 2026-08-14；exact scope：Nuxt 4.5.2 + TypeScript 6.0.3 + vue-tsc 3.3.9，prepare／typecheck／production build 與 artifacts）；https://nuxt.com/docs/4.x/api/nuxt-config、https://nuxt.com/docs/4.x/getting-started/upgrade、https://nuxt.com/docs/4.x/getting-started/routing/、https://nuxt.com/docs/4.x/api/commands/prepare、https://nuxt.com/docs/4.x/guide/concepts/typescript、https://nuxt.com/docs/4.x/api/commands/build（Context7 /websites/nuxt_4_x 與 official current 4.x docs，查核：2026-08-14；scope：srcDir、directories、routing、alias／generated TS config、commands）。Current docs 支持 config semantics；exact combination 的 PASS 只由 dated fixture 支持。
+
+Possible Q&A:
+問：為什麼不是 src/app/app.vue？答：fixture 與 Nuxt config semantics都顯示 custom srcDir 下的 app component 位於 source root src/app.vue；dir.app 只指定 router.options 等 app integration files 的 prefix。
+
+Safety boundary:
+不把這個 snapshot 說成所有 Nuxt 4 專案的唯一設定、完整 runtime／SSR／deployment certification，或未來版本保證；不得把已失敗的 TypeScript 7.0.2 + vue-tsc 3.3.9 說成通過組合，也不得在本頁提前實作 Ticket 15 的 Vue Query 內容。`,
 ];
 
 export const meta: SlideMeta = {
@@ -3168,4 +4372,11 @@ export default [
   ValidSchemaOwnership,
   ValidationDrift,
   StableRuleCorrection,
+  AuthOwnershipMistake,
+  AuthOwnershipConsequence,
+  AuthOwnershipCorrection,
+  AuthWiring,
+  NuxtNamingSeam,
+  NuxtRouteAdapter,
+  NuxtFixtureEvidence,
 ] satisfies Page[];
