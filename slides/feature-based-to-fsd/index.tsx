@@ -241,7 +241,7 @@ const CodeCard = () => (
         fontSize: 23,
       }}
     >
-      <span>new-code.ts</span>
+      <span>new-file.ts</span>
       <span style={{ color: 'var(--osd-accent)' }}>&lt;/&gt;</span>
     </div>
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 32 }}>
@@ -267,7 +267,7 @@ const CodeCard = () => (
         textAlign: 'center',
       }}
     >
-      放哪裡？
+      ？
     </div>
   </div>
 );
@@ -311,21 +311,11 @@ const Cover: Page = () => (
     >
       <section>
         <h1
-          style={{
-            margin: 0,
-            maxWidth: 900,
-            fontFamily: 'var(--osd-font-display)',
-            fontSize: 'var(--osd-size-hero)',
-            fontWeight: 800,
-            lineHeight: 0.94,
-            letterSpacing: '-0.055em',
-          }}
+          style={{ margin: 0, maxWidth: 900, fontFamily: 'var(--osd-font-display)', fontSize: 128, fontWeight: 800, lineHeight: '1.15', letterSpacing: '-0.055em' }}
         >
-          一段程式碼，
+          一段程式碼
           <br />
-          到底該放
-          <br />
-          哪裡？
+          到底該放哪裡？
         </h1>
         <p
           style={{
@@ -396,49 +386,175 @@ const Cover: Page = () => (
   </PageFrame>
 );
 
-const RoleCard = ({
-  icon,
-  role,
-  answer,
+const StructureStage = ({
+  number,
+  title,
+  structure,
+  question,
+  detail,
+  children,
+  emphasized = false,
+}: {
+  number: string;
+  title: string;
+  structure: ReactNode;
+  question: string;
+  detail?: string;
+  children?: ReactNode;
+  emphasized?: boolean;
+}) => (
+  <article
+    style={{
+      ...panelStyle,
+      height: '100%',
+      padding: 22,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12,
+      borderColor: emphasized ? 'var(--osd-accent)' : palette.border,
+      boxShadow: emphasized
+        ? '0 0 0 6px color-mix(in srgb, var(--osd-accent) 8%, transparent)'
+        : 'none',
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+      <span
+        aria-hidden="true"
+        style={{
+          width: 34,
+          height: 34,
+          flex: '0 0 auto',
+          display: 'grid',
+          placeItems: 'center',
+          border: `2px solid ${emphasized ? 'var(--osd-accent)' : palette.borderStrong}`,
+          borderRadius: 10,
+          color: emphasized ? 'var(--osd-accent)' : palette.textSoft,
+          fontSize: 22,
+          fontWeight: 800,
+        }}
+      >
+        {number}
+      </span>
+      <strong
+        style={{
+          color: emphasized ? 'var(--osd-accent)' : 'var(--osd-text)',
+          fontSize: 28,
+          fontWeight: 800,
+          lineHeight: 1.1,
+        }}
+      >
+        {title}
+      </strong>
+    </div>
+
+    <div
+      style={{
+        minHeight: 84,
+        padding: '12px 16px',
+        border: `1px dashed ${emphasized ? 'var(--osd-accent)' : palette.borderStrong}`,
+        borderRadius: 14,
+        background: emphasized
+          ? 'color-mix(in srgb, var(--osd-accent) 9%, transparent)'
+          : palette.whiteSoft,
+        color: palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 600,
+        lineHeight: 1.38,
+      }}
+    >
+      {structure}
+    </div>
+
+    <div>
+      <div
+        style={{
+          color: palette.muted,
+          fontSize: 22,
+          fontWeight: 800,
+          letterSpacing: '0.08em',
+        }}
+      >
+        主要判斷
+      </div>
+      <div style={{ marginTop: 4, color: palette.textSoft, fontSize: 23, fontWeight: 800, lineHeight: 1.3 }}>
+        {question}
+      </div>
+    </div>
+
+    {detail ? (
+      <p style={{ margin: 0, color: palette.muted, fontSize: 22, fontWeight: 600, lineHeight: 1.35 }}>
+        {detail}
+      </p>
+    ) : null}
+    {children}
+  </article>
+);
+
+const RoadmapArrow = ({ label }: { label: string }) => (
+  <div
+    aria-label={label}
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+      color: palette.muted,
+      fontSize: 22,
+      fontWeight: 700,
+      lineHeight: 1.25,
+      textAlign: 'center',
+    }}
+  >
+    <span>{label}</span>
+    <span aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 34, lineHeight: 1 }}>
+      ─›
+    </span>
+  </div>
+);
+
+const DeliverySupport = ({
+  symbol,
+  title,
   detail,
 }: {
-  icon: string;
-  role: string;
-  answer: string;
+  symbol: string;
+  title: string;
   detail: string;
 }) => (
   <div
     style={{
-      ...panelStyle,
-      width: 390,
-      height: 220,
-      padding: 30,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+      display: 'grid',
+      gridTemplateColumns: '34px 1fr',
+      gap: 10,
+      alignItems: 'center',
+      padding: '9px 12px',
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 12,
+      background: palette.whiteSoft,
     }}
   >
-    <div style={{ display: 'flex', alignItems: 'center', gap: 15 }}>
-      <span aria-hidden="true" style={{ fontSize: 34 }}>
-        {icon}
-      </span>
-      <span style={{ color: palette.textSoft, fontSize: 27, fontWeight: 700 }}>{role}</span>
-    </div>
-    <div
+    <span
+      aria-hidden="true"
       style={{
-        padding: '13px 17px',
-        border: `1px dashed ${palette.accentLine}`,
-        borderRadius: 12,
-        background: palette.accentSoft,
+        width: 32,
+        height: 32,
+        display: 'grid',
+        placeItems: 'center',
+        border: `1px solid var(--osd-accent)`,
+        borderRadius: 9,
         color: 'var(--osd-accent)',
-        fontFamily: fonts.mono,
-        fontSize: 25,
-        fontWeight: 700,
+        fontSize: 22,
+        fontWeight: 800,
       }}
     >
-      {answer}
+      {symbol}
+    </span>
+    <div style={{ minWidth: 0 }}>
+      <strong style={{ color: palette.textSoft, fontSize: 22, fontWeight: 800 }}>{title}</strong>
+      <span style={{ color: palette.muted, fontSize: 22, fontWeight: 600 }}>｜{detail}</span>
     </div>
-    <div style={{ color: palette.muted, fontSize: 22, fontWeight: 600 }}>{detail}</div>
   </div>
 );
 
@@ -467,66 +583,139 @@ const ProcessCue = ({ label }: { label: string }) => (
   </div>
 );
 
-const CostChip = ({ symbol, title, detail }: { symbol: string; title: string; detail: string }) => (
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 14,
-      padding: '17px 22px',
-      border: `1px solid ${palette.border}`,
-      borderRadius: 16,
-      background: palette.whiteSoft,
-      color: palette.textSoft,
-      fontSize: 25,
-      fontWeight: 700,
-    }}
-  >
-    <span aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 27 }}>
-      {symbol}
-    </span>
-    <span>{title}</span>
-    <span style={{ color: palette.muted, fontWeight: 500 }}>{detail}</span>
-  </div>
-);
-
 const ProblemSetup: Page = () => (
   <PageFrame>
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 34 }}>
-      <PageHeading
-        title={
-          <>
-            placement 分歧，會讓同一個成本
-            <span style={{ color: 'var(--osd-accent)' }}>反覆出現</span>
-          </>
-        }
-        lead="不是誰比較會背目錄，而是每個角色都得重新補齊判斷脈絡。"
-      />
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div>
+        <h2
+          style={{
+            margin: 0,
+            fontFamily: 'var(--osd-font-display)',
+            fontSize: 68,
+            fontWeight: 800,
+            lineHeight: 1.08,
+            letterSpacing: '-0.04em',
+          }}
+        >今天從三次結構演進開始</h2>
+        <p
+          style={{
+            margin: '14px 0 0',
+            maxWidth: 1580,
+            color: palette.textSoft,
+            fontSize: 32,
+            fontWeight: 500,
+            lineHeight: 1.35,
+          }}
+        >
+          Technical-based 解決技術分類；Feature-based 改善業務聚合；FSD 再補上明確規則與落地保護。
+        </p>
+      </div>
 
       <section
-        aria-label="人、AI 與 reviewer 在不同 placement 答案間來回"
+        aria-label="Technical-based、Feature-based 與 Feature-Sliced Design 的三階段演講路線圖"
         style={{
           flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          gap: 36,
+          minHeight: 0,
+          display: 'grid',
+          gridTemplateColumns: '455px 70px 455px 70px 550px',
+          alignItems: 'stretch',
+          gap: 20,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <RoleCard icon="人" role="Implementer" answer="features/" detail="依業務修改來看" />
-          <ProcessCue label="補 context" />
-          <RoleCard icon="AI" role="Agent" answer="composables/" detail="依現有 pattern 來看" />
-          <ProcessCue label="再解釋" />
-          <RoleCard icon="評" role="Reviewer" answer="shared/" detail="依重用期待來看" />
-        </div>
+        <StructureStage
+          number="01"
+          title="Technical-based"
+          structure={
+            <>
+              components/
+              <br />
+              composables/
+              <br />
+              utils/
+            </>
+          }
+          question="它是什麼技術角色？"
+          detail={'容易分類，但一次業務修改可能橫跨多個技術目錄。\n\n容易變成高耦合，低內聚'}
+        />
 
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 24 }}>
-          <CostChip symbol="↻" title="重構" detail="重新搬移" />
-          <CostChip symbol="↔" title="review" detail="重講理由" />
-          <CostChip symbol="＋" title="AI context" detail="補更多規則" />
-        </div>
+        <RoadmapArrow label="改善 locality" />
+
+        <StructureStage
+          number="02"
+          title="Feature-based"
+          structure={
+            <>
+              features/
+              <br />
+              &nbsp;&nbsp;checkout/　search/　auth/
+            </>
+          }
+          question="它屬於哪個業務能力？"
+          detail="把同一業務能力的程式碼聚在一起，改善 locality。"
+        />
+
+        <RoadmapArrow label="補上共同規則" />
+
+        <StructureStage
+          number="03"
+          title="Feature-Sliced Design"
+          structure={
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4px 18px' }}>
+              <span>Layers</span>
+              <span>Slices</span>
+              <span>Public API</span>
+              <span>Dependency direction</span>
+            </div>
+          }
+          question="誰擁有、誰能依賴、如何持續迭代？"
+          emphasized
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <DeliverySupport
+              symbol="◇"
+              title="Skill"
+              detail="共用判斷語言；AI 不自行裁決 business boundary"
+            />
+            <DeliverySupport
+              symbol="▦"
+              title="Steiger／CI"
+              detail="只保護可自動觀察的規則，不證明 architecture 或 semantics"
+            />
+          </div>
+        </StructureStage>
       </section>
+
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12,
+          color: palette.muted,
+          fontSize: 22,
+          fontWeight: 700,
+        }}
+      >
+        <span aria-hidden="true" style={{ color: 'var(--osd-accent)' }}>
+          ◇
+        </span>
+        三欄是路線圖，不是成熟度排名；FSD 是一種可選 lens，不是唯一答案。
+      </div>
+
+      <div
+        style={{
+          padding: '11px 20px',
+          border: '1px solid var(--osd-accent)',
+          borderRadius: 14,
+          background: 'color-mix(in srgb, var(--osd-accent) 9%, transparent)',
+          color: palette.textSoft,
+          fontSize: 26,
+          fontWeight: 800,
+          textAlign: 'center',
+        }}
+      >
+        從分類，到聚合，再到共同規則與自動保護。
+      </div>
     </div>
   </PageFrame>
 );
@@ -4757,7 +4946,7 @@ Context:
 [近逐字稿] 各位好，我是一隻狐狸。今天想先問一個很普通、但很難長期維持一致的問題：你手上這段新程式碼，到底該放哪裡？當答案只存在某個人的腦中，每次修改都要先重新理解一次。久了之後，路徑選擇就不只是 folder trivia，而是團隊持續付出的協作成本。
 
 Transition:
-我們先從標題這個問題出發，把它放進一個具體修改情境：同一段程式碼，為什麼不同角色會給出不同位置？
+我們先不急著回答 placement；先看今天會走過的三個結構視角，以及每一階段大致補上什麼問題。
 
 Required details:
 完整說出正式標題與講者「一隻狐狸」；強調問題是判斷如何被共享，不是背出唯一資料夾答案。
@@ -4775,28 +4964,28 @@ Safety boundary:
 不宣稱存在萬用 placement 答案，不量化生產力損失，也不把這個一般修改情境包裝成匿名真實案例。`,
 
   `Message:
-placement 分歧會放大重構、review 與 AI context 成本。
+今天會從 Technical-based、Feature-based 走到 Feature-Sliced Design，並區分結構規則、共同判斷語言與自動保護的責任。
 
 Context:
-[近逐字稿] 想像同一段 code：implementer 依業務修改把它放進 feature，AI 依現有 pattern 建議 composable，reviewer 又因預期重用要求 shared。這三個答案未必有人明顯錯，但每次來回都要重新補 context、重講理由，甚至重做搬移。AI 不是問題來源；它只是把團隊原本沒有共同說清楚的判斷放大給我們看。
+[近逐字稿] 今天不會直接從 FSD 的 layers 開始。我會先從大家熟悉的 Technical-based 結構出發，看 Feature-based 如何改善業務程式碼散落的問題；接著再看 Feature-based 還沒有共同回答哪些 ownership、dependency 與演進問題。最後才介紹 FSD 如何把這些判斷寫成共同規則，透過 Skill 讓人與 AI 都能理解，再讓 Steiger 與 CI 保護其中可以機械驗證的部分。重點不是一定要採用 FSD，而是看一套方法論如何真正落實。
 
 Transition:
-承接剛才的 placement 情境，這些來回不是 AI 才有的問題；它反映團隊缺少共同判斷。接下來先看我們最熟悉、也最合理的既有組織方式。
+路線圖先建立三種視角的關係；接下來從第一站 Technical-based 展開，公平看它解決了什麼，以及一次業務修改為何仍可能跨目錄。
 
 Required details:
-明講三種成本：重構重新搬移、review 重講理由、AI context 持續補規則；不要加入速度、準確率或節省比例等數字。
+依序說明三個主要判斷：Technical-based 問技術角色，Feature-based 問業務能力，FSD 再問 ownership、dependency 與演進。明確區分 Skill 是共用語言，Steiger／CI 只保護可機械驗證的結構規則；三階段不是成熟度排名。
 
 Timing:
 45 秒（0:45–1:30）。
 
 Sources:
-講者詮釋；依 authoring spec 的 problem framing。本頁沒有外部實證或版本敏感技術聲明。
+講者詮釋；本 repo 的 .agents/skills/feature-sliced-design/、AGENTS.md 與後續第 29–32 頁的人／AI／Steiger／CI 責任邊界。本頁是簡化路線圖，不新增版本或完整性聲明。
 
 Possible Q&A:
-問：這是不是 AI 特有的問題？答：不是；人與人的 review 也會遇到，AI 只是更明顯暴露 criteria 不一致。
+問：Feature-based 與 FSD 是互斥選項嗎？答：不是；這裡用三個視角說明問題如何逐步被說清楚，實際專案可以只採用其中有價值的規則與工具。
 
 Safety boundary:
-不責怪 AI，不聲稱有實證研究支持特定成本幅度，也不把示意角色或路徑說成講者親身案例。`,
+三欄是簡化的演講路線圖，不是所有專案的唯一目錄形狀。Feature-based 不等於只有一個固定資料夾規格。Skill 是共同判斷語言，不是 autonomous architecture judge，AI 不可自行裁決 business boundary。Steiger／CI 只保護可機械驗證、可被自動化觀察的部分，不代表整個 architecture 或 business semantics 已被證明正確。不宣稱 FSD 是唯一解。`,
 
   `Message:
 Technical-based organization 容易理解與起步，但一次業務修改的邊界可能散落在多個技術目錄。
@@ -4805,7 +4994,7 @@ Context:
 先公平承認它的優點：看到 components、composables、utils，新成員通常很快能知道檔案的技術角色。再沿著一次業務修改追查：畫面、狀態、計算規則可能分散在三處；問題不是任何單一目錄錯，而是 business change boundary 未必和 technical role 對齊。
 
 Transition:
-承接 placement 分歧，我們先公平承認 technical-based organization 是容易上手的起點；但一次業務修改仍要跨目錄追查，所以自然會開始尋找更好的 locality。
+承接剛才三階段路線圖的第一站，我們先公平承認 technical-based organization 是容易上手的起點；但一次業務修改仍可能跨目錄追查，所以自然會開始尋找更好的 locality。
 
 Required details:
 精確使用 Technical-based organization；例子限定 components、composables、utils。把「容易開始」與「業務邊界可能散落」同時講完整。
