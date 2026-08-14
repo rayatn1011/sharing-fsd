@@ -8,7 +8,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 - 必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；使用任何 OpenSlide primitive 前完整讀取對應 reference。
 - Authoring 當日以 `fsd.how` 為 current FSD canonical source，並依 `AGENTS.md` 使用 Context7 重驗 TanStack Vue Query、Steiger、Husky 及任何其他版本敏感 library／tool docs。
 - 保持「FSD 是 lens，不是唯一解」與人／AI／CI 不對稱權責；不將工具能執行的 checks 說成它能裁決 business semantics。

@@ -8,7 +8,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`，且不得與最後一張 authoring ticket 合併執行。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高），且不得與最後一張 authoring ticket 合併執行。
 - 驗收與任何修正必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；重驗任何 OpenSlide primitive 時完整讀取對應 reference。
 - 驗收當日以 `fsd.how` 為 current FSD canonical source，不使用 legacy `feature-sliced.design`；依 `AGENTS.md` 使用 Context7 重驗 Nuxt、Nuxt UI、TanStack Vue Query、Steiger、Husky 及其他版本敏感 library／tool docs。
 - 驗收必須針對完整 deck 的外部行為，不將 helper component、內部常數名稱或 JSX 組織方式變成獨立、脆弱的驗收目標。

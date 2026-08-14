@@ -8,7 +8,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 - 必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；使用任何 OpenSlide primitive 前完整讀取對應 reference。
 - Authoring 當日以 `fsd.how` 為 current FSD canonical source；任何顯示的 Nuxt UI 或其他版本敏感 API 必須依 `AGENTS.md` 使用 Context7 查核官方文件。
 - 以 authoring spec 的 case truth table 與 Wayfinder 01／05 為事實邊界；不自行補寫產品、元件類型、submit lifecycle 或具體欄位為親身事實。

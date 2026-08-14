@@ -8,7 +8,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 - 必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；使用 design tokens、webfonts、page numbers、Steps、transitions 或 morph 前，完整讀取對應 `slide-authoring` reference。
 - Authoring 當日重新開啟 `fsd.how` 及其連結的第一方資料；不引用 legacy `feature-sliced.design`。版本敏感 library／tool docs 依 `AGENTS.md` 使用 Context7 查核。
 - 不將 primer 擴寫為 FSD 文件導讀、placement 百科或宣傳；只作為後續真實案例的必要判斷語言。

@@ -9,7 +9,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 - 必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；使用任何 OpenSlide primitive 前，完整讀取 `slide-authoring` 對應 reference。
 - 正式 authoring 當日以 `fsd.how` 為 current FSD canonical source，不引用 legacy `feature-sliced.design`。涉及版本敏感 library、framework、SDK、API 或 CLI 的聲明時，依 repo `AGENTS.md` 使用 Context7 查核當日官方文件。
 - 以已核准的 authoring spec、`CONTEXT.md` 與 Wayfinder decisions 為範圍；不重開受眾、標題、時間、頁數、敘事或視覺方向。

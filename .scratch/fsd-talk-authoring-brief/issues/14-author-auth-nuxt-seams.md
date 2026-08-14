@@ -8,7 +8,7 @@
 
 ## Execution contract
 
-- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。
+- 執行 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 - 必須使用 `create-slide`、`slide-authoring` 與 `feature-sliced-design`；使用任何 OpenSlide primitive 前完整讀取對應 reference。
 - Authoring 當日以 `fsd.how` 為 current FSD canonical source，並依 `AGENTS.md` 使用 Context7 重驗 Nuxt、Vue application／provide-inject、Axios 或其他將出現的版本敏感 library／tool docs。
 - Nuxt 4.5.2 fixture 是已驗證版本 snapshot，不是所有 Nuxt 4 專案的唯一設定或 deployment certification；如當日 current docs 已變動，更新 notes 的差異與推論標示，不擅自改變已鎖定的 architecture lesson。

@@ -81,7 +81,7 @@ FSD 現行 guidance 只以 `fsd.how` 及其連結的一手來源為 canonical。
 57. As an acceptance reviewer, I want 至少一次正常完整排練與一次 overflow drill, so that 時間與縮減策略有實際證據而非估算。
 58. As an acceptance reviewer, I want 測試聚焦完整 deck 的外部行為, so that helper component implementation details 不會成為脆弱的驗收目標。
 59. As a repo maintainer, I want authoring 只新增指定 deck 與必要 assets, so that themes、其他 slides、package 與 OpenSlide 設定不會被連帶修改。
-60. As a 主流程協作者, I want 正式 authoring task 使用 `gpt-5.6-sol` 且 reasoning effort 為 `max`, so that 已鎖定的執行條件在 handoff 後仍被遵守。
+60. As a 主流程協作者, I want 正式 authoring task 使用 `gpt-5.6-sol` 且 reasoning effort 為 `ultra`（超高）, so that 最新鎖定的執行條件在 handoff 後仍被遵守。
 
 ## Implementation Decisions
 
@@ -203,7 +203,7 @@ FSD 現行 guidance 只以 `fsd.how` 及其連結的一手來源為 canonical。
 - 使用 top-level `design` export；`meta.title` 使用正式標題；`meta.createdAt` 在正式建檔當下依 `slide-authoring` 規則取得精確 ISO timestamp。
 - 每頁 root 為 100% × 100%；不得用 scroll、hidden overflow、negative margin、transform 或低於既定字級來掩蓋 overflow。
 - 使用 design tokens、assets、webfonts、page numbers、Steps、SlideTransition 或 MorphElement 前，正式 authoring task 必須完整讀取對應 `slide-authoring` reference。
-- 正式執行 `create-slide` 並製作 deck 的 task 必須使用 `gpt-5.6-sol`，reasoning effort 必須是 `max`。
+- 正式執行 `create-slide` 並製作 deck 的 task 必須使用 `gpt-5.6-sol`，reasoning effort 必須是 `ultra`（超高）。
 
 ### SHOULD
 
@@ -294,7 +294,7 @@ FSD 現行 guidance 只以 `fsd.how` 及其連結的一手來源為 canonical。
 - Formal title: 「一段程式碼，到底該放哪裡？從 Feature-based 到 Feature-Sliced Design」
 - Speaker: 「一隻狐狸」
 - Body: 34 pages, 2,370 seconds of authored timing, 30-second closing buffer, followed by 10-minute Q&A
-- Formal authoring execution: `gpt-5.6-sol`, reasoning effort `max`
+- Formal authoring execution: `gpt-5.6-sol`, reasoning effort `ultra`（超高）
 
 ### Wayfinder evidence index
 

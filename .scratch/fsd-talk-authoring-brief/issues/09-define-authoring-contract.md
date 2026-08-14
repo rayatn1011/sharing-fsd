@@ -48,7 +48,7 @@ Authoring brief 必須把官方介紹視為公開承諾：簡報需明確回應�
 
 ### 正式 authoring task 的模型設定
 
-使用者明確要求：後續實際執行 `create-slide`、製作正式 OpenSlide deck 的 task 必須使用模型 `gpt-5.6-sol`，reasoning effort 設為 `max`。這是 authoring handoff 的硬性執行條件，不代表本 Wayfinder ticket 開始製作 slides，也不要求改變本 ticket 的模型。
+使用者最初要求後續實際執行 `create-slide`、製作正式 OpenSlide deck 的 task 使用模型 `gpt-5.6-sol`、reasoning effort `max`，其後明確將 reasoning effort 提升為 `ultra`（超高）。最新要求取代舊值；這是 authoring handoff 的硬性執行條件，不代表本 Wayfinder ticket 開始製作 slides，也不要求改變本 ticket 的模型。
 
 ## Answer
 
@@ -143,7 +143,7 @@ Authoring brief 必須包含且互相交叉核對：
 - 一個 deck 只有一個 `index.tsx` 加可選 `assets/`；helper components／constants 全留在同檔。使用 top-level `design` export，`meta.title` 使用正式標題，`meta.createdAt` 依 `slide-authoring` 規則在建檔當下取得精確 ISO timestamp。
 - 每頁 root 填滿 100% × 100%，逐頁計算垂直 budget；不得用 scroll、hidden overflow、負 margin 或縮小字級掩蓋超出畫布。
 - 使用任何 OpenSlide primitive 前，正式 authoring task 必須讀取對應 `slide-authoring/references/*.md`。
-- **正式執行 `create-slide` 與製作 OpenSlide deck 的 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `max`。** 這是後續 task 的硬性 handoff 條件，不代表本 Wayfinder ticket 開始 authoring。
+- **正式執行 `create-slide` 與製作 OpenSlide deck 的 task 必須使用模型 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。** 這是後續 task 的硬性 handoff 條件，不代表本 Wayfinder ticket 開始 authoring。
 
 #### 9. 驗收、排練與超時策略
 

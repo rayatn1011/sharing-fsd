@@ -31,7 +31,7 @@ Status: decision-complete
 - [決定 40 分鐘的敘事弧線與時間配置](./issues/06-decide-story-arc-and-timing.md) — 鎖定問題框架、7 分鐘 primer、三個真實案例、framework seams、操作化回顧與方法論結論的完整時間弧線及超時刪減順序。
 - [用粗略大綱驗證演講節奏](./issues/07-prototype-talk-outline.md) — 使用者 review 通過 40 分鐘 flow；Steiger／CI 段加入 Husky `pre-push` 預檢查，並以三組 walkthrough 驗證新手理解、資深新意與超時刪減。
 - [決定簡報的視覺語言與重複圖像](./issues/08-decide-visual-language.md) — 保留 A 的責任範圍與流向圖解結構，改採 Nuxt 深海軍藍／綠配色、中文優先、具名 Public API 入口、CI 自動檢查防線及不對稱架構控制迴路。
-- [定義 create-slide 的製作規格與驗收契約](./issues/09-define-authoring-contract.md) — 鎖定 34 頁正式 deck、逐頁 notes 與來源／標註／正確性／視覺／OpenSlide／排練驗收，並指定正式 authoring task 使用 `gpt-5.6-sol`、reasoning effort `max`。
+- [定義 create-slide 的製作規格與驗收契約](./issues/09-define-authoring-contract.md) — 鎖定 34 頁正式 deck、逐頁 notes 與來源／標註／正確性／視覺／OpenSlide／排練驗收；正式 authoring task 的最新執行要求為 `gpt-5.6-sol`、reasoning effort `ultra`（超高）。
 
 ## Not yet specified
 
