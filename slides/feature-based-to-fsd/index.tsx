@@ -678,7 +678,7 @@ const BeforeLocality = () => (
       padding: 32,
       display: 'flex',
       flexDirection: 'column',
-      gap: 22,
+      gap: 16,
     }}
   >
     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
@@ -1740,7 +1740,7 @@ const ResponsibilityTile = ({
         borderRadius: 12,
         color: accent ? 'var(--osd-accent)' : palette.textSoft,
         fontFamily: fonts.mono,
-        fontSize: compact ? 19 : 22,
+        fontSize: 22,
         fontWeight: 800,
       }}
     >
@@ -1750,7 +1750,7 @@ const ResponsibilityTile = ({
     <div
       style={{
         color: palette.muted,
-        fontSize: compact ? 21 : 24,
+        fontSize: compact ? 22 : 24,
         fontWeight: 600,
         lineHeight: 1.4,
       }}
@@ -1765,7 +1765,7 @@ const PrematureSharedDecision: Page = () => (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 28 }}>
       <PageHeading
         title="案例一：全專案共用，卻綁住三種責任"
-        lead="只有一個使用情境時，UI、form 與 server-data policy 就被包成同一個 abstraction。"
+        lead="只有一個使用情境時，UI、form 與 server-data policy 就被包進同一個共用元件。"
       />
 
       <section
@@ -2144,7 +2144,7 @@ const OwnerTile = ({
     }}
   >
     <div>
-      <div style={{ color: palette.muted, fontSize: 21, fontWeight: 800, letterSpacing: '0.07em' }}>
+      <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.07em' }}>
         {eyebrow}
       </div>
       <strong style={{ display: 'block', marginTop: 8, color: palette.textSoft, fontSize: 29 }}>
@@ -2255,7 +2255,7 @@ const ResponsibilityCorrection: Page = () => (
               background: 'var(--osd-bg)',
               color: 'var(--osd-accent)',
               fontFamily: fonts.mono,
-              fontSize: 21,
+              fontSize: 22,
               fontWeight: 800,
               textAlign: 'center',
             }}
@@ -2290,7 +2290,7 @@ const ResponsibilityCorrection: Page = () => (
             zIndex: 4,
             color: 'var(--osd-accent)',
             fontFamily: fonts.mono,
-            fontSize: 21,
+            fontSize: 22,
             fontWeight: 800,
           }}
         >
@@ -2304,7 +2304,7 @@ const ResponsibilityCorrection: Page = () => (
             zIndex: 4,
             color: 'var(--osd-accent)',
             fontFamily: fonts.mono,
-            fontSize: 21,
+            fontSize: 22,
             fontWeight: 800,
           }}
         >
@@ -2318,7 +2318,7 @@ const ResponsibilityCorrection: Page = () => (
             zIndex: 4,
             color: palette.textSoft,
             fontFamily: fonts.mono,
-            fontSize: 21,
+            fontSize: 22,
             fontWeight: 800,
           }}
         >
@@ -2357,7 +2357,7 @@ const FeatureSchemaCard = ({
         left: 26,
         top: 18,
         color: palette.muted,
-        fontSize: 21,
+        fontSize: 22,
         fontWeight: 800,
         letterSpacing: '0.08em',
       }}
@@ -2604,7 +2604,7 @@ const FieldRuleImportArrow = ({ left }: { left: number }) => (
         background: palette.bg,
         color: 'var(--osd-accent)',
         fontFamily: fonts.mono,
-        fontSize: 19,
+        fontSize: 22,
         fontWeight: 800,
         whiteSpace: 'nowrap',
       }}
@@ -2677,7 +2677,7 @@ const StableRuleCorrection: Page = () => (
               background: 'var(--osd-bg)',
               color: 'var(--osd-accent)',
               fontFamily: fonts.mono,
-              fontSize: 21,
+              fontSize: 22,
               fontWeight: 800,
               textAlign: 'center',
             }}
@@ -2685,7 +2685,7 @@ const StableRuleCorrection: Page = () => (
             PUBLIC API · fieldRule
           </div>
           <strong style={{ color: 'var(--osd-accent)', fontSize: 30 }}>Shared field rule</strong>
-          <div style={{ marginTop: 6, color: palette.textSoft, fontSize: 21, fontWeight: 700 }}>
+          <div style={{ marginTop: 6, color: palette.textSoft, fontSize: 22, fontWeight: 700 }}>
             適當 lower domain boundary · 已證明必須一起變
           </div>
         </div>
@@ -3456,7 +3456,7 @@ const RouteCodeLine = ({ children, accent = false }: { children: ReactNode; acce
     style={{
       color: accent ? 'var(--osd-accent)' : palette.textSoft,
       fontFamily: fonts.mono,
-      fontSize: 23,
+      fontSize: 24,
       fontWeight: 700,
       lineHeight: 1.5,
       whiteSpace: 'nowrap',
@@ -3514,7 +3514,7 @@ const NuxtRouteAdapter: Page = () => (
         <div
           style={{
             ...panelStyle,
-            width: 610,
+            width: 680,
             height: 340,
             padding: '30px 32px',
             borderColor: palette.borderStrong,
@@ -3665,7 +3665,7 @@ const NuxtFixtureEvidence: Page = () => (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
       <PageHeading
         title="Nuxt 4.5.2 fixture：這條 seam 有 build evidence"
-        lead="2026-08-14 snapshot；不是唯一 Nuxt 4 config，也不是 deployment certification。"
+        lead="2026-08-14 snapshot；不是唯一 Nuxt 4 config，也不是 deployment 認證。"
       />
 
       <section style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 24 }}>
@@ -3852,7 +3852,7 @@ const CacheContract: Page = () => (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
       <PageHeading
         title="Cache identity 由真正的 owner 對外"
-        lead="Read、prefetch、write 與 invalidation，都從同一份 query options／key contract 出發。"
+        lead="Read、prefetch、write、invalidate，共用同一份 query key／options contract。"
       />
 
       <section
@@ -3874,13 +3874,13 @@ const CacheContract: Page = () => (
               borderColor: palette.borderStrong,
             }}
           >
-            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
-              CACHE CONSUMERS
+            <div style={{ color: palette.muted, fontFamily: fonts.mono, fontSize: 22, fontWeight: 800 }}>
+              const qc = useQueryClient()
             </div>
             <CacheConsumerChip command="useQuery(options)" purpose="read" />
-            <CacheConsumerChip command="prefetchQuery(options)" purpose="prefetch" />
-            <CacheConsumerChip command="setQueryData(queryKey, next)" purpose="write" />
-            <CacheConsumerChip command="invalidateQueries({ queryKey })" purpose="invalidate" />
+            <CacheConsumerChip command="qc.prefetchQuery(options)" purpose="prefetch" />
+            <CacheConsumerChip command="qc.setQueryData(queryKey, next)" purpose="write" />
+            <CacheConsumerChip command="qc.invalidateQueries({ queryKey })" purpose="invalidate" />
           </div>
         </div>
 
@@ -3961,7 +3961,7 @@ const ReactiveContractCard = ({
 );
 
 const ReactiveSeam: Page = () => (
-  <FrameworkFrame categoryLabel="現行官方 guidance" categorySymbol="◆">
+  <FrameworkFrame categoryLabel="現行官方 guidance／講者轉譯" categorySymbol="◈">
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
       <PageHeading
         title="要自動追蹤，就讓 reactive input 穿過 boundary"
@@ -4065,7 +4065,7 @@ const SsrAndDraftSeam: Page = () => (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
       <PageHeading
         title="Lifecycle 不同，就不要共用同一個 mutable owner"
-        lead="SSR cache 隔離到每個 app／request；server snapshot 與 form draft 也各自擁有狀態。"
+        lead="SSR cache 依 app／request 隔離；server snapshot 與 form draft 各自擁有狀態。"
       />
 
       <section
@@ -4343,7 +4343,7 @@ const GuardRow = ({ rule, detail }: { rule: string; detail: string }) => (
       height: 74,
       padding: '0 20px',
       display: 'grid',
-      gridTemplateColumns: '270px 1fr',
+      gridTemplateColumns: '310px 1fr',
       alignItems: 'center',
       gap: 18,
       border: `1px solid ${palette.borderStrong}`,
@@ -4351,7 +4351,9 @@ const GuardRow = ({ rule, detail }: { rule: string; detail: string }) => (
       background: palette.whiteSoft,
     }}
   >
-    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22 }}>{rule}</strong>
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22, whiteSpace: 'nowrap' }}>
+      {rule}
+    </strong>
     <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{detail}</span>
   </div>
 );
@@ -4370,7 +4372,7 @@ const GuardColumn = ({
   <div
     style={{
       ...panelStyle,
-      width: 700,
+      width: 760,
       height: 352,
       padding: '26px 28px',
       display: 'flex',
@@ -4407,7 +4409,7 @@ const SteigerBoundary: Page = () => (
           <GuardColumn eyebrow="OBSERVABLE STRUCTURE" title="Hard structural guards" accent>
             <GuardRow rule="forbidden-imports" detail="layer direction／cross-import" />
             <GuardRow rule="no-public-api-sidestep" detail="不繞過具名入口" />
-            <GuardRow rule="folder contract" detail="slice／segment／Public API 形狀" />
+            <GuardRow rule="folder contract" detail="slice／segment／Public API" />
           </GuardColumn>
           <GuardColumn eyebrow="REVIEW SIGNALS" title="Heuristic diagnostics">
             <GuardRow rule="thresholds" detail="20 slices／15 shared-lib modules" />
@@ -5076,7 +5078,7 @@ Timing:
 80 秒（16:15–17:35）。
 
 Sources:
-.scratch/fsd-talk-authoring-brief/issues/05-prototype-nuxt-ui-form-boundary.md（resolved guided probe B）；prototype/nuxt-ui-form-boundary commit 059326be75e53b39500b4496a9301a9963e41c04 的 prototype HTML（只取 boundary insight，非 production implementation）；https://ui.nuxt.com/docs/components/form 與 /form-field（Context7 library /llmstxt/ui_nuxt_llms_txt，authoring-day 查核：2026-08-14；scope：current Form state/schema/error mechanics，不支持本頁架構處方）。
+.scratch/fsd-talk-authoring-brief/issues/05-prototype-nuxt-ui-form-boundary.md（resolved guided probe B）；prototype/nuxt-ui-form-boundary commit 059326be75e53b39500b4496a9301a9963e41c04 的 prototype HTML（只取 boundary insight，非 production implementation）；https://ui.nuxt.com/docs/components/form 與 https://ui.nuxt.com/docs/components/form-field（Context7 /websites/ui_nuxt，authoring-day 查核：2026-08-14；scope：current Form state/schema/error mechanics，不支持本頁架構處方）；https://registry.npmjs.org/@nuxt%2fui/4.10.0（查核：2026-08-14；scope：當日 published package version 4.10.0）。
 
 Possible Q&A:
 問：第二個 consumer 一定要放 shared/ui 嗎？答：不一定；先確認重用已經真實存在、control 不含 feature policy，才把它視為 lower reusable boundary 候選。
@@ -5100,7 +5102,7 @@ Timing:
 85 秒（17:35–19:00）。
 
 Sources:
-https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：Pages 可保留未重用 UI、Shared UI 不含 business logic但可含 UI logic）；https://fsd.how/docs/guides/migration/from-v2-0/ 與 /guides/issues/excessive-entities/（查核：2026-08-14；scope：Pages First／deferred decomposition）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：Public API contract）；Ticket 05 與主案例一提供三責任 boundary evidence。
+https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：Pages 可保留未重用 UI、Shared UI 不含 business logic但可含 UI logic）；https://fsd.how/docs/guides/migration/from-v2-0/ 與 https://fsd.how/docs/guides/issues/excessive-entities/（查核：2026-08-14；scope：Pages First／deferred decomposition）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：Public API contract）；Ticket 05 與主案例一提供三責任 boundary evidence。
 
 Possible Q&A:
 問：form adapter 也能重用嗎？答：可以，但要等多個真實 consumer 證明 form contract 本身穩定；本案例只證明受控 UI responsibility 值得先獨立。
@@ -5358,13 +5360,13 @@ Transition:
 承接 Nuxt routing seam 的 framework／application ownership，現在把同一個判斷帶進 server-state cache：先建立唯一 cache identity；下一頁再確認 reactive input 是否真的穿過 contract。
 
 Required details:
-Cache identity 是 queryKey，不是 queryFn。Owning module 可以是 Page、既有 Entity 或其他符合證據的 slice；slice-only request 可留在原 slice。FSD 的 TanStack Query guide 使用 React syntax，本頁是 React-to-Vue translation，並以 Vue Query 官方 queryOptions／invalidation 文件交叉查核。
+Cache identity 是 queryKey，不是 queryFn。Owning module 可以是 Page、既有 Entity 或其他符合證據的 slice；slice-only request 可留在原 slice。畫面以 const qc = useQueryClient() 取得 QueryClient，後三個操作保留 receiver。FSD 的 TanStack Query guide 使用 React syntax，本頁是 React-to-Vue translation，並以 Vue Query 官方 queryOptions／invalidation 文件交叉查核。
 
 Timing:
 50 秒（30:30–31:20）。
 
 Sources:
-https://tanstack.com/query/latest/docs/framework/vue/guides/query-options 與 /query-invalidation（查核：2026-08-14；scope：queryOptions reuse、queryKey、prefetch／write／invalidation）；https://fsd.how/docs/guides/tech/with-react-query/、https://fsd.how/docs/guides/examples/api-requests/、https://fsd.how/docs/guides/issues/excessive-entities/、https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：factory／Public API／owner／deferred Entity）。Verified current：@tanstack/vue-query 5.101.4、v5 docs；本 slide repo 未安裝或 lock Vue Query。
+https://tanstack.com/query/latest/docs/framework/vue/guides/query-options 與 https://tanstack.com/query/latest/docs/framework/vue/guides/query-invalidation（Context7 /websites/tanstack_query_framework_vue，查核：2026-08-14；scope：queryOptions reuse、QueryClient receivers、queryKey、prefetch／write／invalidation）；https://fsd.how/docs/guides/tech/with-react-query/、https://fsd.how/docs/guides/examples/api-requests/、https://fsd.how/docs/guides/issues/excessive-entities/、https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：factory／Public API／owner／deferred Entity）；https://registry.npmjs.org/@tanstack%2fvue-query/5.101.4（查核：2026-08-14；scope：當日 published package version 5.101.4）。Verified current：Vue Query v5 docs；本 slide repo 未安裝或 lock Vue Query。
 
 Possible Q&A:
 問：query factory 一定放 entities/ 嗎？答：不一定；先看哪個 frontend module 擁有責任、哪些 consumers 真實重用，以及 boundary 是否穩定。
@@ -5382,13 +5384,13 @@ Transition:
 承接 cache identity，這頁補上 reactive identity：不只 factory 要共用，變動來源也不能在 boundary 前被截斷。下一頁把 lifecycle 拉到 SSR request 與 form draft。
 
 Required details:
-current Vue Query guidance 接受 ref／getter／MaybeRefOrGetter；queryFn 內可用 toValue 取值。官方明列 queryKey 與 enabled 等 reactive options；不得泛化成所有 options 都會自動追蹤。Getter 只在 queryFn 內讀、卻沒留在 queryKey，也不足以建立 query-key tracking。
+current Vue Query guidance 接受 ref／getter／MaybeRefOrGetter；queryFn 內可用 toValue 取值。官方明列 queryKey 與 enabled 等 reactive options；不得泛化成所有 options 都會自動追蹤。Getter 只在 queryFn 內讀、卻沒留在 queryKey，也不足以建立 query-key tracking。畫面的 postQueries.detail(id) 是依官方 Vue mechanics 與 FSD React example 寫成的 React-to-Vue 講者轉譯，不是官方逐字 code。
 
 Timing:
 50 秒（31:20–32:10）。
 
 Sources:
-https://tanstack.com/query/latest/docs/framework/vue/reactivity 與 https://tanstack.com/query/latest/docs/framework/vue/reference/useQuery（查核：2026-08-14；version／scope：Vue Query 5.101.4／v5，reactive query keys、getter／ref、plain snapshot、immutable results）。本 slide repo 未安裝或 lock Vue Query。
+https://tanstack.com/query/latest/docs/framework/vue/reactivity 與 https://tanstack.com/query/latest/docs/framework/vue/reference/useQuery（Context7 /websites/tanstack_query_framework_vue，查核：2026-08-14；version／scope：Vue Query v5 reactive query keys、getter／ref、plain snapshot、immutable results）；https://registry.npmjs.org/@tanstack%2fvue-query/5.101.4（查核：2026-08-14；scope：當日 published package version 5.101.4）。本 slide repo 未安裝或 lock Vue Query。
 
 Possible Q&A:
 問：所有 query input 都要用 getter 嗎？答：不是；只有預期變動且應觸發不同 key／refetch 的輸入，才必須保留 reactivity。
@@ -5400,7 +5402,7 @@ Public API 要收 plain value 或 MaybeRefOrGetter 是 owning module 的 contrac
 SSR cache 與 form draft 都要依 lifecycle／owner 分流：每個 server request 建立自己的 QueryClient，query result 則複製成獨立 mutable draft 後再編輯。
 
 Context:
-TanStack current SSR guide 的 Nuxt 3 snippet 在 defineNuxtPlugin callback 內 new QueryClient，server render 後 dehydrate、client hydrate；同頁 Vite SSR 範例更明寫每個 request 建 fresh client。Nuxt 4.5.2 lifecycle 文件確認 initial server request 各自建立 app 並執行 plugins。由此推論，process-wide singleton 共用 server cache 有跨 request data contamination 風險。另一側的 query result 是 immutable snapshot，不應直接 v-model；copy 後的 form draft 才是 editing owner。
+TanStack current SSR guide 的 Nuxt 3 snippet 在 defineNuxtPlugin callback 內 new QueryClient，server render 後 dehydrate、client hydrate；同頁 Vite SSR 範例更明寫每個 request 建 fresh client。Current Nuxt 4.x lifecycle 文件確認 initial server request 各自建立 app 並執行 plugins；Nuxt 4.5.2 只屬前頁 dated fixture。由此推論，process-wide singleton 共用 server cache 有跨 request data contamination 風險。另一側的 query result 是 immutable snapshot，不應直接 v-model；copy 後的 form draft 才是 editing owner。
 
 Transition:
 承接 reactive source 的 lifecycle，這頁用同一個 judgment 收束兩個 seam：lifecycle 不同，就不要混用 mutable owner。接下來從 framework mechanics 回到誰有權制定 architecture policy。
@@ -5412,7 +5414,7 @@ Timing:
 50 秒（32:10–33:00）。
 
 Sources:
-https://tanstack.com/query/latest/docs/framework/vue/guides/ssr 與 /reactivity（查核：2026-08-14；scope：Vue Query v5 SSR dehydrate／hydrate、fresh per-request client、result immutability）；https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle 與 /getting-started/state-management（Nuxt docs 4.5.2，查核：2026-08-14；scope：per-request app lifecycle、cross-request state warning）。TanStack snippet仍標 Nuxt 3；本頁的 Nuxt 4 lifecycle 接法是交叉查核後的講者 integration，Vue Query current 為 5.101.4，repo 未 pin。
+https://tanstack.com/query/latest/docs/framework/vue/guides/ssr 與 https://tanstack.com/query/latest/docs/framework/vue/reactivity（Context7 /websites/tanstack_query_framework_vue，查核：2026-08-14；scope：Vue Query v5 SSR dehydrate／hydrate、fresh per-request client、result immutability）；https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle 與 https://nuxt.com/docs/4.x/getting-started/state-management（Context7 /websites/nuxt_4_x，current Nuxt 4.x docs 查核：2026-08-14；scope：per-request app lifecycle、cross-request state warning）；https://registry.npmjs.org/@tanstack%2fvue-query/5.101.4（查核：2026-08-14；scope：當日 published package version 5.101.4）。TanStack snippet仍標 Nuxt 3；本頁的 Nuxt 4 lifecycle 接法是交叉查核後的講者 integration，repo 未 pin Vue Query。
 
 Possible Q&A:
 問：browser 端可以只有一個 QueryClient 嗎？答：可以；關鍵是不要把 server process 的所有 requests 當成同一個 browser app lifecycle。
@@ -5460,7 +5462,7 @@ Timing:
 60 秒（34:00–35:00）。
 
 Sources:
-https://github.com/feature-sliced/skills（master 查核：2026-08-14；scope：FSD v2.1 layer/import/placement decision framework 與 Nuxt／TanStack Query integration）；https://fsd.how/docs/reference/layers/；本 repo 的 AGENTS.md、CONTEXT.md 與 .agents/skills/feature-sliced-design/ 作 local shared-language evidence；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
+https://github.com/feature-sliced/skills/tree/16df62d223a227159f968e9cb3143120401c4623（official master resolved 2026-08-14；scope：FSD v2.1 layer/import/placement decision framework 與 Nuxt／TanStack Query integration）；https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：layer semantic responsibility）；本 repo 的 AGENTS.md、CONTEXT.md 與 .agents/skills/feature-sliced-design/ 作 local shared-language evidence；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
 
 Possible Q&A:
 問：有 skill 之後 AI 就能自己決定嗎？答：不能；skill 提供共同 decision framework，不保證判斷正確或 deterministic，模糊處仍需 human owner。
@@ -5478,13 +5480,13 @@ Transition:
 承接共同判斷語言，現在把其中可觀察的規則分層。下一頁把選定的 machine checks 放進 local pre-push 與 remote CI，但仍不把 CI 升格成 business judge。
 
 Required details:
-Verified 2026-08-14：Steiger CLI 0.6.0；@feature-sliced/steiger-plugin 0.7.0。Research 將 0.7.0 作 plugin shorthand，規則行為無 material drift；本 slide repo 未安裝或在 lockfile pin Steiger／plugin。Severity error／warn／off 是 team policy。
+Verified 2026-08-14：Steiger CLI 0.6.0；@feature-sliced/steiger-plugin 0.7.0。Research 的「Steiger 0.7.0」是 plugin shorthand；本頁對 CLI／plugin 分開查核，沒有把跨版本規則行為視為已證實相同。本 slide repo 未安裝或在 lockfile pin Steiger／plugin。Severity error／warn／off 是 team policy。
 
 Timing:
 30 秒（35:00–35:30）。
 
 Sources:
-https://github.com/feature-sliced/steiger、https://github.com/feature-sliced/steiger/blob/master/packages/steiger/package.json、https://github.com/feature-sliced/steiger/blob/master/packages/steiger-plugin-fsd/package.json，以及 plugin 的 excessive-slicing、shared-lib-grouping、insignificant-slice rule READMEs（official master 查核：2026-08-14；scope：versions、rules、arbitrary thresholds、reference-count heuristic）；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
+https://github.com/feature-sliced/steiger/tree/2d8411e3e64cec241c2544ad77b1f8349060023、https://github.com/feature-sliced/steiger/blob/2d8411e3e64cec241c2544ad77b1f8349060023/packages/steiger/package.json、https://github.com/feature-sliced/steiger/blob/2d8411e3e64cec241c2544ad77b1f8349060023/packages/steiger-plugin-fsd/package.json、https://github.com/feature-sliced/steiger/blob/2d8411e3e64cec241c2544ad77b1f8349060023/packages/steiger-plugin-fsd/src/excessive-slicing/README.md、https://github.com/feature-sliced/steiger/blob/2d8411e3e64cec241c2544ad77b1f8349060023/packages/steiger-plugin-fsd/src/shared-lib-grouping/README.md、https://github.com/feature-sliced/steiger/blob/2d8411e3e64cec241c2544ad77b1f8349060023/packages/steiger-plugin-fsd/src/insignificant-slice/README.md（official master resolved 2026-08-14；scope：CLI／plugin versions、arbitrary thresholds、reference-count heuristic）；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
 
 Possible Q&A:
 問：Steiger PASS 代表沒有 circular dependency 嗎？答：不代表；需要另設 cycle checker，且 business boundary 仍需 human review。
@@ -5508,7 +5510,7 @@ Timing:
 30 秒（35:30–36:00）。
 
 Sources:
-https://typicode.github.io/husky/ 與 https://typicode.github.io/husky/how-to.html（查核：2026-08-14；scope：Husky 9.1.7、client-side hooks、hook file mechanics）；https://git-scm.com/docs/githooks#_pre_push（scope：pre-push timing／non-zero behavior）；https://github.com/feature-sliced/steiger（scope：Steiger command／rules）；spec.md 的 team-policy matrix。
+https://typicode.github.io/husky/ 與 https://typicode.github.io/husky/how-to.html（查核：2026-08-14；scope：client-side hooks、hook file mechanics）；https://github.com/typicode/husky/blob/v9.1.7/package.json（查核：2026-08-14；scope：Husky 9.1.7 version provenance）；https://git-scm.com/docs/githooks#_pre_push（查核：2026-08-14；scope：pre-push timing／non-zero behavior）；https://github.com/feature-sliced/steiger/tree/2d8411e3e64cec241c2544ad77b1f8349060023（查核：2026-08-14；scope：Steiger command／rules）；spec.md 的 team-policy matrix。
 
 Possible Q&A:
 問：為什麼不放 pre-commit？答：這個團隊 policy 選 pre-push，避免每個開發中間狀態都觸發完整檢查；不同團隊可以依 feedback cost 另選。
@@ -5547,7 +5549,7 @@ Context:
 [近逐字稿] 最後，我不希望各位離開時只記得一串 layer 名稱。即使你的團隊明天完全不採用 FSD，也請帶走三個問題。第一，ownership：誰對這段責任負責，哪些東西真的應該一起變？第二，dependency：誰可以依賴誰，外部要從哪一個具名入口進來？第三，evolution rules：什麼證據出現時才抽離，例外如何記錄，又怎麼把學到的判斷回饋成下一次可以共同遵循的規則？FSD 的價值，是提供一個完整、可參考的 lens，讓我們具體練習這三題；它不是推銷，也不是唯一解。當答案能被人與 AI 共同理解、被 review，並讓 CI 保護其中可機械驗證的部分，我們才不必每次都從「這段 code 到底該放哪裡」重新開始。謝謝大家。正式內容到 39:30；最後一頁停留三十秒，40:00 再進 Q&A。
 
 Transition:
-由問題框架回扣到三個案例與方法論結論；39:30 停止新增內容，保留本頁至 40:00，之後只進 Q&A，不新增 backup slides。
+由問題框架回扣到三個案例與方法論結論；39:30 停止新增內容，保留本頁至 40:00。40:00 後只進 Q&A；需要回看證據時，從 overview 跳回相關正文頁，不新增 backup slides。
 
 Required details:
 三題必須逐字說出 ownership、dependency、evolution rules；明講 FSD 是 lens／完整參考、不是唯一解。Authored overflow strategy 是「刪細節、不刪敘事節點」：依序刪 evidence／版本／API 細節，壓縮 framework seams，縮短 mechanics 但保留原 decision → consequence → correction → lesson，最後才壓縮 primer 名詞；不得刪 problem framework、三個匿名真實案例、Human／AI／CI 分工、三層回顧／控制迴路與方法論結論。這只是 authoring strategy，尚未完成真人口語排練。
