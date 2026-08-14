@@ -3746,6 +3746,1007 @@ const NuxtFixtureEvidence: Page = () => (
   </FrameworkFrame>
 );
 
+const CacheContractCore = () => (
+  <div
+    style={{
+      ...panelStyle,
+      position: 'relative',
+      width: 700,
+      height: 360,
+      padding: '64px 36px 24px',
+      borderColor: 'var(--osd-accent)',
+      background: palette.accentSoft,
+      boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+    }}
+  >
+    <div
+      style={{
+        position: 'absolute',
+        left: 28,
+        top: -22,
+        width: 644,
+        padding: '8px 13px',
+        border: '2px solid var(--osd-accent)',
+        borderRadius: 999,
+        background: 'var(--osd-bg)',
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+        textAlign: 'center',
+      }}
+    >
+      PUBLIC API · owning module
+    </div>
+    <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      QUERY OPTIONS FACTORY
+    </div>
+    <strong style={{ display: 'block', marginTop: 8, color: 'var(--osd-accent)', fontSize: 38 }}>
+      Cache contract
+    </strong>
+    <div style={{ marginTop: 18, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+      <div
+        style={{
+          padding: '14px 22px',
+          border: `1px solid ${palette.accentLine}`,
+          borderRadius: 15,
+          background: palette.whiteSoft,
+        }}
+      >
+        <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800 }}>CACHE IDENTITY</div>
+        <div style={{ marginTop: 6, color: palette.textSoft, fontFamily: fonts.mono, fontSize: 26, fontWeight: 800 }}>
+          queryKey
+        </div>
+      </div>
+      <div
+        style={{
+          padding: '14px 22px',
+          border: `1px solid ${palette.accentLine}`,
+          borderRadius: 15,
+          background: palette.whiteSoft,
+        }}
+      >
+        <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800 }}>REQUEST CONTRACT</div>
+        <div style={{ marginTop: 6, color: palette.textSoft, fontFamily: fonts.mono, fontSize: 26, fontWeight: 800 }}>
+          queryFn
+        </div>
+      </div>
+    </div>
+    <div style={{ marginTop: 14, color: palette.textSoft, fontSize: 28, fontWeight: 700 }}>
+      一個 owner，對外提供同一份 identity
+    </div>
+  </div>
+);
+
+const CacheConsumerChip = ({ command, purpose }: { command: string; purpose: string }) => (
+  <div
+    style={{
+      height: 58,
+      padding: '0 16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 10,
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 15,
+      background: palette.whiteSoft,
+    }}
+  >
+    <span
+      style={{
+        color: palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {command}
+    </span>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700, whiteSpace: 'nowrap' }}>{purpose}</span>
+  </div>
+);
+
+const CacheContract: Page = () => (
+  <FrameworkFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="Cache identity 由真正的 owner 對外"
+        lead="Read、prefetch、write 與 invalidation，都從同一份 query options／key contract 出發。"
+      />
+
+      <section
+        aria-label="Owning module 經 Public API 對外提供 query key 與 request contract，讓讀取、預取、寫入與失效共用 cache identity"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 24 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 34 }}>
+          <CacheContractCore />
+          <AdapterArrow label="consume same contract" />
+          <div
+            style={{
+              ...panelStyle,
+              width: 630,
+              height: 360,
+              padding: '28px 30px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 10,
+              borderColor: palette.borderStrong,
+            }}
+          >
+            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+              CACHE CONSUMERS
+            </div>
+            <CacheConsumerChip command="useQuery(options)" purpose="read" />
+            <CacheConsumerChip command="prefetchQuery(options)" purpose="prefetch" />
+            <CacheConsumerChip command="setQueryData(queryKey, next)" purpose="write" />
+            <CacheConsumerChip command="invalidateQueries({ queryKey })" purpose="invalidate" />
+          </div>
+        </div>
+
+        <div
+          style={{
+            width: 1390,
+            padding: '11px 20px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 23,
+            fontWeight: 800,
+            textAlign: 'center',
+          }}
+        >
+          Placement = 實際 owner ＋ reuse evidence　<span style={{ color: palette.dim }}>≠</span>　endpoint response → Entity
+        </div>
+      </section>
+    </div>
+  </FrameworkFrame>
+);
+
+const ReactiveContractCard = ({
+  status,
+  eyebrow,
+  lineOne,
+  lineTwo,
+  outcome,
+  accent = false,
+}: {
+  status: string;
+  eyebrow: string;
+  lineOne: string;
+  lineTwo: string;
+  outcome: string;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 690,
+      height: 350,
+      padding: '30px 34px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : `linear-gradient(145deg, ${palette.panelStrong}, ${palette.panel})`,
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.055)' : undefined,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <span style={{ color: accent ? 'var(--osd-accent)' : palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+        {eyebrow}
+      </span>
+      <span
+        style={{
+          padding: '7px 12px',
+          border: `1px ${accent ? 'solid' : 'dashed'} ${accent ? 'var(--osd-accent)' : palette.borderStrong}`,
+          borderRadius: 999,
+          color: accent ? 'var(--osd-accent)' : palette.textSoft,
+          fontSize: 22,
+          fontWeight: 800,
+        }}
+      >
+        {status}
+      </span>
+    </div>
+    <div style={{ padding: '24px 26px', border: `1px solid ${palette.borderStrong}`, borderRadius: 15, background: '#040821' }}>
+      <RouteCodeLine accent={accent}>{lineOne}</RouteCodeLine>
+      <RouteCodeLine>{lineTwo}</RouteCodeLine>
+    </div>
+    <div style={{ color: accent ? 'var(--osd-accent)' : palette.textSoft, fontSize: 29, fontWeight: 800 }}>
+      {outcome}
+    </div>
+  </div>
+);
+
+const ReactiveSeam: Page = () => (
+  <FrameworkFrame categoryLabel="現行官方 guidance" categorySymbol="◆">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="要自動追蹤，就讓 reactive input 穿過 boundary"
+        lead="Getter／ref 留在 queryKey；先讀成 plain value，只會得到當下 snapshot。"
+      />
+
+      <section
+        aria-label="Getter 穿過 query factory Public API 並留在 query key，與先讀 route param 成 plain snapshot 的錯誤對照"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 28 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 46 }}>
+          <ReactiveContractCard
+            status="TRACKED · ✓"
+            eyebrow="PUBLIC CONTRACT · REACTIVE"
+            lineOne="const id = () => route.params.id"
+            lineTwo="useQuery(postQueries.detail(id))"
+            outcome="URL 改變 → key 改變 → refetch"
+            accent
+          />
+          <ReactiveContractCard
+            status="SNAPSHOT · ×"
+            eyebrow="PLAIN VALUE · TOO EARLY"
+            lineOne="const id = route.params.id"
+            lineTwo="useQuery(postQueries.detail(id))"
+            outcome="URL 改變，query 仍不知道"
+          />
+        </div>
+        <div
+          style={{
+            padding: '11px 22px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 24,
+            fontWeight: 800,
+          }}
+        >
+          關鍵不是 getter 語法；是 <span style={{ color: 'var(--osd-accent)' }}>reactive identity 仍在 queryKey</span>
+        </div>
+      </section>
+    </div>
+  </FrameworkFrame>
+);
+
+const RequestCacheCard = ({ request, cache }: { request: string; cache: string }) => (
+  <div
+    style={{
+      width: 440,
+      height: 150,
+      padding: '22px 26px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      border: `2px solid ${palette.accentLine}`,
+      borderRadius: 18,
+      background: palette.accentSoft,
+    }}
+  >
+    <div style={{ color: 'var(--osd-accent)', fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      {request}
+    </div>
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 28, whiteSpace: 'nowrap' }}>
+      new QueryClient()
+    </strong>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{cache} · app／request lifecycle</span>
+  </div>
+);
+
+const StateOwnerCard = ({
+  eyebrow,
+  title,
+  detail,
+  accent = false,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 600,
+      height: 170,
+      padding: '20px 26px',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : palette.whiteSoft,
+    }}
+  >
+    <div style={{ color: accent ? 'var(--osd-accent)' : palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      {eyebrow}
+    </div>
+    <strong style={{ display: 'block', marginTop: 7, color: palette.textSoft, fontSize: 32 }}>{title}</strong>
+    <div style={{ marginTop: 5, color: palette.muted, fontSize: 28, fontWeight: 700 }}>{detail}</div>
+  </div>
+);
+
+const SsrAndDraftSeam: Page = () => (
+  <FrameworkFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="Lifecycle 不同，就不要共用同一個 mutable owner"
+        lead="SSR cache 隔離到每個 app／request；server snapshot 與 form draft 也各自擁有狀態。"
+      />
+
+      <section
+        aria-label="兩個 SSR request 各自建立 QueryClient cache，server snapshot 複製成獨立 mutable form draft"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 26 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 26 }}>
+          <RequestCacheCard request="REQUEST A" cache="cache A" />
+          <RequestCacheCard request="REQUEST B" cache="cache B" />
+          <div
+            style={{
+              width: 430,
+              height: 150,
+              padding: '22px 26px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              border: `2px dashed ${palette.borderStrong}`,
+              borderRadius: 18,
+              background: palette.whiteSoft,
+            }}
+          >
+            <div
+              style={{
+                color: palette.muted,
+                fontSize: 22,
+                fontWeight: 800,
+                letterSpacing: '0.06em',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              PROCESS-WIDE SINGLETON · ×
+            </div>
+            <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 28 }}>one server cache</strong>
+            <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>requests 不該共享</span>
+          </div>
+        </div>
+
+        <div style={{ width: 1410, borderTop: `1px solid ${palette.borderStrong}` }} />
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 34 }}>
+          <StateOwnerCard eyebrow="SERVER STATE" title="Query result · readonly snapshot" detail="refresh 時可被 cache 替換" />
+          <AdapterArrow label="copy for editing" runtime />
+          <StateOwnerCard eyebrow="FORM STATE" title="Mutable draft" detail="獨立 edit buffer · submit 再 mutation" accent />
+        </div>
+      </section>
+    </div>
+  </FrameworkFrame>
+);
+
+const OperationsFrame = ({
+  children,
+  categoryLabel = '講者詮釋',
+  categorySymbol = '◇',
+}: {
+  children: ReactNode;
+  categoryLabel?: string;
+  categorySymbol?: string;
+}) => (
+  <PageFrame section="ARCHITECTURE OPERATIONS" categoryLabel={categoryLabel} categorySymbol={categorySymbol}>
+    {children}
+  </PageFrame>
+);
+
+const PolicyTile = ({ index, title, detail }: { index: string; title: string; detail: string }) => (
+  <div
+    style={{
+      height: 126,
+      padding: '20px 24px',
+      display: 'grid',
+      gridTemplateColumns: '48px 1fr',
+      alignItems: 'center',
+      gap: 18,
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 16,
+      background: palette.whiteSoft,
+    }}
+  >
+    <span
+      style={{
+        width: 44,
+        height: 44,
+        display: 'grid',
+        placeItems: 'center',
+        border: `1px solid ${palette.accentLine}`,
+        borderRadius: 13,
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+      }}
+    >
+      {index}
+    </span>
+    <div>
+      <strong style={{ color: palette.textSoft, fontSize: 29 }}>{title}</strong>
+      <div style={{ marginTop: 6, color: palette.muted, fontSize: 22, fontWeight: 700 }}>{detail}</div>
+    </div>
+  </div>
+);
+
+const HumanJudgment: Page = () => (
+  <OperationsFrame categoryLabel="團隊 policy／講者詮釋" categorySymbol="◐">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="人的工作：先把不可委派的判斷說清楚"
+        lead="工具能看見結構 signals；看不見產品語言、責任理由與風險取捨。"
+      />
+
+      <section
+        aria-label="人負責制定 business language、ownership boundary、例外與 severity policy"
+        style={{ flex: 1, display: 'grid', placeItems: 'center' }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            position: 'relative',
+            width: 1390,
+            height: 440,
+            padding: '74px 38px 30px',
+            borderColor: 'var(--osd-accent)',
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 32,
+              top: -22,
+              padding: '9px 18px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontSize: 23,
+              fontWeight: 800,
+            }}
+          >
+            HUMAN · POLICY OWNER
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 22 }}>
+            <PolicyTile index="01" title="Business language" detail="團隊真正使用的產品詞彙" />
+            <PolicyTile index="02" title="Ownership／boundary" detail="誰負責、為什麼在一起" />
+            <PolicyTile index="03" title="Exceptions" detail="何時偏離，以及移除條件" />
+            <PolicyTile index="04" title="Severity" detail="哪些是 hard gate、哪些先 warning" />
+          </div>
+          <div style={{ marginTop: 18, color: palette.textSoft, fontSize: 28, fontWeight: 800, textAlign: 'center' }}>
+            高成本或跨 boundary 的決定，最終責任仍在人
+          </div>
+        </div>
+      </section>
+    </div>
+  </OperationsFrame>
+);
+
+const LanguageRoleCard = ({
+  symbol,
+  title,
+  detail,
+  accent = false,
+}: {
+  symbol: string;
+  title: string;
+  detail: string;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 380,
+      height: 300,
+      padding: '28px 30px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : `linear-gradient(145deg, ${palette.panelStrong}, ${palette.panel})`,
+    }}
+  >
+    <span
+      style={{
+        width: 52,
+        height: 52,
+        display: 'grid',
+        placeItems: 'center',
+        border: `2px solid ${accent ? 'var(--osd-accent)' : palette.borderStrong}`,
+        borderRadius: 16,
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontSize: 28,
+        fontWeight: 800,
+      }}
+    >
+      {symbol}
+    </span>
+    <strong style={{ color: accent ? 'var(--osd-accent)' : palette.textSoft, fontSize: 34 }}>{title}</strong>
+    <div style={{ color: palette.muted, fontSize: 28, fontWeight: 700, lineHeight: 1.4 }}>{detail}</div>
+  </div>
+);
+
+const SharedLanguageStack = () => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 520,
+      height: 330,
+      padding: '30px 32px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 18,
+      borderColor: 'var(--osd-accent)',
+      boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+    }}
+  >
+    <div style={{ color: 'var(--osd-accent)', fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      SHARED JUDGMENT LANGUAGE
+    </div>
+    <CacheConsumerChip command="Skill" purpose="decision framework" />
+    <CacheConsumerChip command="CONTEXT" purpose="domain language" />
+    <CacheConsumerChip command="Architecture docs" purpose="policy + exceptions" />
+  </div>
+);
+
+const LanguageArrow = ({ label }: { label: string }) => (
+  <div style={{ width: 130, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9 }}>
+    <span style={{ color: palette.textSoft, fontSize: 22, fontWeight: 800, textAlign: 'center' }}>{label}</span>
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+      <span style={{ flex: 1, borderTop: `3px dashed ${palette.borderStrong}` }} />
+      <span aria-hidden="true" style={{ color: palette.muted, fontSize: 31, lineHeight: 0.8 }}>
+        ›
+      </span>
+    </div>
+  </div>
+);
+
+const HumanAiLanguage: Page = () => (
+  <OperationsFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="人與 AI，需要讀同一份判斷語言"
+        lead="Skill、CONTEXT 與 architecture docs 同時支援 implementation 與 review。"
+      />
+
+      <section
+        aria-label="人與 AI 共同讀取 Skill、CONTEXT 與架構文件，依同一語言實作與 review，但 AI 不是最終裁決者"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 28 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+          <LanguageRoleCard symbol="人" title="Human" detail="質疑、補脈絡、承擔最終取捨" />
+          <LanguageArrow label="read · cite" />
+          <SharedLanguageStack />
+          <LanguageArrow label="read · cite" />
+          <LanguageRoleCard symbol="AI" title="AI collaborator" detail="在明確規則內提出、review、修復" accent />
+        </div>
+        <div
+          style={{
+            padding: '11px 24px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 24,
+            fontWeight: 800,
+          }}
+        >
+          Business ambiguity／例外／boundary change　<span style={{ color: 'var(--osd-accent)' }}>→ 回到人</span>
+        </div>
+      </section>
+    </div>
+  </OperationsFrame>
+);
+
+const GuardRow = ({ rule, detail }: { rule: string; detail: string }) => (
+  <div
+    style={{
+      height: 74,
+      padding: '0 20px',
+      display: 'grid',
+      gridTemplateColumns: '270px 1fr',
+      alignItems: 'center',
+      gap: 18,
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 14,
+      background: palette.whiteSoft,
+    }}
+  >
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 22 }}>{rule}</strong>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{detail}</span>
+  </div>
+);
+
+const GuardColumn = ({
+  eyebrow,
+  title,
+  accent = false,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  accent?: boolean;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 700,
+      height: 352,
+      padding: '26px 28px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 14,
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.055)' : undefined,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+      <strong style={{ color: accent ? 'var(--osd-accent)' : palette.textSoft, fontSize: 32 }}>{title}</strong>
+      <span style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+        {eyebrow}
+      </span>
+    </div>
+    {children}
+  </div>
+);
+
+const SteigerBoundary: Page = () => (
+  <OperationsFrame categoryLabel="現行工具 source／團隊 policy" categorySymbol="◐">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="Steiger：hard guards 與 heuristics 要分開"
+        lead="機器都能報告，不代表兩邊都能直接裁決 architecture truth。"
+      />
+
+      <section
+        aria-label="Steiger 可作 hard gate 的 import Public API folder checks，與 threshold reference count naming 等 heuristic diagnostics 對照"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 24 }}
+      >
+        <div style={{ display: 'flex', gap: 42 }}>
+          <GuardColumn eyebrow="OBSERVABLE STRUCTURE" title="Hard structural guards" accent>
+            <GuardRow rule="forbidden-imports" detail="layer direction／cross-import" />
+            <GuardRow rule="no-public-api-sidestep" detail="不繞過具名入口" />
+            <GuardRow rule="folder contract" detail="slice／segment／Public API 形狀" />
+          </GuardColumn>
+          <GuardColumn eyebrow="REVIEW SIGNALS" title="Heuristic diagnostics">
+            <GuardRow rule="thresholds" detail="20 slices／15 shared-lib modules" />
+            <GuardRow rule="reference count" detail="0–1 reference 只是一個 signal" />
+            <GuardRow rule="naming／typically" detail="英文假設與「通常」規則" />
+          </GuardColumn>
+        </div>
+        <div
+          style={{
+            width: 1442,
+            padding: '11px 22px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 23,
+            fontWeight: 800,
+            textAlign: 'center',
+          }}
+        >
+          PASS <span style={{ color: palette.dim }}>≠</span> business boundary 正確／完整符合 FSD／完全沒有 circular dependencies
+        </div>
+      </section>
+    </div>
+  </OperationsFrame>
+);
+
+const CheckBadge = ({ label }: { label: string }) => (
+  <div
+    style={{
+      height: 64,
+      padding: '4px 10px',
+      display: 'grid',
+      placeItems: 'center',
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 999,
+      background: palette.whiteSoft,
+      color: palette.textSoft,
+      fontFamily: fonts.mono,
+      fontSize: 22,
+      fontWeight: 800,
+      lineHeight: 1.1,
+      textAlign: 'center',
+    }}
+  >
+    {label}
+  </div>
+);
+
+const DeliveryDefense = ({
+  eyebrow,
+  title,
+  detail,
+  accent = false,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: string;
+  accent?: boolean;
+  children: ReactNode;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: accent ? 760 : 520,
+      height: 332,
+      padding: '30px 32px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.055)' : undefined,
+    }}
+  >
+    <div>
+      <div style={{ color: accent ? 'var(--osd-accent)' : palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+        {eyebrow}
+      </div>
+      <strong style={{ display: 'block', marginTop: 10, color: palette.textSoft, fontSize: 36 }}>{title}</strong>
+      <div style={{ marginTop: 8, color: palette.muted, fontSize: 23, fontWeight: 700 }}>{detail}</div>
+    </div>
+    <div style={{ display: 'grid', gridTemplateColumns: accent ? 'repeat(3, 1fr)' : '1fr 1fr', gap: 12 }}>
+      {children}
+    </div>
+  </div>
+);
+
+const HuskyCiMatrix: Page = () => (
+  <OperationsFrame categoryLabel="團隊 policy" categorySymbol="●">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="pre-push 提早回饋；remote CI 共同守門"
+        lead="Hook timing 是團隊 policy；兩端執行的，都只是不會忘記的機械檢查。"
+      />
+
+      <section
+        aria-label="Husky pre-push 本機預檢查接到 remote CI 共同守門，兩端執行 Steiger typecheck build tests 與 custom checks"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 26 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 38 }}>
+          <DeliveryDefense eyebrow="LOCAL · TEAM POLICY" title=".husky/pre-push" detail="送遠端前先收到 feedback">
+            <CheckBadge label="Steiger" />
+            <CheckBadge label="typecheck" />
+            <CheckBadge label="tests" />
+            <CheckBadge label="project checks" />
+          </DeliveryDefense>
+          <AdapterArrow label="push · same policy" runtime />
+          <DeliveryDefense eyebrow="REMOTE · SHARED GATE" title="CI defense" detail="每個人都不能跳過的共同結果" accent>
+            <CheckBadge label="Steiger rules" />
+            <CheckBadge label="typecheck" />
+            <CheckBadge label="production build" />
+            <CheckBadge label="tests" />
+            <CheckBadge label="custom architecture" />
+            <CheckBadge label="version output" />
+          </DeliveryDefense>
+        </div>
+        <div
+          style={{
+            padding: '11px 24px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 24,
+            fontWeight: 800,
+          }}
+        >
+          pre-push 不取代 remote CI；CI 也不裁決 business semantics
+        </div>
+      </section>
+    </div>
+  </OperationsFrame>
+);
+
+const ControlLoopNode = ({
+  eyebrow,
+  title,
+  detail,
+  width,
+  accent = false,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: ReactNode;
+  width: number;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width,
+      height: 240,
+      padding: '22px 24px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : `linear-gradient(145deg, ${palette.panelStrong}, ${palette.panel})`,
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.055)' : undefined,
+    }}
+  >
+    <div style={{ color: accent ? 'var(--osd-accent)' : palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+      {eyebrow}
+    </div>
+    <strong style={{ color: accent ? 'var(--osd-accent)' : palette.textSoft, fontSize: 30 }}>{title}</strong>
+    <div style={{ color: palette.textSoft, fontSize: 28, fontWeight: 700, lineHeight: 1.35 }}>{detail}</div>
+  </div>
+);
+
+const WorkflowArrow = ({ label }: { label: string }) => (
+  <div style={{ width: 130, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9 }}>
+    <span style={{ color: palette.textSoft, fontSize: 22, fontWeight: 800, textAlign: 'center' }}>{label}</span>
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+      <span style={{ flex: 1, borderTop: '4px solid var(--osd-accent)' }} />
+      <span aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 34, lineHeight: 0.8 }}>
+        ›
+      </span>
+    </div>
+  </div>
+);
+
+const ControlLoopSynthesis: Page = () => (
+  <OperationsFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="控制迴路不對稱：決策權不平均"
+        lead="明確規則 → 共用判斷語言 → 自動保護；只有例外與邊界改變回到人。"
+      />
+
+      <section
+        aria-label="人制定政策，人與 AI 依共同語言實作與 review，AI 在明確規則內自我修復，CI 守機械結果，模糊例外或邊界改變才回到人"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 16 }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+          <ControlLoopNode
+            eyebrow="FINAL POLICY OWNER"
+            title="人制定 architecture policy"
+            detail={<>language · boundary · exceptions · severity</>}
+            width={400}
+            accent
+          />
+          <WorkflowArrow label="寫成明確規則" />
+          <ControlLoopNode
+            eyebrow="SHARED LANGUAGE"
+            title="人 ＋ AI 實作／review"
+            detail={<>Skill · CONTEXT · architecture docs</>}
+            width={450}
+          />
+          <WorkflowArrow label="交付可檢查結果" />
+          <ControlLoopNode
+            eyebrow="MECHANICAL DEFENSE"
+            title="CI 守住 executable checks"
+            detail={<>imports · Public API · types · build · tests</>}
+            width={400}
+          />
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+          <div
+            style={{
+              width: 720,
+              padding: '14px 20px',
+              border: `1px solid ${palette.borderStrong}`,
+              borderRadius: 16,
+              background: palette.whiteSoft,
+              color: palette.textSoft,
+              fontSize: 23,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            AI：明確規則內自我修復　<span style={{ color: 'var(--osd-accent)' }}>↻</span>　再交回 review／CI
+          </div>
+          <div
+            style={{
+              width: 720,
+              padding: '14px 20px',
+              border: `2px solid ${palette.accentLine}`,
+              borderRadius: 16,
+              background: palette.accentSoft,
+              color: palette.textSoft,
+              fontSize: 23,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            規則模糊／例外／責任邊界改變　<span style={{ color: 'var(--osd-accent)' }}>→ 只回到人</span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </OperationsFrame>
+);
+
+const TakeawayQuestion = ({
+  index,
+  term,
+  question,
+}: {
+  index: string;
+  term: string;
+  question: string;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 470,
+      height: 250,
+      padding: '28px 30px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <span
+      style={{
+        width: 48,
+        height: 48,
+        display: 'grid',
+        placeItems: 'center',
+        border: `1px solid ${palette.accentLine}`,
+        borderRadius: 14,
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 22,
+        fontWeight: 800,
+      }}
+    >
+      {index}
+    </span>
+    <strong style={{ color: 'var(--osd-accent)', fontFamily: fonts.mono, fontSize: 30 }}>{term}</strong>
+    <div style={{ color: palette.textSoft, fontSize: 28, fontWeight: 800, lineHeight: 1.35 }}>{question}</div>
+  </div>
+);
+
+const MethodConclusion: Page = () => (
+  <PageFrame section="TAKEAWAYS" categoryLabel="講者詮釋" categorySymbol="◇">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="即使不採用 FSD，也請帶走三個問題"
+        lead="FSD 是一個完整 lens；真正要留下的是可共同理解、review、演進的答案。"
+      />
+
+      <section
+        aria-label="不採用 FSD 仍應回答 ownership dependency 與 evolution rules 三個帶走問題"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 30 }}
+      >
+        <div style={{ display: 'flex', gap: 36 }}>
+          <TakeawayQuestion index="01" term="OWNERSHIP" question="誰對這段責任負責？" />
+          <TakeawayQuestion index="02" term="DEPENDENCY" question="誰能依賴誰、從哪裡進？" />
+          <TakeawayQuestion index="03" term="EVOLUTION RULES" question="何時抽離、例外如何回饋？" />
+        </div>
+
+        <div
+          style={{
+            width: 1482,
+            padding: '20px 28px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            border: '2px solid var(--osd-accent)',
+            borderRadius: 20,
+            background: palette.accentSoft,
+          }}
+        >
+          <strong style={{ color: palette.textSoft, fontSize: 29 }}>
+            明確規則　→　共用判斷語言　→　自動保護
+          </strong>
+          <span style={{ color: 'var(--osd-accent)', fontSize: 24, fontWeight: 800 }}>
+            39:30 END · 留白至 40:00 → Q&amp;A
+          </span>
+        </div>
+      </section>
+    </div>
+  </PageFrame>
+);
+
 export const notes: (string | undefined)[] = [
   `Message:
 一段程式碼該放哪裡，不只是路徑選擇，而是長期協作與理解成本。
@@ -4346,6 +5347,222 @@ Possible Q&A:
 
 Safety boundary:
 不把這個 snapshot 說成所有 Nuxt 4 專案的唯一設定、完整 runtime／SSR／deployment certification，或未來版本保證；不得把已失敗的 TypeScript 7.0.2 + vue-tsc 3.3.9 說成通過組合，也不得在本頁提前實作 Ticket 15 的 Vue Query 內容。`,
+
+  `Message:
+Vue Query 的 cache contract 應由真實 owning module 經 Public API 對外，讓 read、prefetch、write 與 invalidation 共用同一個 query-key identity。
+
+Context:
+queryOptions factory 把 queryKey 與 queryFn 放在一起；consumer 可以重用 options 做 useQuery／prefetch，並從同一 factory 取得 queryKey 做 setQueryData 與 invalidateQueries。Placement 仍依 frontend owner、穩定 boundary 與真實 reuse 決定，不因 endpoint response 長得像名詞就自動建立 Entity。
+
+Transition:
+承接 Nuxt routing seam 的 framework／application ownership，現在把同一個判斷帶進 server-state cache：先建立唯一 cache identity；下一頁再確認 reactive input 是否真的穿過 contract。
+
+Required details:
+Cache identity 是 queryKey，不是 queryFn。Owning module 可以是 Page、既有 Entity 或其他符合證據的 slice；slice-only request 可留在原 slice。FSD 的 TanStack Query guide 使用 React syntax，本頁是 React-to-Vue translation，並以 Vue Query 官方 queryOptions／invalidation 文件交叉查核。
+
+Timing:
+50 秒（30:30–31:20）。
+
+Sources:
+https://tanstack.com/query/latest/docs/framework/vue/guides/query-options 與 /query-invalidation（查核：2026-08-14；scope：queryOptions reuse、queryKey、prefetch／write／invalidation）；https://fsd.how/docs/guides/tech/with-react-query/、https://fsd.how/docs/guides/examples/api-requests/、https://fsd.how/docs/guides/issues/excessive-entities/、https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：factory／Public API／owner／deferred Entity）。Verified current：@tanstack/vue-query 5.101.4、v5 docs；本 slide repo 未安裝或 lock Vue Query。
+
+Possible Q&A:
+問：query factory 一定放 entities/ 嗎？答：不一定；先看哪個 frontend module 擁有責任、哪些 consumers 真實重用，以及 boundary 是否穩定。
+
+Safety boundary:
+不說 queryFn 是 cache identity，不把所有 endpoint response 變成 Entity，也不宣稱所有 factories 都應放 Shared。人與 AI 從同一 Public API 找 contract 是本演講 synthesis，不是 TanStack 的正確性保證。`,
+
+  `Message:
+若 query 應隨輸入變動，getter／ref 必須穿過 public contract，並以 reactive source 的形式留在 queryKey。
+
+Context:
+左邊保留 getter，query key 會追蹤 route param；右邊先讀 route.params.id，傳出的只是當下 plain snapshot。Plain value 並非一律錯：參數刻意固定時可以使用；錯的是先做 snapshot，之後仍期待 key 自動改變與 refetch。
+
+Transition:
+承接 cache identity，這頁補上 reactive identity：不只 factory 要共用，變動來源也不能在 boundary 前被截斷。下一頁把 lifecycle 拉到 SSR request 與 form draft。
+
+Required details:
+current Vue Query guidance 接受 ref／getter／MaybeRefOrGetter；queryFn 內可用 toValue 取值。官方明列 queryKey 與 enabled 等 reactive options；不得泛化成所有 options 都會自動追蹤。Getter 只在 queryFn 內讀、卻沒留在 queryKey，也不足以建立 query-key tracking。
+
+Timing:
+50 秒（31:20–32:10）。
+
+Sources:
+https://tanstack.com/query/latest/docs/framework/vue/reactivity 與 https://tanstack.com/query/latest/docs/framework/vue/reference/useQuery（查核：2026-08-14；version／scope：Vue Query 5.101.4／v5，reactive query keys、getter／ref、plain snapshot、immutable results）。本 slide repo 未安裝或 lock Vue Query。
+
+Possible Q&A:
+問：所有 query input 都要用 getter 嗎？答：不是；只有預期變動且應觸發不同 key／refetch 的輸入，才必須保留 reactivity。
+
+Safety boundary:
+Public API 要收 plain value 或 MaybeRefOrGetter 是 owning module 的 contract 選擇，不是 TanStack／FSD 的唯一處方；本頁也不宣稱 Steiger 能檢查 Vue reactivity。`,
+
+  `Message:
+SSR cache 與 form draft 都要依 lifecycle／owner 分流：每個 server request 建立自己的 QueryClient，query result 則複製成獨立 mutable draft 後再編輯。
+
+Context:
+TanStack current SSR guide 的 Nuxt 3 snippet 在 defineNuxtPlugin callback 內 new QueryClient，server render 後 dehydrate、client hydrate；同頁 Vite SSR 範例更明寫每個 request 建 fresh client。Nuxt 4.5.2 lifecycle 文件確認 initial server request 各自建立 app 並執行 plugins。由此推論，process-wide singleton 共用 server cache 有跨 request data contamination 風險。另一側的 query result 是 immutable snapshot，不應直接 v-model；copy 後的 form draft 才是 editing owner。
+
+Transition:
+承接 reactive source 的 lifecycle，這頁用同一個 judgment 收束兩個 seam：lifecycle 不同，就不要混用 mutable owner。接下來從 framework mechanics 回到誰有權制定 architecture policy。
+
+Required details:
+Server Request A／B 各有 app-scoped QueryClient；browser-side client lifecycle 不等同 server process singleton。只把 query result／server snapshot稱為 readonly；整個 cache 仍可透過 mutation／setQueryData 等 API 更新。Draft submit 後再 mutation／同步 cache，不在 query result 上直接 two-way bind。
+
+Timing:
+50 秒（32:10–33:00）。
+
+Sources:
+https://tanstack.com/query/latest/docs/framework/vue/guides/ssr 與 /reactivity（查核：2026-08-14；scope：Vue Query v5 SSR dehydrate／hydrate、fresh per-request client、result immutability）；https://nuxt.com/docs/4.x/guide/concepts/nuxt-lifecycle 與 /getting-started/state-management（Nuxt docs 4.5.2，查核：2026-08-14；scope：per-request app lifecycle、cross-request state warning）。TanStack snippet仍標 Nuxt 3；本頁的 Nuxt 4 lifecycle 接法是交叉查核後的講者 integration，Vue Query current 為 5.101.4，repo 未 pin。
+
+Possible Q&A:
+問：browser 端可以只有一個 QueryClient 嗎？答：可以；關鍵是不要把 server process 的所有 requests 當成同一個 browser app lifecycle。
+
+Safety boundary:
+「process-wide singleton 有 contamination 風險」是依 per-request isolation 得出的安全推論，不宣稱官方保證一定洩漏；不把 Nuxt 3 snippet 冒充 Nuxt 4 專用範例，也不把本頁說成完整 SSR／deployment certification。`,
+
+  `Message:
+Business language、ownership／boundary、例外與 severity 是 human judgment；工具只能回報它被配置去觀察的結構 signals。
+
+Context:
+FSD layers 與 slices 有 semantic meaning，slice 名稱應直接來自產品／業務語言。AST、folder tree、import graph 能指出可觀察事實，卻不能單獨證明為什麼某段責任應一起變、例外何時值得保留、或哪個 diagnostic 的風險應升成 hard gate。
+
+Transition:
+承接 SSR／draft owner seam，現在把判斷責任明確交回人：工具不是 domain owner。下一頁再問，如何讓這些人類判斷不只留在腦中，也能供 AI 共同實作與 review。
+
+Required details:
+四項都要明講：business language、ownership／boundary、exceptions、severity。工具可以提出建議與 signals；最終 policy owner 仍要承擔跨 boundary、風險與例外的取捨。
+
+Timing:
+60 秒（33:00–34:00）。
+
+Sources:
+https://fsd.how/docs/reference/layers/ 與 https://fsd.how/docs/reference/slices-segments/（FSD 2.1 current guidance，查核：2026-08-14；scope：semantic layers、business-named slices）；https://github.com/feature-sliced/steiger（查核：2026-08-14；scope：static filesystem／import diagnostics surface）；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md 與 spec.md 的 Human／AI／CI responsibility model。
+
+Possible Q&A:
+問：AI 或 Steiger 就不能提供 architecture 建議嗎？答：可以；但它們不能只從 static facts 證明 business semantics 正確，最後 responsibility 必須有明確的人承擔。
+
+Safety boundary:
+「最終裁決留在人」與 severity ownership 是本演講的 governance policy，不冒充 FSD normative rule；也不把工具描述成完全無法理解或協助 reasoning。`,
+
+  `Message:
+Skill、CONTEXT 與 architecture docs 把判斷外化成一份人與 AI 都能讀、引用、實作與 review 的共同語言。
+
+Context:
+Human 提供 domain context、挑戰假設並承擔最終取捨；AI 在文件已清楚定義的 placement、dependency、exception 與 verification 規則內提出實作、review 與修復。兩者引用同一份 contract，才能減少每次重新口述 criteria；但文件與 skill 不會把 AI 變成 final arbiter。
+
+Transition:
+承接 human judgment，這頁把判斷寫成可共享的 contract。下一頁開始拆工具邊界：哪些 Steiger diagnostics 適合作 hard structural guard，哪些仍只是需要人判讀的 heuristic。
+
+Required details:
+共同語言至少包含 Skill 的 decision framework、CONTEXT 的 domain language、architecture docs 的 policy／exceptions。AI 遇到 ambiguity、例外或 responsibility boundary change 必須回到人；規則明確時才可在 bounded scope 內 self-repair。
+
+Timing:
+60 秒（34:00–35:00）。
+
+Sources:
+https://github.com/feature-sliced/skills（master 查核：2026-08-14；scope：FSD v2.1 layer/import/placement decision framework 與 Nuxt／TanStack Query integration）；https://fsd.how/docs/reference/layers/；本 repo 的 AGENTS.md、CONTEXT.md 與 .agents/skills/feature-sliced-design/ 作 local shared-language evidence；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
+
+Possible Q&A:
+問：有 skill 之後 AI 就能自己決定嗎？答：不能；skill 提供共同 decision framework，不保證判斷正確或 deterministic，模糊處仍需 human owner。
+
+Safety boundary:
+「共同語言降低 review 漂移」是本演講 synthesis；不把 skill 說成 validator，不宣稱 AI 可取代 domain owner，也不把 local CONTEXT 冒充 FSD 官方規範。`,
+
+  `Message:
+Steiger 的 hard structural guards 與 heuristic diagnostics 都有價值，但必須分開設定 gate、severity 與 review responsibility。
+
+Context:
+forbidden imports、Public API sidestep 與 folder contract 是工具可直接觀察的 structure；20 slices、15 shared-lib modules、0／1 reference、naming assumptions 與「通常」型建議則明確含 arbitrary threshold 或 context-dependent heuristic。recommended preset 的 error 不代表 business truth 程度。
+
+Transition:
+承接共同判斷語言，現在把其中可觀察的規則分層。下一頁把選定的 machine checks 放進 local pre-push 與 remote CI，但仍不把 CI 升格成 business judge。
+
+Required details:
+Verified 2026-08-14：Steiger CLI 0.6.0；@feature-sliced/steiger-plugin 0.7.0。Research 將 0.7.0 作 plugin shorthand，規則行為無 material drift；本 slide repo 未安裝或在 lockfile pin Steiger／plugin。Severity error／warn／off 是 team policy。
+
+Timing:
+30 秒（35:00–35:30）。
+
+Sources:
+https://github.com/feature-sliced/steiger、https://github.com/feature-sliced/steiger/blob/master/packages/steiger/package.json、https://github.com/feature-sliced/steiger/blob/master/packages/steiger-plugin-fsd/package.json，以及 plugin 的 excessive-slicing、shared-lib-grouping、insignificant-slice rule READMEs（official master 查核：2026-08-14；scope：versions、rules、arbitrary thresholds、reference-count heuristic）；.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md。
+
+Possible Q&A:
+問：Steiger PASS 代表沒有 circular dependency 嗎？答：不代表；需要另設 cycle checker，且 business boundary 仍需 human review。
+
+Safety boundary:
+Steiger PASS ≠ business boundary 正確；≠ 完整符合所有 FSD 語意；≠ 整個 module graph 無 circular dependencies。它只證明目前版本／設定能觀察的 diagnostics 已通過。`,
+
+  `Message:
+Husky .husky/pre-push 提供本機預檢，remote CI 提供共同 gate；兩者只守可執行的 machine-checkable policy。
+
+Context:
+Husky 支援 client-side Git hooks，pre-push 可在 push 前執行 commands 並以 non-zero 阻擋該次 push；它仍是 local hook，可被略過或停用。因此 Steiger rules、typecheck、tests、production build 與 custom architecture checks 應在 remote CI 再跑成共同結果。選 pre-push 而非 pre-commit，是避免開發中間狀態噪音的 team policy，不是 Husky 或 FSD 規定。
+
+Transition:
+承接 Steiger 的 guard／heuristic 分層，這頁把可機械檢查的 policy 接到 delivery flow。下一頁把 Human、AI 與 CI 的責任組成全場的不對稱控制迴路。
+
+Required details:
+Verified 2026-08-14：Husky 9.1.7；本 slide repo 未安裝 Husky、沒有 .husky/，也未 pin Steiger。畫面是 production-team policy template，不是本簡報 repo 已配置的事實。Local green 不等於 remote green；remote required checks 才是共同 gate policy。
+
+Timing:
+30 秒（35:30–36:00）。
+
+Sources:
+https://typicode.github.io/husky/ 與 https://typicode.github.io/husky/how-to.html（查核：2026-08-14；scope：Husky 9.1.7、client-side hooks、hook file mechanics）；https://git-scm.com/docs/githooks#_pre_push（scope：pre-push timing／non-zero behavior）；https://github.com/feature-sliced/steiger（scope：Steiger command／rules）；spec.md 的 team-policy matrix。
+
+Possible Q&A:
+問：為什麼不放 pre-commit？答：這個團隊 policy 選 pre-push，避免每個開發中間狀態都觸發完整檢查；不同團隊可以依 feedback cost 另選。
+
+Safety boundary:
+不暗示 local hook 無法跳過，不把 current deck repo 說成已配置 Husky／Steiger，也不讓 CI 冒充 business semantics 裁決者；只有已編成 script、config 或 test 的規則才會被守。`,
+
+  `Message:
+架構操作化是一個不對稱控制迴路：人擁有 policy，人與 AI 依共同語言工作，AI 可在明確規則內修復，CI 只守機械結果；只有模糊、例外或 boundary change 回到人。
+
+Context:
+[近逐字稿] 現在把全場收成一個控制迴路。第一步，人先制定 policy：我們用什麼 business language、哪裡是 ownership boundary、例外何時成立、哪些風險要升成 hard gate。第二步，不要讓答案只留在腦中；把它寫進 Skill、CONTEXT 與 architecture docs，讓人與 AI 依同一套語言實作與 review。第三步，AI 可以在規則已經明確時修正 import、Public API、typing 或 test failure，再把結果交回 review 與 CI。第四步，CI 只守 executable checks：imports、Public API、types、build、tests。這個迴路刻意不對稱。AI 不是最終裁決者，CI 更不是。只有規則仍然模糊、遇到例外，或 responsibility boundary 本身要改變，才把決策送回人。這就是明確規則、共用判斷語言、自動保護。
+
+Transition:
+承接 pre-push／CI mechanics，這頁完成從 placement 分歧到 architecture operations 的閉環。最後一頁不再加新框架，只留下即使不用 FSD 也必須回答的三個問題。
+
+Required details:
+口頭依固定順序走完：Human policy owner → Human＋AI implementation／review → AI bounded self-repair → CI mechanical defense → only ambiguity／exception／boundary change returns to Human。若現場落後，先刪本頁重複的工具與版本舉例，保留五個責任節點與「明確規則 → 共用判斷語言 → 自動保護」原句。
+
+Timing:
+120 秒（36:00–38:00）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/research/02-judgment-and-enforcement.md、spec.md 的 locked asymmetric architecture control loop，以及前頁已列的一手 FSD／Steiger／Husky sources。本頁是對前述 evidence 的講者 synthesis，不新增外部工具保證。
+
+Possible Q&A:
+問：什麼情況 AI 可以自我修復？答：只有 acceptance、allowed files、rule semantics 與 verification 都明確，而且修正不改變 business responsibility；否則回到人。
+
+Safety boundary:
+不把 Human、AI、CI 畫成等權角色，不宣稱 AI 自主決定 policy，也不說 CI green 等於 architecture 正確。Overflow 只能刪細節，不能刪 Human／AI／CI 分工、三層回顧或不對稱回人條件。`,
+
+  `Message:
+即使不採用 FSD，也要能回答 ownership、dependency、evolution rules；FSD 是完整的 lens 與 reference，不是唯一解。
+
+Context:
+[近逐字稿] 最後，我不希望各位離開時只記得一串 layer 名稱。即使你的團隊明天完全不採用 FSD，也請帶走三個問題。第一，ownership：誰對這段責任負責，哪些東西真的應該一起變？第二，dependency：誰可以依賴誰，外部要從哪一個具名入口進來？第三，evolution rules：什麼證據出現時才抽離，例外如何記錄，又怎麼把學到的判斷回饋成下一次可以共同遵循的規則？FSD 的價值，是提供一個完整、可參考的 lens，讓我們具體練習這三題；它不是推銷，也不是唯一解。當答案能被人與 AI 共同理解、被 review，並讓 CI 保護其中可機械驗證的部分，我們才不必每次都從「這段 code 到底該放哪裡」重新開始。謝謝大家。正式內容到 39:30；最後一頁停留三十秒，40:00 再進 Q&A。
+
+Transition:
+由問題框架回扣到三個案例與方法論結論；39:30 停止新增內容，保留本頁至 40:00，之後只進 Q&A，不新增 backup slides。
+
+Required details:
+三題必須逐字說出 ownership、dependency、evolution rules；明講 FSD 是 lens／完整參考、不是唯一解。Authored overflow strategy 是「刪細節、不刪敘事節點」：依序刪 evidence／版本／API 細節，壓縮 framework seams，縮短 mechanics 但保留原 decision → consequence → correction → lesson，最後才壓縮 primer 名詞；不得刪 problem framework、三個匿名真實案例、Human／AI／CI 分工、三層回顧／控制迴路與方法論結論。這只是 authoring strategy，尚未完成真人口語排練。
+
+Timing:
+90 秒（38:00–39:30）；39:30–40:00 停留本頁，40:00 後進 Q&A。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/spec.md 的 Thesis、Content Scope、locked page map、timing／overflow policy；CONTEXT.md 的 FSD lens 與 Architecture operationalization 定義；全場三個案例的 truth boundary 來自 Ticket 01／spec。本頁是講者方法論結論，沒有新增版本敏感 API claim。
+
+Possible Q&A:
+問：不用 FSD，怎麼落地？答：先把 ownership、dependency、evolution rules 寫成團隊可 review 的 contract，再挑適合現有 stack 的 linter、tests 與 CI checks；工具名稱可以不同。
+
+Safety boundary:
+不把 FSD 說成唯一解或萬用答案，不把三個案例延伸出未確認細節，不宣稱已完成真人口語排練，也不把本 ticket 的 build／overview 檢查冒充 Ticket 16 的獨立 full-deck acceptance。`,
 ];
 
 export const meta: SlideMeta = {
@@ -4379,4 +5596,13 @@ export default [
   NuxtNamingSeam,
   NuxtRouteAdapter,
   NuxtFixtureEvidence,
+  CacheContract,
+  ReactiveSeam,
+  SsrAndDraftSeam,
+  HumanJudgment,
+  HumanAiLanguage,
+  SteigerBoundary,
+  HuskyCiMatrix,
+  ControlLoopSynthesis,
+  MethodConclusion,
 ] satisfies Page[];
