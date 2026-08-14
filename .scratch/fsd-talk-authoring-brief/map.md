@@ -28,6 +28,7 @@
 - [驗證 Nuxt 4 整合 fixture](./issues/10-verify-nuxt4-integration-fixture.md) — Nuxt 4.5.2 實測確認 custom `srcDir`、App-layer routes/layouts、內建 `@` 與 FSD Page Public API 可通過 prepare、typecheck、production build。
 - [決定 40 分鐘的敘事弧線與時間配置](./issues/06-decide-story-arc-and-timing.md) — 鎖定問題框架、7 分鐘 primer、三個真實案例、framework seams、操作化回顧與方法論結論的完整時間弧線及超時刪減順序。
 - [用粗略大綱驗證演講節奏](./issues/07-prototype-talk-outline.md) — 使用者 review 通過 40 分鐘 flow；Steiger／CI 段加入 Husky `pre-push` 預檢查，並以三組 walkthrough 驗證新手理解、資深新意與超時刪減。
+- [決定簡報的視覺語言與重複圖像](./issues/08-decide-visual-language.md) — 保留 A 的責任範圍與流向圖解結構，改採 Nuxt 深海軍藍／綠配色、中文優先、具名 Public API 入口、CI 自動檢查防線及不對稱架構控制迴路。
 
 ## Not yet specified
 
