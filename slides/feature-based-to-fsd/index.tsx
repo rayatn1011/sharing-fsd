@@ -17,7 +17,7 @@ export const design: DesignSystem = {
   palette: {
     bg: '#020420',
     text: '#F8FAFC',
-    accent: '#00DC82',
+    accent: '#04ab80',
   },
   fonts: {
     display:

@@ -41,3 +41,11 @@ Blocked by: 07
 所有頁面以 1920×1080 大螢幕閱讀為準：保持 100–160px 內容邊界、56–80px 頁面標題、32–44px 正文與 22–28px 標籤；一頁只承擔一個主要圖解，避免滿版格線、儀表板密度與大段程式碼。格線只在需要對齊架構圖時局部出現，等寬字只用於程式碼與路徑。
 
 Prototype primary source：branch `prototype/fsd-talk-visual-language`，commit `23c24ddf2c06db0ba411efe2dfab7ee6ff58dd14`。可用 `git show prototype/fsd-talk-visual-language:.scratch/fsd-talk-authoring-brief/prototypes/08-visual-language.html` 取回單檔 HTML。
+
+## Amendment — 2026-08-15
+
+使用者已核准將正式 deck 的 primary accent 修訂為 `#00DABF`；自本 amendment 起，`#00DABF` supersedes `#00DC82`，成為正式 deck 的現行 primary accent。上方 `## Answer` 保留原始決策全文與歷史，其中 `#00DC82` 只代表當時採用的值，不再是現行 contract；其餘視覺語言、semantic colors、圖解 grammar、版面與內容決策均未重開。
+
+## Amendment — 2026-08-15（第二次修訂）
+
+使用者後續核准將正式 deck 的 primary accent 修訂為 `#04ab80`；自本 amendment 起，`#04ab80` supersedes 先前 amendment 的 `#00DABF`，成為正式 deck 的現行 primary accent。`#00DC82` 與 `#00DABF` 均保留為可追溯的決策歷史；其餘視覺語言、semantic colors、圖解 grammar、版面與內容決策均未重開。

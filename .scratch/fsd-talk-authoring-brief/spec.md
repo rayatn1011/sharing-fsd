@@ -187,7 +187,9 @@ FSD 現行 guidance 只以 `fsd.how` 及其連結的一手來源為 canonical。
 ### MUST：Visual system 與圖解 grammar
 
 - Canvas 固定 1920×1080；內容邊界 100–160px；頁面標題 56–80px、正文 32–44px、label 22–28px。每頁 root 填滿畫布，逐頁計算 vertical budget。
-- 字體使用 Public Sans；主背景 `#020420`，主 accent `#00DC82`，搭配白色與 slate 中性色階。Nuxt 是視覺基準，不反覆使用 Logo／山形，也不得讓 deck 看似 Nuxt 官方產品簡報。
+- 字體使用 Public Sans；主背景 `#020420`，current primary accent `#04ab80`，搭配白色與 slate 中性色階。Nuxt 是視覺基準，不反覆使用 Logo／山形，也不得讓 deck 看似 Nuxt 官方產品簡報。
+- **Amendment — 2026-08-15：**`#00DABF` supersedes 原 primary accent `#00DC82`；本修訂只更新 current primary accent contract，不改變 semantic colors、頁數、敘事、timing、內容、來源或驗收 seam。
+- **Amendment — 2026-08-15（第二次修訂）：**`#04ab80` supersedes 先前 amendment 的 `#00DABF`，成為現行 primary accent；`#00DC82` 與 `#00DABF` 均只保留為決策歷史。本修訂不改變 semantic colors、頁數、敘事、timing、內容、來源或驗收 seam。
 - 採 light density：每頁一個主要判斷，通常一句結論加一個圖解或 2–3 個短要點；技術頁約 3–6 行 code。不得縮小字級、減少邊界或塞滿 dashboard/grid 來換取密度。
 - 封閉框線表示責任範圍；框線上的具名入口表示 Public API；實線箭頭表示 runtime data flow；虛線箭頭表示 static import／dependency；每支箭頭附動詞或資料名稱。
 - CI 使用「自動檢查防線」，直接列出 imports、Public API、types、build、tests 等實際 checks；不得與 Public API 共用含義模糊的 gate 圖像。

@@ -130,11 +130,19 @@ Authoring brief 必須包含且互相交叉核對：
 #### 7. 視覺與 motion contract
 
 - Canvas 固定 1920×1080；內容邊界 100–160px；頁面標題 56–80px、正文 32–44px、標籤 22–28px。
-- 使用 Public Sans、`#020420` 深海軍藍、`#00DC82` Nuxt 綠、白色與 slate 中性色階；Nuxt 只作視覺基準，不反覆使用 Logo 或山形。
+- 使用 Public Sans、`#020420` 深海軍藍、`#04ab80` primary accent、白色與 slate 中性色階；Nuxt 只作視覺基準，不反覆使用 Logo 或山形。
 - 採 **light density**：每頁只承擔一個判斷，通常是一句結論搭配一個圖解或 2–3 個短要點；不縮字換密度。
 - 固定圖解 grammar：封閉框線＝責任範圍；實線箭頭＝runtime data flow；虛線箭頭＝static import／dependency；框線上具名入口＝Public API；CI＝列出實際檢查項目的自動檢查防線。箭頭附動詞或資料名稱，顏色不單獨承擔語意。
 - 結尾主圖是不對稱架構控制迴路：人制定政策，人與 AI 依共同語言實作／review，AI 可在既定規則內修復，CI 守可機械驗證的結果，只有模糊、例外或邊界變更回到人。
 - 採 **subtle motion**：不為每頁強制加動畫；轉場共用同一 motion vocabulary，通常 140–280ms。`<Steps>` 只服務必要的推理順序，morph 只用於同一架構物件的狀態延續；由 overview 直接進入任何頁面時仍完整可讀。
+
+##### Amendment — 2026-08-15
+
+使用者已核准正式 deck 的 current primary accent 為 `#00DABF`，並明確 supersedes 原 contract 的 `#00DC82`。原值保留於此作為決策歷史；本 amendment 只修訂 primary accent，不重開其他 authoring contract、semantic colors、版面、內容、頁數、timing 或驗收 seam。
+
+##### Amendment — 2026-08-15（第二次修訂）
+
+使用者後續核准正式 deck 的 current primary accent 為 `#04ab80`，並明確 supersedes 先前 amendment 的 `#00DABF`。`#00DC82` 與 `#00DABF` 均保留為決策歷史；本 amendment 只修訂 primary accent，不重開其他 authoring contract、semantic colors、版面、內容、頁數、timing 或驗收 seam。
 
 #### 8. OpenSlide implementation boundaries 與執行設定
 
