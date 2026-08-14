@@ -26,10 +26,11 @@
 - [把官方 TanStack Query guidance 轉譯為 Vue Query 案例](./issues/04-adapt-tanstack-query-to-vue.md) — Query ownership 與 cache contract 可沿用，Vue reactive inputs 與 Nuxt SSR QueryClient lifecycle 必須作為框架接縫另外設計。
 - [設計 Nuxt UI 表單的邊界壓力測試](./issues/05-prototype-nuxt-ui-form-boundary.md) — 以第二個非表單 consumer 被迫繼承 form 與資料來源政策的瞬間，對照只重用受控 UI control 的責任分界。
 - [驗證 Nuxt 4 整合 fixture](./issues/10-verify-nuxt4-integration-fixture.md) — Nuxt 4.5.2 實測確認 custom `srcDir`、App-layer routes/layouts、內建 `@` 與 FSD Page Public API 可通過 prepare、typecheck、production build。
+- [決定 40 分鐘的敘事弧線與時間配置](./issues/06-decide-story-arc-and-timing.md) — 鎖定問題框架、7 分鐘 primer、三個真實案例、framework seams、操作化回顧與方法論結論的完整時間弧線及超時刪減順序。
 
 ## Not yet specified
 
-- The final story arc may reveal a need for a comparison artifact or explanatory prototype that is not yet sharp enough to ticket.
+- 無；三層閉環與 generic feature-based 的比較已納入敘事回顧，後續由既有的粗略大綱 prototype 驗證節奏。
 
 ## Out of scope
 

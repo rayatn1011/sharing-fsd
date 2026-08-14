@@ -20,6 +20,10 @@ _Avoid_: Folder-template adoption, making the project look like FSD
 Using Feature-Sliced Design as a concrete case for revealing architecture-planning and enforcement concerns, without presenting it as the only valid method.
 _Avoid_: FSD advocacy, FSD sales pitch
 
+**Framework seam**:
+An integration boundary where framework-controlled entry points or lifecycles connect to application-owned modules without transferring business ownership to framework structure.
+_Avoid_: Library tutorial, framework folder ownership
+
 **Problem framework**:
 The talk-wide progression from technical-based organization through feature-based organization to the FSD lens; it frames the problem but is not counted as a real pitfall case.
 _Avoid_: Real case, case study
