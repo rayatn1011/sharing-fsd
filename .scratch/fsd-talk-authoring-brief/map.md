@@ -20,13 +20,13 @@
 
 ## Decisions so far
 
+- [選出可公開的真實踩坑案例](./issues/01-select-public-real-pitfalls.md) — 鎖定錯誤耦合、穩定規則重複漂移、以及登入 Feature 錯誤擁有全域 auth state 三個匿名親身案例。
 - [劃分人與 AI 的架構判斷和 Steiger 的保護範圍](./issues/02-map-judgment-and-enforcement.md) — Steiger／CI 保護可觀察的結構與執行結果；業務邊界、例外與規則嚴格度仍由人制定，並由人與 AI 依共享語言判斷。
 - [驗證 Nuxt file-based routing 與 FSD 的現行整合方式](./issues/03-verify-nuxt-routing-integration.md) — Nuxt route entry 是 framework adapter，FSD Page 是 application module；以薄 adapter 經 Public API 接線，但 Nuxt 4 的精確設定仍需 fixture 驗證。
 - [把官方 TanStack Query guidance 轉譯為 Vue Query 案例](./issues/04-adapt-tanstack-query-to-vue.md) — Query ownership 與 cache contract 可沿用，Vue reactive inputs 與 Nuxt SSR QueryClient lifecycle 必須作為框架接縫另外設計。
 
 ## Not yet specified
 
-- The real-experience inventory may expose additional integration pitfalls, evidence needs, or scope cuts that cannot be named until the cases are selected.
 - The final story arc may reveal a need for a comparison artifact or explanatory prototype that is not yet sharp enough to ticket.
 
 ## Out of scope

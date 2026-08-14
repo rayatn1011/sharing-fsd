@@ -10,7 +10,9 @@ This repo produces an OpenSlide presentation that introduces Feature-Sliced Desi
 - Write audience-facing content and presenter notes in Traditional Chinese unless the user requests another language.
 - Confirm one decision at a time before changing the audience, duration, content scope, narrative, or visual direction.
 - Use OpenSlide's bundled skills for slide authoring and the installed `feature-sliced-design` skill for subject-matter decisions.
-- Verify FSD claims against current official guidance. Clearly label historical guidance, project-specific conventions, and interpretation.
+- Treat [fsd.how](https://fsd.how/) and pages under that domain as the canonical source for current FSD guidance. Do not use or cite the legacy `feature-sliced.design` domain: the speaker reports that the original project lost the domain and could not recover it, and its current content is not controlled by the FSD project. The official `feature-sliced` GitHub organization may be used for repository history and release provenance, but `fsd.how` prevails for current guidance.
+- Clearly label historical guidance, project-specific conventions, speaker-supplied history, and interpretation. Until a first-party source for the domain-loss chronology is linked, present that chronology as speaker context rather than an independently verified official statement.
+- In the finished talk, explain the source choice for roughly 20–30 seconds near the start of the just-in-time FSD primer: introduce FSD, establish `fsd.how` as the current official source, then proceed to layers, slices, segments, and dependency rules. Do not count the domain story as one of the real architecture pitfall cases.
 - After editing slides, visually inspect every changed page and run the project build before completion.
 
 ## Hard rules
