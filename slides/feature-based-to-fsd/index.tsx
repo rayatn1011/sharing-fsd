@@ -77,7 +77,13 @@ const panelStyle: CSSProperties = {
   background: `linear-gradient(145deg, ${palette.panelStrong}, ${palette.panel})`,
 };
 
-const CategoryLabel = () => (
+const CategoryLabel = ({
+  label = '講者詮釋',
+  symbol = '◇',
+}: {
+  label?: string;
+  symbol?: string;
+}) => (
   <div
     style={{
       display: 'inline-flex',
@@ -95,13 +101,23 @@ const CategoryLabel = () => (
     }}
   >
     <span aria-hidden="true" style={{ fontSize: 24, lineHeight: 1 }}>
-      ◇
+      {symbol}
     </span>
-    講者詮釋
+    {label}
   </div>
 );
 
-const PageFrame = ({ children }: { children: ReactNode }) => (
+const PageFrame = ({
+  children,
+  section = 'PROBLEM FRAMEWORK',
+  categoryLabel = '講者詮釋',
+  categorySymbol = '◇',
+}: {
+  children: ReactNode;
+  section?: string;
+  categoryLabel?: string;
+  categorySymbol?: string;
+}) => (
   <div style={pageRoot}>
     <header
       style={{
@@ -131,9 +147,9 @@ const PageFrame = ({ children }: { children: ReactNode }) => (
             background: 'var(--osd-accent)',
           }}
         />
-        PROBLEM FRAMEWORK
+        {section}
       </div>
-      <CategoryLabel />
+      <CategoryLabel label={categoryLabel} symbol={categorySymbol} />
     </header>
 
     <main style={{ flex: 1, minHeight: 0 }}>{children}</main>
@@ -1008,6 +1024,667 @@ const Thesis: Page = () => (
   </PageFrame>
 );
 
+const PrimerFrame = ({
+  children,
+  categoryLabel = '現行官方 guidance',
+  categorySymbol = '◆',
+}: {
+  children: ReactNode;
+  categoryLabel?: string;
+  categorySymbol?: string;
+}) => (
+  <PageFrame
+    section="FSD PRIMER"
+    categoryLabel={categoryLabel}
+    categorySymbol={categorySymbol}
+  >
+    {children}
+  </PageFrame>
+);
+
+const SourcePolicyCard = ({
+  icon,
+  eyebrow,
+  title,
+  detail,
+  accent = false,
+}: {
+  icon: string;
+  eyebrow: string;
+  title: string;
+  detail: ReactNode;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      height: 388,
+      padding: 40,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      boxShadow: accent ? '0 0 0 8px rgba(0, 220, 130, 0.06)' : undefined,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <span
+        aria-hidden="true"
+        style={{
+          width: 52,
+          height: 52,
+          display: 'grid',
+          placeItems: 'center',
+          border: `2px ${accent ? 'solid' : 'dashed'} ${
+            accent ? 'var(--osd-accent)' : palette.borderStrong
+          }`,
+          borderRadius: 15,
+          color: accent ? 'var(--osd-accent)' : palette.textSoft,
+          fontSize: 28,
+          fontWeight: 800,
+        }}
+      >
+        {icon}
+      </span>
+      <span
+        style={{
+          color: accent ? 'var(--osd-accent)' : palette.muted,
+          fontSize: 23,
+          fontWeight: 800,
+          letterSpacing: '0.1em',
+        }}
+      >
+        {eyebrow}
+      </span>
+    </div>
+
+    <div
+      style={{
+        color: accent ? 'var(--osd-accent)' : 'var(--osd-text)',
+        fontFamily: fonts.mono,
+        fontSize: accent ? 76 : 49,
+        fontWeight: 800,
+        letterSpacing: '-0.04em',
+      }}
+    >
+      {title}
+    </div>
+
+    <div style={{ color: palette.textSoft, fontSize: 32, fontWeight: 600, lineHeight: 1.45 }}>
+      {detail}
+    </div>
+  </div>
+);
+
+const SourcePolicy: Page = () => (
+  <PrimerFrame categoryLabel="現行官方 guidance／講者背景" categorySymbol="◐">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 34 }}>
+      <PageHeading
+        title="先把 current source 說清楚"
+        lead="本演講的現行 FSD guidance，以 fsd.how 與它連結的一手資料為準。"
+      />
+
+      <section
+        aria-label="本演講的 FSD current source 與 legacy domain 使用界線"
+        style={{
+          flex: 1,
+          display: 'grid',
+          gridTemplateColumns: '1.28fr 0.72fr',
+          alignItems: 'center',
+          gap: 36,
+        }}
+      >
+        <SourcePolicyCard
+          icon="✓"
+          eyebrow="CANONICAL SOURCE"
+          title="fsd.how"
+          accent
+          detail={
+            <>
+              現行 guidance
+              <br />
+              2026-08-14 已查核的一手入口
+            </>
+          }
+        />
+        <SourcePolicyCard
+          icon="!"
+          eyebrow="SPEAKER CONTEXT"
+          title="Legacy domain"
+          detail={
+            <>
+              不作 current guidance
+              <br />
+              不計入架構案例
+            </>
+          }
+        />
+      </section>
+    </div>
+  </PrimerFrame>
+);
+
+const LayerTier = ({
+  name,
+  role,
+  status,
+  width,
+  optional = false,
+}: {
+  name: string;
+  role: string;
+  status: string;
+  width: number;
+  optional?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width,
+      height: 66,
+      padding: '0 24px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 28,
+      borderColor: optional ? palette.borderStrong : palette.accentLine,
+      borderStyle: optional ? 'dashed' : 'solid',
+      background: optional ? palette.whiteSoft : palette.accentSoft,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 24 }}>
+      <strong
+        style={{
+          color: optional ? palette.textSoft : 'var(--osd-accent)',
+          fontFamily: fonts.mono,
+          fontSize: 32,
+        }}
+      >
+        {name}
+      </strong>
+      <span style={{ color: palette.muted, fontSize: 23, fontWeight: 600 }}>{role}</span>
+    </div>
+    <span
+      style={{
+        flex: '0 0 auto',
+        padding: '8px 13px',
+        border: `1px ${optional ? 'dashed' : 'solid'} ${
+          optional ? palette.borderStrong : palette.accentLine
+        }`,
+        borderRadius: 999,
+        color: optional ? palette.textSoft : 'var(--osd-accent)',
+        fontSize: 22,
+        fontWeight: 800,
+        letterSpacing: '0.04em',
+      }}
+    >
+      {status}
+    </span>
+  </div>
+);
+
+const LayersPrimer: Page = () => (
+  <PrimerFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="Layers 是責任層級；不是必填清單"
+        lead="app/ + pages/ + shared/ 就能作為有效起點；其他層有明確價值再加入。"
+      />
+
+      <section
+        aria-label="App、Pages、Shared 為常見起點，Features 與 Entities 有價值再加入的 layer 階梯"
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12,
+        }}
+      >
+        <LayerTier name="app/" role="啟動、providers、routing" status="常見起點" width={790} />
+        <LayerTier name="pages/" role="頁面組合與本地邏輯" status="常見起點" width={900} />
+        <LayerTier
+          name="features/"
+          role="跨頁重用的使用者互動"
+          status="有價值再加"
+          width={1010}
+          optional
+        />
+        <LayerTier
+          name="entities/"
+          role="穩定、可重用的 business model"
+          status="有價值再加"
+          width={1120}
+          optional
+        />
+        <LayerTier name="shared/" role="無業務邏輯的基礎設施" status="常見起點" width={1230} />
+      </section>
+    </div>
+  </PrimerFrame>
+);
+
+const SegmentBox = ({
+  name,
+  purpose,
+  example,
+}: {
+  name: string;
+  purpose: string;
+  example: string;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      height: 220,
+      padding: 28,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <div
+      style={{
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 34,
+        fontWeight: 800,
+      }}
+    >
+      {name}
+    </div>
+    <div style={{ color: palette.textSoft, fontSize: 32, fontWeight: 700 }}>{purpose}</div>
+    <div style={{ color: palette.muted, fontFamily: fonts.mono, fontSize: 22, fontWeight: 600 }}>
+      {example}
+    </div>
+  </div>
+);
+
+const SlicesAndSegments: Page = () => (
+  <PrimerFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 30 }}>
+      <PageHeading
+        title="Slice 按業務意義分；segment 按內部目的分"
+        lead="pages/checkout/ 是業務 slice；ui/、model/、api/ 是它的內部分區。"
+      />
+
+      <section
+        aria-label="pages checkout slice 內含 ui、model 與 api segments"
+        style={{ flex: 1, display: 'grid', placeItems: 'center' }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            position: 'relative',
+            width: 1330,
+            height: 382,
+            padding: '68px 46px 42px',
+            borderColor: 'var(--osd-accent)',
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 36,
+              top: -24,
+              padding: '12px 20px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 26,
+              fontWeight: 800,
+            }}
+          >
+            SLICE · pages/checkout/
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              right: 36,
+              top: 18,
+              color: palette.muted,
+              fontSize: 22,
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+            }}
+          >
+            業務責任邊界
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
+            <SegmentBox name="ui/" purpose="畫面與互動" example="CheckoutPage.vue" />
+            <SegmentBox name="model/" purpose="狀態與規則" example="checkout.ts" />
+            <SegmentBox name="api/" purpose="後端互動" example="submit-order.ts" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </PrimerFrame>
+);
+
+const SliceInternal = ({ name, purpose }: { name: string; purpose: string }) => (
+  <div
+    style={{
+      width: 286,
+      height: 90,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      border: `1px solid ${palette.borderStrong}`,
+      borderRadius: 15,
+      background: palette.whiteSoft,
+    }}
+  >
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 27 }}>{name}</strong>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 600 }}>{purpose}</span>
+  </div>
+);
+
+const DependencyAndPublicApi: Page = () => (
+  <PrimerFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="依賴向下；slice 對外只開具名入口"
+        lead="高層只 import 更低層；外部依賴先穿過 Public API，不鑽進 slice internals。"
+      />
+
+      <section
+        aria-label="Pages 透過具名 Public API 向下依賴 Features 的示意圖"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 510,
+            top: 0,
+            width: 660,
+            height: 122,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '0 32px',
+          }}
+        >
+          <div>
+            <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+              HIGHER LAYER
+            </div>
+            <div
+              style={{
+                marginTop: 8,
+                color: 'var(--osd-text)',
+                fontFamily: fonts.mono,
+                fontSize: 32,
+                fontWeight: 800,
+              }}
+            >
+              pages/checkout/
+            </div>
+          </div>
+          <span style={{ color: palette.textSoft, fontSize: 25, fontWeight: 700 }}>Page composition</span>
+        </div>
+
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 584"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, zIndex: 2, width: '100%', height: '100%' }}
+        >
+          <path
+            d="M840 122 L840 166 M840 216 L840 248"
+            fill="none"
+            stroke="var(--osd-accent)"
+            strokeWidth="4"
+            strokeDasharray="11 10"
+          />
+          <path d="M826 232 L840 250 L854 232" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+        </svg>
+        <div
+          style={{
+            position: 'absolute',
+            left: 870,
+            top: 134,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          import
+        </div>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 270,
+            top: 190,
+            width: 1140,
+            height: 244,
+            padding: '72px 42px 34px',
+            borderColor: 'var(--osd-accent)',
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 32,
+              bottom: 18,
+              color: palette.muted,
+              fontSize: 22,
+              fontWeight: 800,
+              letterSpacing: '0.08em',
+            }}
+          >
+            LOWER LAYER · SLICE · features/payment/
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              left: 260,
+              top: -24,
+              zIndex: 3,
+              width: 620,
+              padding: '11px 18px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 22,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            PUBLIC API · features/payment/index.ts
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 28 }}>
+            <SliceInternal name="ui/" purpose="internal" />
+            <SliceInternal name="model/" purpose="internal" />
+            <SliceInternal name="api/" purpose="internal" />
+          </div>
+        </div>
+      </section>
+    </div>
+  </PrimerFrame>
+);
+
+const DecisionColumn = ({
+  question,
+  branchLabel,
+  outcome,
+  accent = false,
+}: {
+  question: string;
+  branchLabel: string;
+  outcome: string;
+  accent?: boolean;
+}) => (
+  <div style={{ width: 320, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <div
+      style={{
+        ...panelStyle,
+        width: '100%',
+        height: 124,
+        padding: '24px 26px',
+        display: 'grid',
+        placeItems: 'center',
+        color: 'var(--osd-text)',
+        fontSize: 32,
+        fontWeight: 800,
+        lineHeight: 1.35,
+        textAlign: 'center',
+      }}
+    >
+      {question}
+    </div>
+    <div aria-hidden="true" style={{ width: 2, height: 28, background: palette.borderStrong }} />
+    <div
+      style={{
+        padding: '5px 11px',
+        border: `1px solid ${palette.borderStrong}`,
+        borderRadius: 999,
+        color: palette.textSoft,
+        fontSize: 22,
+        fontWeight: 800,
+      }}
+    >
+      {branchLabel}
+    </div>
+    <div aria-hidden="true" style={{ width: 2, height: 16, background: palette.borderStrong }} />
+    <div
+      style={{
+        width: '100%',
+        height: 94,
+        display: 'grid',
+        placeItems: 'center',
+        border: `2px ${accent ? 'solid' : 'dashed'} ${
+          accent ? 'var(--osd-accent)' : palette.borderStrong
+        }`,
+        borderRadius: 17,
+        background: accent ? palette.accentSoft : palette.whiteSoft,
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontFamily: outcome.includes('/') ? fonts.mono : 'var(--osd-font-body)',
+        fontSize: 27,
+        fontWeight: 800,
+        textAlign: 'center',
+      }}
+    >
+      {outcome}
+    </div>
+  </div>
+);
+
+const DecisionArrow = ({ label }: { label: string }) => (
+  <div
+    style={{
+      width: 76,
+      marginTop: 39,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: 2,
+      color: 'var(--osd-accent)',
+      fontSize: 22,
+      fontWeight: 800,
+    }}
+  >
+    <span>{label}</span>
+    <span aria-hidden="true" style={{ fontSize: 38, lineHeight: 1 }}>
+      →
+    </span>
+  </div>
+);
+
+const ExtractionOutcome = () => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 350,
+      height: 164,
+      padding: '22px 26px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
+      borderColor: 'var(--osd-accent)',
+      background: palette.accentSoft,
+      boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+      textAlign: 'center',
+    }}
+  >
+    <strong style={{ color: 'var(--osd-accent)', fontSize: 32, lineHeight: 1.2 }}>
+      再抽到有價值的 lower layer
+    </strong>
+    <span style={{ color: palette.textSoft, fontSize: 22, fontWeight: 600, lineHeight: 1.3 }}>
+      不是先建空資料夾
+    </span>
+  </div>
+);
+
+const PagesFirst: Page = () => (
+  <PrimerFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="先留在 Pages；證據出現後再抽離"
+        lead="不是看到「可能重用」就抽；先問真實重複與穩定邊界。"
+      />
+
+      <section
+        aria-label="Pages First 與延後抽離 decision tree"
+        style={{
+          position: 'relative',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          paddingTop: 22,
+        }}
+      >
+        <DecisionColumn
+          question="現在只服務一個 page？"
+          branchLabel="YES"
+          outcome="留在 pages/checkout/"
+          accent
+        />
+        <DecisionArrow label="NO" />
+        <DecisionColumn question="抽離能解決真實重複？" branchLabel="NO" outcome="延後抽離" />
+        <DecisionArrow label="YES" />
+        <DecisionColumn question="責任邊界已經穩定？" branchLabel="NO" outcome="延後抽離" />
+        <DecisionArrow label="YES" />
+        <ExtractionOutcome />
+
+        <div
+          style={{
+            position: 'absolute',
+            right: 10,
+            bottom: 0,
+            padding: '9px 15px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 22,
+            fontWeight: 700,
+          }}
+        >
+          NEXT · 第一個真實案例：抽得太早
+        </div>
+      </section>
+    </div>
+  </PrimerFrame>
+);
+
 export const notes: (string | undefined)[] = [
   `Message:
 一段程式碼該放哪裡，不只是路徑選擇，而是長期協作與理解成本。
@@ -1152,6 +1829,126 @@ Possible Q&A:
 
 Safety boundary:
 不稱 FSD 為唯一解，不宣稱 CI 能證明 business boundary 或全部 architecture correctness，也不在本頁提前引用 legacy domain 或展開 primer。`,
+
+  `Message:
+本演講的現行 FSD guidance，以 fsd.how 與它連結的一手資料為準。
+
+Context:
+用 20–30 秒交代來源政策：fsd.how 是本演講 authoring 當日（2026-08-14）重新查核的 current entry，後續 layers、Public API 與 Pages First 都從這裡延伸。舊網域只作講者背景；畫面不引用舊網址，也不把網域經過算成架構案例。
+
+Transition:
+承接前頁「用 FSD lens 建立共同語言」的承諾，先說清楚這套語言以哪個 current source 為準；接著從第一個最低必要概念 layers 開始。
+
+Required details:
+精確說「本演講採用 fsd.how」，不要說網站自行宣布唯一 canonical。現行 guidance 與講者背景必須用文字與不同圖示分標；來源說明控制在 20–30 秒。
+
+Timing:
+35 秒（7:00–7:35）。
+
+Sources:
+https://fsd.how/（authoring-day 查核：2026-08-14；scope：現行 FSD 文件入口）；https://fsd.how/docs/get-started/overview/（查核：2026-08-14；scope：現行入門概念）。Live docs 未顯示可確認的逐頁發布日期或通用版本選擇器。舊網域經過依 AGENTS.md 僅作講者背景，不列為 current guidance source。
+
+Possible Q&A:
+問：為什麼不使用舊網域？答：這份演講固定從 2026-08-14 查核的 fsd.how 與其一手連結延伸；舊網域經過只保留為講者背景，不在現場擴寫成官方歷史。
+
+Safety boundary:
+不把 source policy 冒充 fsd.how 首頁的自我宣告，不引用 legacy domain，不把未在本頁一手來源發布的失去控制 chronology 說成官方歷史，也不把來源故事算作第一個真實案例。`,
+
+  `Message:
+Layers 表達責任與依賴層級；not all layers are required，App、Pages、Shared 可作常見起點。
+
+Context:
+先解釋 layer 不是待辦清單，而是責任量與可依賴範圍的標準語言。圖上只放後續案例需要的最低示意：App、Pages、Shared 用實線與「常見起點」標籤；Features、Entities 用虛線與「有價值再加」標籤。這不是完整 layer 清單。
+
+Transition:
+承接 source policy，現在開始建立最低術語：先用 layers 說責任層級；下一頁再進到每個 business area 如何形成 slice，以及 slice 內如何分 segment。
+
+Required details:
+必須明講 not all layers are required；App／Pages／Shared 是常見、有效的起點，不是強制最低配備。現行 docs 仍列 Processes（deprecated），並 generally discourage Widgets；primer 為控制範圍不在觀眾畫面展開。
+
+Timing:
+90 秒（7:35–9:05）。
+
+Sources:
+https://fsd.how/docs/reference/layers/（authoring-day 查核：2026-08-14；scope：layer responsibility、not all layers、App／Pages／Shared common baseline、Features／Pages guidance）；https://fsd.how/docs/get-started/overview/（查核：2026-08-14；scope：layer overview）。兩者為未標逐頁發布日期的 current live docs。
+
+Possible Q&A:
+問：Widgets 與 Processes 去哪裡？答：現行 reference 仍列出它們；Processes 已 deprecated，Widgets 在 current guide generally discouraged。這頁只保留後續案例真正需要的最低層次語言。
+
+Safety boundary:
+不宣稱 FSD 只有畫面上的五層，不把 App／Pages／Shared 說成每個專案的硬性三件套，也不把空 layer folders 或目錄外觀等同 architecture operationalization。`,
+
+  `Message:
+Slice 依產品／業務意義聚合；segment 只描述 slice 內程式碼的技術用途。
+
+Context:
+把 pages/checkout/ 畫成封閉的 business responsibility boundary：checkout 是 slice 名稱，取自產品語言；ui、model、api 是 slice 內常見 segments，分別承接畫面、狀態規則與後端互動。這種內部分區不等於回到全專案的 components／types／utils 技術目錄。
+
+Transition:
+承接 layers 的責任層級，下一步看每層如何用 business slices 聚合程式碼、再用 segments 整理內部；有了內部結構後，下一頁才能說明外部如何安全依賴它。
+
+Required details:
+Slice 名稱不由標準固定，應由 domain 決定；ui／model／api 是常見而非必備或完整清單。App 與 Shared 是例外：不含 business slices，直接由 segments 組成。
+
+Timing:
+85 秒（9:05–10:30）。
+
+Sources:
+https://fsd.how/docs/reference/slices-segments/（authoring-day 查核：2026-08-14；scope：slice hierarchy、business meaning、segments、App／Shared exception）；https://fsd.how/docs/get-started/overview/（查核：2026-08-14；scope：layers／slices／segments overview）。
+
+Possible Q&A:
+問：Slice 就是 feature 嗎？答：不是；slice 是 layer 內的 business partition，Pages、Features、Entities 等 layer 都可以有 slices，而 App／Shared 是例外。
+
+Safety boundary:
+不把 checkout 示意說成唯一命名，不宣稱每個 slice 都必須同時有 ui／model／api，也不把 segment 擴張成跨全專案的 technical-based organization。`,
+
+  `Message:
+跨 slice 的 static dependency 只往嚴格較低 layer，外部 consumer 透過具名 Public API 使用 slice。
+
+Context:
+虛線箭頭代表 static import：較高的 pages/checkout/ 向下依賴 features/payment/，箭頭先穿過具名入口 features/payment/index.ts，再使用 slice 對外承諾的內容。Public API 保護 consumer 不必知道 ui／model／api 的內部路徑；它是 architecture contract，不是 runtime security gate。
+
+Transition:
+承接 slice 的內部責任框，現在補上外部依賴契約：誰可以 import 誰，以及入口在哪裡。規則清楚後，下一頁就能問最容易被忽略的問題：這個 lower-layer boundary 什麼時候才值得建立？
+
+Required details:
+明講「嚴格較低 layer」與 same-layer slice isolation；同一 slice 內部仍可互相引用，App／Shared segments 有例外。index.ts 是本頁常見實作例，不宣稱所有環境永遠只能有單一 index entry。
+
+Timing:
+100 秒（10:30–12:10）。
+
+Sources:
+https://fsd.how/docs/reference/layers/（authoring-day 查核：2026-08-14；scope：layer import rule 與 App／Shared exception）；https://fsd.how/docs/reference/slices-segments/（查核：2026-08-14；scope：slice isolation、Public API rule）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：Public API contract、index re-export 的常見實作與例外）。
+
+Possible Q&A:
+問：建立 index.ts 就能強制大家不 deep import 嗎？答：不能；它先建立 contract，後續還需要 linter 或 custom checks 保護可觀察的違規。
+
+Safety boundary:
+不把虛線箭頭說成 runtime data flow，不把 Public API 當 security boundary，也不宣稱 index file 本身能阻止 deep imports；本頁不展開 cross-import／environment-specific entry 的完整百科。`,
+
+  `Message:
+Pages First：先讓 code 留在 owning page；真實重複與穩定邊界出現後，再抽到帶來價值的 lower layer。
+
+Context:
+Decision tree 是對 current FSD 2.1 guidance 的講者整理：單一 page 使用就留在 Pages；即使多處出現，也先問抽離是否處理真實重複、責任邊界是否穩定。不確定時延後抽離是有效決策。最後的 lower layer 仍要依責任判斷，不是自動建立 Feature 或 Entity。
+
+Transition:
+承接前頁的 dependency／Public API contract，現在補上建立 boundary 的時機。下一頁進入第一個匿名真實案例：當 UI control、form adapter 與 server-data owner 太早一起被抽成共用責任，會付出什麼代價？
+
+Required details:
+三個判斷依序講完整：是否單頁使用、抽離是否解決真實重複、責任邊界是否穩定。不要把「兩處」說成官方硬門檻；Shared infrastructure 與 App-wide wiring 不套用這棵簡化的 page-business-code decision tree。
+
+Timing:
+110 秒（12:10–14:00）。
+
+Sources:
+https://fsd.how/docs/guides/migration/from-v2-0/（authoring-day 查核：2026-08-14；version／scope：FSD 2.1 Pages First、可先停在 Pages、跨 several pages 有重用需求再下移）；https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：未重用 UI 可留在 Page、Feature 的跨頁重用指標）；https://fsd.how/docs/guides/issues/excessive-entities/（查核：2026-08-14；version／scope：FSD 2.1 deferred decomposition、可不建立 Entities、需求穩定後再重構）。
+
+Possible Q&A:
+問：重複出現就一定要抽嗎？答：不一定；先看是否真的需要同一責任、是否不會永遠一起變，以及 boundary 是否穩定。少量 duplication 可能比過早建立 global boundary 更安全。
+
+Safety boundary:
+「真實重複＋穩定邊界」是本演講對多個 current guidance 的綜合判斷，不冒充單一官方逐字硬規則；不提供逐檔 migration plan，也不把 Pages First 擴張成所有 App／Shared placement 的唯一演算法。`,
 ];
 
 export const meta: SlideMeta = {
@@ -1159,4 +1956,16 @@ export const meta: SlideMeta = {
   createdAt: '2026-08-14T12:02:31.878Z',
 };
 
-export default [Cover, ProblemSetup, TechnicalBaseline, FeatureImprovement, GapFraming, Thesis] satisfies Page[];
+export default [
+  Cover,
+  ProblemSetup,
+  TechnicalBaseline,
+  FeatureImprovement,
+  GapFraming,
+  Thesis,
+  SourcePolicy,
+  LayersPrimer,
+  SlicesAndSegments,
+  DependencyAndPublicApi,
+  PagesFirst,
+] satisfies Page[];
