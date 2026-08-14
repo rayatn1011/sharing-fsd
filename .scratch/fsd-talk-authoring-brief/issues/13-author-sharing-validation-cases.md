@@ -5,6 +5,7 @@
 **Blocked by:** 12 — 完成 just-in-time FSD primer（頁 7–11）
 
 **Status:** ready-for-agent
+**State:** done
 
 ## Execution contract
 
@@ -15,15 +16,15 @@
 
 ## Acceptance checklist
 
-- [ ] 頁 12–15 完整呈現過早共享的原決策、wrapper／例外 props 後果、第二個非表單 consumer 壓力測試，以及 UI control、form adapter、server-data owner 三責任分離的修正。
-- [ ] 頁 14 的 consumer 與業務情境清楚標為「合成案例」；頁 12–13 只聲明已核准的匿名親身因果，不以敘事強度犧牲真實性。
-- [ ] 頁 16–18 先承認各 feature 擁有不同完整 schema 的合理性，再呈現語意相同規則的複製漂移，最後只下沉已證明必須一起變動的 shared field rule。
-- [ ] 七頁時間依序為 60、75、80、85、70、80、90 秒，總計 540 秒，且兩案例形成「不該共享的責任過早共享」與「該一致的穩定規則沒有共享」的明確對照。
-- [ ] 每頁都完整填寫八個 notes 欄位，在 `Context`、`Sources` 與 `Safety boundary` 追溯親身事實、合成部分、現行 guidance 與講者詮釋。
-- [ ] 延續同一套責任框、Public API 入口、runtime data flow 實線箭頭與 static dependency 虛線箭頭；所有箭頭有動詞或資料名稱。
-- [ ] 觀眾畫面保持 light density 與 single judgment，案例分類同時用文字與圖示／線型／實心或外框呈現，顏色不是唯一語意載體。
-- [ ] 已完成的 18 頁可從 overview 非線性進入並完整閱讀，無裁切、貼邊、意外換行或 overflow workaround。
-- [ ] `pnpm build` exit 0，且 diff 只限正式 deck 與必要 slide-local assets，沒有修改禁止範圍。
+- [x] 頁 12–15 完整呈現過早共享的原決策、wrapper／例外 props 後果、第二個非表單 consumer 壓力測試，以及 UI control、form adapter、server-data owner 三責任分離的修正。
+- [x] 頁 14 的 consumer 與業務情境清楚標為「合成案例」；頁 12–13 只聲明已核准的匿名親身因果，不以敘事強度犧牲真實性。
+- [x] 頁 16–18 先承認各 feature 擁有不同完整 schema 的合理性，再呈現語意相同規則的複製漂移，最後只下沉已證明必須一起變動的 shared field rule。
+- [x] 七頁時間依序為 60、75、80、85、70、80、90 秒，總計 540 秒，且兩案例形成「不該共享的責任過早共享」與「該一致的穩定規則沒有共享」的明確對照。
+- [x] 每頁都完整填寫八個 notes 欄位，在 `Context`、`Sources` 與 `Safety boundary` 追溯親身事實、合成部分、現行 guidance 與講者詮釋。
+- [x] 延續同一套責任框、Public API 入口、runtime data flow 實線箭頭與 static dependency 虛線箭頭；所有箭頭有動詞或資料名稱。
+- [x] 觀眾畫面保持 light density 與 single judgment，案例分類同時用文字與圖示／線型／實心或外框呈現，顏色不是唯一語意載體。
+- [x] 已完成的 18 頁可從 overview 非線性進入並完整閱讀，無裁切、貼邊、意外換行或 overflow workaround。
+- [x] `pnpm build` exit 0，且 diff 只限正式 deck 與必要 slide-local assets，沒有修改禁止範圍。
 
 ## Stable pointers
 

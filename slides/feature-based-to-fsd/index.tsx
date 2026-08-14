@@ -1685,6 +1685,1031 @@ const PagesFirst: Page = () => (
   </PrimerFrame>
 );
 
+const CaseFrame = ({
+  children,
+  categoryLabel = '匿名真實案例',
+  categorySymbol = '●',
+}: {
+  children: ReactNode;
+  categoryLabel?: string;
+  categorySymbol?: string;
+}) => (
+  <PageFrame
+    section="ARCHITECTURE CASES"
+    categoryLabel={categoryLabel}
+    categorySymbol={categorySymbol}
+  >
+    {children}
+  </PageFrame>
+);
+
+const ResponsibilityTile = ({
+  index,
+  title,
+  detail,
+  accent = false,
+  compact = false,
+}: {
+  index: string;
+  title: string;
+  detail: ReactNode;
+  accent?: boolean;
+  compact?: boolean;
+}) => (
+  <div
+    style={{
+      height: compact ? 170 : 260,
+      padding: compact ? 20 : 28,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      border: `2px ${accent ? 'solid' : 'dashed'} ${
+        accent ? 'var(--osd-accent)' : palette.borderStrong
+      }`,
+      borderRadius: 18,
+      background: accent ? palette.accentSoft : palette.whiteSoft,
+    }}
+  >
+    <div
+      style={{
+        width: compact ? 36 : 42,
+        height: compact ? 36 : 42,
+        display: 'grid',
+        placeItems: 'center',
+        border: `1px solid ${accent ? 'var(--osd-accent)' : palette.borderStrong}`,
+        borderRadius: 12,
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: compact ? 19 : 22,
+        fontWeight: 800,
+      }}
+    >
+      {index}
+    </div>
+    <strong style={{ color: palette.textSoft, fontSize: compact ? 27 : 31, lineHeight: 1.2 }}>{title}</strong>
+    <div
+      style={{
+        color: palette.muted,
+        fontSize: compact ? 21 : 24,
+        fontWeight: 600,
+        lineHeight: 1.4,
+      }}
+    >
+      {detail}
+    </div>
+  </div>
+);
+
+const PrematureSharedDecision: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <PageHeading
+        title="案例一：全專案共用，卻綁住三種責任"
+        lead="只有一個使用情境時，UI、form 與 server-data policy 就被包成同一個 abstraction。"
+      />
+
+      <section
+        aria-label="單一全專案共用元件同時包住 UI control、form adapter 與 server-data owner"
+        style={{ flex: 1, display: 'grid', placeItems: 'center' }}
+      >
+        <div
+          style={{
+            ...panelStyle,
+            position: 'relative',
+            width: 1390,
+            height: 448,
+            padding: '82px 42px 38px',
+            borderColor: 'var(--osd-accent)',
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 32,
+              top: -24,
+              padding: '10px 17px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 23,
+              fontWeight: 800,
+            }}
+          >
+            PUBLIC API · shared component
+          </div>
+          <div
+            style={{
+              position: 'absolute',
+              right: 34,
+              top: 25,
+              color: palette.muted,
+              fontSize: 22,
+              fontWeight: 800,
+              letterSpacing: '0.07em',
+            }}
+          >
+            ONE SHARED RESPONSIBILITY
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 28 }}>
+            <ResponsibilityTile index="01" title="UI control" detail="顯示資料與回報互動" />
+            <ResponsibilityTile index="02" title="Form adapter" detail="field state · validation · error" />
+            <ResponsibilityTile
+              index="03"
+              title="Server-data owner"
+              detail="source · transform · loading policy"
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const PressureChip = ({
+  title,
+  detail,
+  style,
+}: {
+  title: string;
+  detail: string;
+  style: CSSProperties;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      ...style,
+      position: 'absolute',
+      width: 286,
+      minHeight: 112,
+      padding: '20px 22px',
+      borderStyle: 'dashed',
+      background: palette.whiteSoft,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+      <span aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 25, fontWeight: 800 }}>
+        ＋
+      </span>
+      <strong style={{ color: palette.textSoft, fontSize: 27 }}>{title}</strong>
+    </div>
+    <div style={{ marginTop: 8, color: palette.muted, fontSize: 22, fontWeight: 600 }}>{detail}</div>
+  </div>
+);
+
+const ConsequenceBadge = ({ symbol, title }: { symbol: string; title: string }) => (
+  <div
+    style={{
+      width: 350,
+      height: 82,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 14,
+      border: `2px dashed ${palette.borderStrong}`,
+      borderRadius: 16,
+      background: palette.whiteSoft,
+      color: palette.textSoft,
+      fontSize: 27,
+      fontWeight: 800,
+    }}
+  >
+    <span aria-hidden="true" style={{ color: 'var(--osd-accent)', fontSize: 30 }}>
+      {symbol}
+    </span>
+    {title}
+  </div>
+);
+
+const PrematureSharedConsequence: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="例外愈加愈多，control 仍無法獨立演進"
+        lead="脫離 form 或替換資料來源，都得繞著原本的共用 abstraction 修補。"
+      />
+
+      <section
+        aria-label="共用元件外圍增生 wrapper 與例外 props，仍無法脫離 form 或替換資料來源"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 500"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        >
+          <path d="M286 154 L435 206" fill="none" stroke={palette.borderStrong} strokeWidth="3" strokeDasharray="9 10" />
+          <path d="M1394 114 L1245 196" fill="none" stroke={palette.borderStrong} strokeWidth="3" strokeDasharray="9 10" />
+          <path d="M1394 322 L1245 284" fill="none" stroke={palette.borderStrong} strokeWidth="3" strokeDasharray="9 10" />
+        </svg>
+
+        <PressureChip title="外層 wrapper" detail="把舊 contract 再包一層" style={{ left: 16, top: 96 }} />
+        <PressureChip title="例外 prop" detail="為新情境繼續開洞" style={{ right: 16, top: 44 }} />
+        <PressureChip title="更多條件分支" detail="責任仍留在同一處" style={{ right: 16, top: 252 }} />
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 435,
+            top: 74,
+            width: 810,
+            height: 300,
+            padding: '70px 42px 34px',
+            borderColor: 'var(--osd-accent)',
+            background: palette.accentSoft,
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 28,
+              top: 18,
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 23,
+              fontWeight: 800,
+            }}
+          >
+            SHARED COMPONENT · RESPONSIBILITIES STILL COUPLED
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+            <ResponsibilityTile index="UI" title="Control" detail="presentation" accent compact />
+            <ResponsibilityTile index="F" title="Form" detail="binding policy" compact />
+            <ResponsibilityTile index="S" title="Server" detail="data policy" compact />
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            left: 472,
+            bottom: 0,
+            display: 'flex',
+            gap: 36,
+          }}
+        >
+          <ConsequenceBadge symbol="×" title="無法脫離 form" />
+          <ConsequenceBadge symbol="×" title="難以替換 data source" />
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const ProbeRoute = ({
+  symbol,
+  title,
+  detail,
+  accent = false,
+  style,
+}: {
+  symbol: string;
+  title: string;
+  detail: ReactNode;
+  accent?: boolean;
+  style: CSSProperties;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      ...style,
+      position: 'absolute',
+      width: 680,
+      height: 170,
+      padding: '26px 32px',
+      display: 'grid',
+      gridTemplateColumns: '64px 1fr',
+      alignItems: 'center',
+      gap: 24,
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : palette.whiteSoft,
+    }}
+  >
+    <span
+      aria-hidden="true"
+      style={{
+        width: 56,
+        height: 56,
+        display: 'grid',
+        placeItems: 'center',
+        border: `2px ${accent ? 'solid' : 'dashed'} ${
+          accent ? 'var(--osd-accent)' : palette.borderStrong
+        }`,
+        borderRadius: 16,
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontSize: 30,
+        fontWeight: 800,
+      }}
+    >
+      {symbol}
+    </span>
+    <div>
+      <strong style={{ color: accent ? 'var(--osd-accent)' : palette.textSoft, fontSize: 31 }}>
+        {title}
+      </strong>
+      <div style={{ marginTop: 10, color: palette.muted, fontSize: 24, fontWeight: 600, lineHeight: 1.35 }}>
+        {detail}
+      </div>
+    </div>
+  </div>
+);
+
+const SecondConsumerProbe: Page = () => (
+  <CaseFrame categoryLabel="合成案例" categorySymbol="△">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="壓力測試：第二個 consumer 根本不是表單"
+        lead="它只需要相同 UI；是否被迫繼承 form 與 data policy，會直接暴露邊界。"
+      />
+
+      <section
+        aria-label="合成的非表單 consumer 對過早共享與責任分離兩條路施壓"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 500"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+        >
+          <path d="M520 246 L790 128" fill="none" stroke={palette.borderStrong} strokeWidth="4" strokeDasharray="11 10" />
+          <path d="M520 246 L790 366" fill="none" stroke="var(--osd-accent)" strokeWidth="4" strokeDasharray="11 10" />
+          <path d="M772 118 L792 127 L777 142" fill="none" stroke={palette.borderStrong} strokeWidth="4" />
+          <path d="M776 351 L792 367 L770 373" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+        </svg>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 52,
+            top: 126,
+            width: 468,
+            height: 244,
+            padding: 34,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            borderStyle: 'dashed',
+          }}
+        >
+          <div style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.08em' }}>
+            SYNTHETIC PRESSURE TEST
+          </div>
+          <strong style={{ color: 'var(--osd-text)', fontSize: 38, lineHeight: 1.2 }}>
+            非表單 consumer
+          </strong>
+          <div style={{ color: palette.textSoft, fontSize: 26, fontWeight: 600, lineHeight: 1.4 }}>
+            需要 options、value 與互動
+            <br />
+            不需要 form context
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            left: 582,
+            top: 102,
+            color: palette.muted,
+            fontFamily: fonts.mono,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          import 整包責任
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            left: 582,
+            top: 366,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          import UI contract
+        </div>
+
+        <ProbeRoute
+          symbol="×"
+          title="繼承整包 abstraction"
+          detail="被迫建立假表單，或再加入 wrapper／例外 props。"
+          style={{ right: 52, top: 42 }}
+        />
+        <ProbeRoute
+          symbol="✓"
+          title="只重用受控 UI"
+          detail="consumer 自己擁有狀態與資料來源；form policy 不跟過來。"
+          accent
+          style={{ right: 52, bottom: 26 }}
+        />
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const OwnerTile = ({
+  eyebrow,
+  title,
+  detail,
+  style,
+}: {
+  eyebrow: string;
+  title: string;
+  detail: ReactNode;
+  style: CSSProperties;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      ...style,
+      position: 'absolute',
+      width: 760,
+      height: 150,
+      padding: '24px 28px',
+      display: 'grid',
+      gridTemplateColumns: '280px 1fr',
+      alignItems: 'center',
+      gap: 24,
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <div>
+      <div style={{ color: palette.muted, fontSize: 21, fontWeight: 800, letterSpacing: '0.07em' }}>
+        {eyebrow}
+      </div>
+      <strong style={{ display: 'block', marginTop: 8, color: palette.textSoft, fontSize: 29 }}>
+        {title}
+      </strong>
+    </div>
+    <div style={{ color: palette.textSoft, fontSize: 24, fontWeight: 600, lineHeight: 1.4 }}>{detail}</div>
+  </div>
+);
+
+const ResponsibilityCorrection: Page = () => (
+  <CaseFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="修正不是搬家；是拆回三個可獨立演進的責任"
+        lead="Owning page／feature 組合 policy；只有已穩定的 UI contract 才成為重用候選。"
+      />
+
+      <section
+        aria-label="Server-data owner 與 form adapter 留在 owning page 或 feature，透過 runtime data flow 使用具名 Public API 的 UI control"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1680 500"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', inset: 0, zIndex: 4, width: '100%', height: '100%' }}
+        >
+          <path d="M840 154 L1198 190" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M840 340 L1198 302" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M1180 178 L1200 190 L1180 200" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path d="M1180 291 L1200 302 L1180 313" fill="none" stroke="var(--osd-accent)" strokeWidth="4" />
+          <path
+            d="M930 70 L1424 70 L1424 90 M1424 135 L1424 156"
+            fill="none"
+            stroke={palette.textSoft}
+            strokeWidth="3"
+            strokeDasharray="11 10"
+          />
+          <path d="M1411 142 L1424 160 L1437 142" fill="none" stroke={palette.textSoft} strokeWidth="3" />
+        </svg>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 22,
+            top: 22,
+            zIndex: 1,
+            width: 930,
+            height: 440,
+            borderColor: palette.borderStrong,
+            borderStyle: 'dashed',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 28,
+              top: 18,
+              color: palette.muted,
+              fontSize: 22,
+              fontWeight: 800,
+              letterSpacing: '0.08em',
+            }}
+          >
+            OWNING PAGE / FEATURE · POLICY OWNER
+          </div>
+          <OwnerTile
+            eyebrow="RESPONSIBILITY 01"
+            title="Server-data owner"
+            detail="選來源、轉換資料，決定 loading／error policy。"
+            style={{ left: 62, top: 82 }}
+          />
+          <OwnerTile
+            eyebrow="RESPONSIBILITY 02"
+            title="Form adapter"
+            detail="綁定 field state、validation 與 error presentation。"
+            style={{ left: 62, top: 266 }}
+          />
+        </div>
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            right: 30,
+            top: 112,
+            zIndex: 3,
+            width: 452,
+            height: 270,
+            padding: '76px 34px 32px',
+            borderColor: 'var(--osd-accent)',
+            background: palette.accentSoft,
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: -22,
+              width: 420,
+              transform: 'translateX(-50%)',
+              padding: '8px 13px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 21,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            PUBLIC API · controlledControl
+          </div>
+          <strong style={{ color: 'var(--osd-accent)', fontSize: 34 }}>UI control</strong>
+          <div
+            style={{
+              marginTop: 20,
+              color: palette.textSoft,
+              fontFamily: fonts.mono,
+              fontSize: 22,
+              fontWeight: 700,
+              lineHeight: 1.55,
+            }}
+          >
+            options · value · loading
+            <br />
+            onChange
+          </div>
+          <div style={{ marginTop: 14, color: palette.muted, fontSize: 22, fontWeight: 600 }}>
+            不知道 form library／endpoint
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            left: 944,
+            top: 132,
+            zIndex: 4,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 21,
+            fontWeight: 800,
+          }}
+        >
+          options + loading
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            left: 962,
+            top: 326,
+            zIndex: 4,
+            color: 'var(--osd-accent)',
+            fontFamily: fonts.mono,
+            fontSize: 21,
+            fontWeight: 800,
+          }}
+        >
+          value / onChange
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            left: 1010,
+            top: 38,
+            zIndex: 4,
+            color: palette.textSoft,
+            fontFamily: fonts.mono,
+            fontSize: 21,
+            fontWeight: 800,
+          }}
+        >
+          import via Public API
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const FeatureSchemaCard = ({
+  feature,
+  localComposition,
+  schemaName,
+}: {
+  feature: string;
+  localComposition: string;
+  schemaName: string;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 470,
+      height: 356,
+      padding: '72px 30px 30px',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 20,
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <div
+      style={{
+        position: 'absolute',
+        left: 26,
+        top: 18,
+        color: palette.muted,
+        fontSize: 21,
+        fontWeight: 800,
+        letterSpacing: '0.08em',
+      }}
+    >
+      {feature} · FULL SCHEMA OWNER
+    </div>
+    <strong style={{ color: palette.textSoft, fontSize: 32 }}>{schemaName}</strong>
+    <div
+      style={{
+        padding: '18px 20px',
+        border: `1px solid ${palette.borderStrong}`,
+        borderRadius: 14,
+        background: palette.whiteSoft,
+        color: palette.textSoft,
+        fontSize: 24,
+        fontWeight: 700,
+      }}
+    >
+      {localComposition}
+    </div>
+    <div
+      style={{
+        padding: '18px 20px',
+        border: `1px dashed ${palette.accentLine}`,
+        borderRadius: 14,
+        color: 'var(--osd-accent)',
+        fontSize: 24,
+        fontWeight: 700,
+      }}
+    >
+      某項共通欄位規則
+    </div>
+  </div>
+);
+
+const ValidSchemaOwnership: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 26 }}>
+      <PageHeading
+        title="案例二：各 feature 合理擁有不同完整 schema"
+        lead="欄位組合與 feature-specific validation 本來就不必長成同一份。"
+      />
+
+      <section
+        aria-label="三個 feature 各自擁有不同完整 schema，並保留一項語意相同的欄位規則"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 30 }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 34 }}>
+          <FeatureSchemaCard feature="FEATURE A" schemaName="Schema A" localComposition="本地欄位組合 α" />
+          <FeatureSchemaCard feature="FEATURE B" schemaName="Schema B" localComposition="本地欄位組合 β" />
+          <FeatureSchemaCard feature="FEATURE C" schemaName="Schema C" localComposition="本地欄位組合 γ" />
+        </div>
+        <div
+          style={{
+            alignSelf: 'center',
+            padding: '13px 24px',
+            border: `1px dashed ${palette.borderStrong}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 25,
+            fontWeight: 800,
+          }}
+        >
+          完整 schema 不同 <span style={{ color: palette.dim, padding: '0 12px' }}>≠</span> 所有規則都該各自複製
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const RuleCopyCard = ({
+  owner,
+  version,
+  status,
+  symbol,
+  accent = false,
+}: {
+  owner: string;
+  version: string;
+  status: string;
+  symbol: string;
+  accent?: boolean;
+}) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 430,
+      height: 250,
+      padding: 30,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: accent ? 'var(--osd-accent)' : palette.borderStrong,
+      borderStyle: accent ? 'solid' : 'dashed',
+      background: accent ? palette.accentSoft : palette.whiteSoft,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <span style={{ color: palette.muted, fontSize: 22, fontWeight: 800, letterSpacing: '0.07em' }}>
+        {owner}
+      </span>
+      <span
+        aria-hidden="true"
+        style={{
+          width: 42,
+          height: 42,
+          display: 'grid',
+          placeItems: 'center',
+          border: `2px ${accent ? 'solid' : 'dashed'} ${
+            accent ? 'var(--osd-accent)' : palette.borderStrong
+          }`,
+          borderRadius: 12,
+          color: accent ? 'var(--osd-accent)' : palette.textSoft,
+          fontSize: 24,
+          fontWeight: 800,
+        }}
+      >
+        {symbol}
+      </span>
+    </div>
+    <strong
+      style={{
+        color: accent ? 'var(--osd-accent)' : palette.textSoft,
+        fontFamily: fonts.mono,
+        fontSize: 34,
+      }}
+    >
+      {version}
+    </strong>
+    <div style={{ color: palette.textSoft, fontSize: 25, fontWeight: 700 }}>{status}</div>
+  </div>
+);
+
+const ValidationDrift: Page = () => (
+  <CaseFrame>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 24 }}>
+      <PageHeading
+        title="同一語意規則被複製；修改一次，行為卻開始分岔"
+        lead="有些副本被更新，有些被漏掉，甚至很難知道還有哪些地方必須同步。"
+      />
+
+      <section
+        aria-label="語意相同的欄位規則副本在部分 feature 更新後產生 validation drift"
+        style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 32 }}
+      >
+        <div
+          style={{
+            width: 1380,
+            padding: '16px 24px',
+            border: `1px solid ${palette.borderStrong}`,
+            borderRadius: 16,
+            background: palette.whiteSoft,
+            color: palette.textSoft,
+            fontSize: 26,
+            fontWeight: 800,
+            textAlign: 'center',
+          }}
+        >
+          同一項欄位規則改變　·　副本結構示意，不代表實際數量
+        </div>
+
+        <div style={{ display: 'flex', gap: 36 }}>
+          <RuleCopyCard owner="某個 feature" version="rule · NEW" status="這份已更新" symbol="✓" accent />
+          <RuleCopyCard owner="另一個 feature" version="rule · OLD" status="這份仍是舊行為" symbol="!" />
+          <RuleCopyCard owner="其他副本" version="rule · ?" status="影響範圍難發現" symbol="?" />
+        </div>
+
+        <div
+          style={{
+            width: 1380,
+            padding: '18px 26px',
+            border: `2px dashed ${palette.accentLine}`,
+            borderRadius: 18,
+            background: palette.accentSoft,
+            color: palette.textSoft,
+            fontSize: 28,
+            fontWeight: 800,
+            textAlign: 'center',
+          }}
+        >
+          validation drift <span style={{ color: palette.dim, padding: '0 14px' }}>=</span>
+          <span style={{ color: 'var(--osd-accent)' }}>同一語意，卻有不同驗證行為</span>
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
+const SchemaOwnerMini = ({ name, detail }: { name: string; detail: string }) => (
+  <div
+    style={{
+      ...panelStyle,
+      width: 390,
+      height: 138,
+      padding: '22px 26px',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      borderColor: palette.borderStrong,
+    }}
+  >
+    <strong style={{ color: palette.textSoft, fontFamily: fonts.mono, fontSize: 27 }}>{name}</strong>
+    <span style={{ color: palette.muted, fontSize: 22, fontWeight: 700 }}>{detail}</span>
+  </div>
+);
+
+const FieldRuleImportArrow = ({ left }: { left: number }) => (
+  <div
+    aria-hidden="true"
+    style={{
+      position: 'absolute',
+      left,
+      top: 148,
+      zIndex: 4,
+      height: 212,
+    }}
+  >
+    <span
+      style={{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        height: 149,
+        borderLeft: '3px dashed var(--osd-accent)',
+      }}
+    />
+    <span
+      style={{
+        position: 'absolute',
+        left: 0,
+        top: 195,
+        height: 17,
+        borderLeft: '3px dashed var(--osd-accent)',
+      }}
+    />
+    <span
+      style={{
+        position: 'absolute',
+        left: 16,
+        top: 58,
+        padding: '5px 9px',
+        border: `1px solid ${palette.accentLine}`,
+        borderRadius: 999,
+        background: palette.bg,
+        color: 'var(--osd-accent)',
+        fontFamily: fonts.mono,
+        fontSize: 19,
+        fontWeight: 800,
+        whiteSpace: 'nowrap',
+      }}
+    >
+      import fieldRule
+    </span>
+    <span
+      style={{
+        position: 'absolute',
+        left: -10,
+        bottom: -8,
+        color: 'var(--osd-accent)',
+        fontSize: 22,
+        lineHeight: 1,
+      }}
+    >
+      ▼
+    </span>
+  </div>
+);
+
+const StableRuleCorrection: Page = () => (
+  <CaseFrame categoryLabel="現行官方 guidance／講者詮釋" categorySymbol="◈">
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: 22 }}>
+      <PageHeading
+        title="保留完整 schema；只下沉已證明必須一致的 rule"
+        lead="共享的是一項穩定責任，不是把所有 feature validation 合成 universal schema。"
+      />
+
+      <section
+        aria-label="三個 feature schema 經具名 Public API 靜態依賴同一個 lower domain boundary field rule"
+        style={{ position: 'relative', flex: 1, minHeight: 0 }}
+      >
+        <div style={{ position: 'absolute', left: 40, top: 10, zIndex: 3, display: 'flex', gap: 90 }}>
+          <SchemaOwnerMini name="Feature A schema" detail="保留本地欄位組合" />
+          <SchemaOwnerMini name="Feature B schema" detail="保留本地欄位組合" />
+          <SchemaOwnerMini name="Feature C schema" detail="保留本地欄位組合" />
+        </div>
+
+        <FieldRuleImportArrow left={235} />
+        <FieldRuleImportArrow left={715} />
+        <FieldRuleImportArrow left={1195} />
+
+        <div
+          style={{
+            ...panelStyle,
+            position: 'absolute',
+            left: 190,
+            top: 320,
+            zIndex: 3,
+            width: 1050,
+            height: 150,
+            padding: '58px 32px 14px',
+            borderColor: 'var(--osd-accent)',
+            background: palette.accentSoft,
+            boxShadow: '0 0 0 8px rgba(0, 220, 130, 0.055)',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 25,
+              top: -22,
+              zIndex: 5,
+              width: 1000,
+              padding: '8px 13px',
+              border: '2px solid var(--osd-accent)',
+              borderRadius: 999,
+              background: 'var(--osd-bg)',
+              color: 'var(--osd-accent)',
+              fontFamily: fonts.mono,
+              fontSize: 21,
+              fontWeight: 800,
+              textAlign: 'center',
+            }}
+          >
+            PUBLIC API · fieldRule
+          </div>
+          <strong style={{ color: 'var(--osd-accent)', fontSize: 30 }}>Shared field rule</strong>
+          <div style={{ marginTop: 6, color: palette.textSoft, fontSize: 21, fontWeight: 700 }}>
+            適當 lower domain boundary · 已證明必須一起變
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            padding: '10px 16px',
+            border: `1px dashed ${palette.accentLine}`,
+            borderRadius: 999,
+            color: palette.textSoft,
+            fontSize: 22,
+            fontWeight: 800,
+          }}
+        >
+          NEXT · 誰該擁有 app-wide auth state？
+        </div>
+      </section>
+    </div>
+  </CaseFrame>
+);
+
 export const notes: (string | undefined)[] = [
   `Message:
 一段程式碼該放哪裡，不只是路徑選擇，而是長期協作與理解成本。
@@ -1949,6 +2974,174 @@ Possible Q&A:
 
 Safety boundary:
 「真實重複＋穩定邊界」是本演講對多個 current guidance 的綜合判斷，不冒充單一官方逐字硬規則；不提供逐檔 migration plan，也不把 Pages First 擴張成所有 App／Shared placement 的唯一演算法。`,
+
+  `Message:
+案例一的原始錯誤，是在只有一個使用情境時，就把 UI control、form adapter 與特定 server-data owner 做成一個全專案共用責任。
+
+Context:
+這是匿名親身事實：團隊確實把三種責任包進同一個共用元件。觀眾畫面刻意不交代產品、業務名稱、元件種類或具體表單；三個框只描述已確認的 responsibility boundary，不替案例補造情節。
+
+Transition:
+承接前頁 Pages First 的「證據出現後再抽離」，這裡看見相反決策：證據尚未出現，boundary 已經全域化。下一頁沿著這個原決策，檢查實際可觀察的維護後果。
+
+Required details:
+三項責任都要講到：UI control 負責呈現與互動；form adapter 負責 field state／validation／error；server-data owner 負責資料來源、轉換與 loading／error policy。這不是在說三者永遠不能同頁組合，而是不應未經證明就成為同一個 shared responsibility。
+
+Timing:
+60 秒（14:00–15:00）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的「親身事實確認」與「主案例一」；.scratch/fsd-talk-authoring-brief/spec.md 的 case truth table（authoring scope 查核：2026-08-14）。本頁因果來自匿名親身事實，不是 FSD 官方案例。
+
+Possible Q&A:
+問：共用 form component 都是錯的嗎？答：不是；只有當一起變動的責任與重用情境已被觀察到，才有足夠證據決定它們是否應形成同一 boundary。
+
+Safety boundary:
+不揭露產品、業務或元件種類；不加入成員選擇器、設定表單、動態牆、具體欄位、endpoint 名稱或 submit lifecycle；也不把單一匿名事件概括成所有專案的普遍結論。`,
+
+  `Message:
+三種責任被綁在一起後，wrapper、例外 props 與分支只能繼續包在外面；control 仍無法脫離 form，也難以替換資料來源。
+
+Context:
+匿名親身因果只保留已核准的兩個後果：control 難以單獨使用、data source 難以替換。圖上的 wrapper／例外 prop／條件分支是結構類型，不代表真實數量或實際命名；它們用來呈現 spec 已核准的增生方向。
+
+Transition:
+承接上一頁的三責任耦合，這頁把維護代價具象化。下一頁不再加強真實故事，而是明確切換成合成的第二 consumer，測試這個 boundary 能否承受不同使用方式。
+
+Required details:
+先說結果，再指出修補為何沒有改變 owner：新 wrapper 或 exception 仍以原 shared component 為中心，三種 policy 沒有真正分離。不得提 standalone、hideError、sourceMode 等 prototype prop 名稱為親身事實。
+
+Timing:
+75 秒（15:00–16:15）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的主案例一因果；.scratch/fsd-talk-authoring-brief/spec.md 頁 13 map 與 truth table（查核：2026-08-14）。
+
+Possible Q&A:
+問：增加一個 prop 為什麼不行？答：單一例外未必有問題；警訊是每個新 consumer 都要繼承無關 policy，boundary 仍無法獨立演進。
+
+Safety boundary:
+不聲稱 wrapper 或 props 的真實數量，不虛構實際 prop 名稱、資料來源、表單 library 或事故；不把「難以」誇大成完全不可能重構。`,
+
+  `Message:
+合成的第二個非表單 consumer 只需要 UI contract；若仍得繼承 form 與 data policy，過早共享的錯誤邊界就被暴露。
+
+Context:
+本頁整個 consumer 情境都明標「合成案例」。它是 Ticket 05 選定的 guided probe，不是講者親身產品細節：左側只保留抽象的非表單需求，右側比較「匯入整包責任」與「只匯入受控 UI」兩條結構路徑。
+
+Transition:
+承接真實後果，我們用合成壓力測試回答「第二種使用方式來時會怎樣」。測試顯示重用單位應縮小到穩定 UI contract；下一頁回到可公開的 boundary correction。
+
+Required details:
+分類先講再示範：非表單 consumer、假表單、第二條使用路徑都屬合成。虛線箭頭表示 static import，兩條都附 import label；本頁不描述 runtime submit flow。
+
+Timing:
+80 秒（16:15–17:35）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/05-prototype-nuxt-ui-form-boundary.md（resolved guided probe B）；prototype/nuxt-ui-form-boundary commit 059326be75e53b39500b4496a9301a9963e41c04 的 prototype HTML（只取 boundary insight，非 production implementation）；https://ui.nuxt.com/docs/components/form 與 /form-field（Context7 library /llmstxt/ui_nuxt_llms_txt，authoring-day 查核：2026-08-14；scope：current Form state/schema/error mechanics，不支持本頁架構處方）。
+
+Possible Q&A:
+問：第二個 consumer 一定要放 shared/ui 嗎？答：不一定；先確認重用已經真實存在、control 不含 feature policy，才把它視為 lower reusable boundary 候選。
+
+Safety boundary:
+不得把第二 consumer、假表單、URL state、成員選擇器、設定表單、動態牆或任何 prototype prop 說成親身事實；Nuxt UI 文件只證明 library mechanics，不決定 ownership。`,
+
+  `Message:
+修正是分離 UI control、form adapter 與 server-data owner；owning page／feature 組合 policy，只重用已證明穩定的 responsibility。
+
+Context:
+圖上左側責任框是 owning page／feature：server-data owner 提供 options／loading，form adapter 提供 value／onChange 與 validation/error binding。右側 UI control 只收受控 contract，透過具名 Public API 對外；實線是 runtime data flow，虛線是 static import。
+
+Transition:
+承接第二 consumer 壓力測試，這頁把可重用與不可綁死的責任拆開。案例一的教訓是「不該一起變的責任被過早共享」；下一頁刻意轉到相反問題：合理分開的 feature schemas 中，有一項該一致的規則卻沒有共享。
+
+Required details:
+server-data owner 決定 fetch／transform／loading／error policy；form adapter 只處理 binding／validation／error presentation；UI control 不知道 form library、query library 或 endpoint。shared/ui 只是符合條件後的候選，不是所有 control 的預設位置。
+
+Timing:
+85 秒（17:35–19:00）。
+
+Sources:
+https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：Pages 可保留未重用 UI、Shared UI 不含 business logic但可含 UI logic）；https://fsd.how/docs/guides/migration/from-v2-0/ 與 /guides/issues/excessive-entities/（查核：2026-08-14；scope：Pages First／deferred decomposition）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：Public API contract）；Ticket 05 與主案例一提供三責任 boundary evidence。
+
+Possible Q&A:
+問：form adapter 也能重用嗎？答：可以，但要等多個真實 consumer 證明 form contract 本身穩定；本案例只證明受控 UI responsibility 值得先獨立。
+
+Safety boundary:
+三責任分法與「穩定責任才共享」是符合 current guidance 的講者詮釋，不冒充 fsd.how 逐字處方；不把 Shared 說成完全沒有 application-aware code，也不建立 universal shared/form。`,
+
+  `Message:
+案例二先承認合理差異：各 feature 可以擁有不同完整 schema 與自己的欄位組合。
+
+Context:
+匿名親身事實是多個 feature 的完整 schema 本來就不同；畫面使用 Feature A／B／C 與 α／β／γ 只作匿名結構示意，不代表真實 feature 名稱、數量或欄位。每個封閉框都保留自己的 composition owner。
+
+Transition:
+承接案例一「不要過早把 policy 綁成同一責任」，這裡先保留 feature schema 的合理自治。下一頁只聚焦其中語意本應一致、卻被複製成多份的欄位規則。
+
+Required details:
+完整 schema 可有不同 required／optional 組合與 feature-specific validation；不要把「不同」本身稱為 drift，也不要提出 universal user schema 作解法。
+
+Timing:
+70 秒（19:00–20:10）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的主案例二親身事實；.scratch/fsd-talk-authoring-brief/spec.md 頁 16 map 與 truth table；https://fsd.how/docs/guides/examples/types/（authoring-day 查核：2026-08-14；scope：validation schema 應與使用端 colocate，表單 input schema 可在相應 ui／model）。
+
+Possible Q&A:
+問：為什麼不直接共用整份 schema？答：因為不同 feature 的欄位組合與 policy 合理不同；全域 schema 會把不一起變的責任重新耦合。
+
+Safety boundary:
+不宣稱實際有三個 feature，不說出註冊、登入、密碼、email 或任何產品欄位；A／B／C 只是結構示意。`,
+
+  `Message:
+Validation drift 發生在語意本應一致的 field rule 被複製後，只更新部分副本，讓不同流程出現不同驗證行為。
+
+Context:
+這是匿名親身因果：共同規則變更時，團隊只修改部分副本，其他副本被漏掉，甚至難以知道完整影響範圍。NEW／OLD／? 三張卡是狀態示意，不代表實際版本、數量或具體欄位。
+
+Transition:
+承接各 feature schema 的合理自治，這頁把問題縮小到一個必須一致的語意規則。下一頁不合併完整 schemas，而是只替這項穩定規則建立單一可發現 owner。
+
+Required details:
+先區分 feature-specific variation 與 validation drift：前者是意圖差異，後者是同一語意在副本間意外分岔。漏改與不可發現的影響範圍都要講到。
+
+Timing:
+80 秒（20:10–21:30）。
+
+Sources:
+.scratch/fsd-talk-authoring-brief/issues/01-select-public-real-pitfalls.md 的「親身事實確認：重複的是欄位規則」與主案例二決定；.scratch/fsd-talk-authoring-brief/spec.md 頁 17 map 與 truth table（查核：2026-08-14）。「validation drift」是本演講／CONTEXT.md 的術語，不是 fsd.how 官方 pattern 名稱。
+
+Possible Q&A:
+問：所有 duplication 都是 drift 嗎？答：不是；只有語意被要求一致、卻因副本同步失敗而意外分岔，才是這裡的 validation drift。
+
+Safety boundary:
+不揭露或猜測具體欄位、規則內容、feature 名稱與副本數量；不把 NEW／OLD 當真實版本紀錄，也不宣稱 duplication 一律有害。`,
+
+  `Message:
+修正是讓 feature schema 繼續在本地組合，只把已證明必須一起變動的 shared field rule 放進單一 lower owner，經 Public API 重用。
+
+Context:
+上方三個 schema frame 仍各自封閉；虛線箭頭代表它們 static import 同一個 fieldRule Public API。下方只是一個適當 lower domain boundary，不寫死 FSD layer，因為 business meaning 與實際 reuse context 才能決定是 Entity model 或其他 owner。「Shared field rule」是共享的規則，不等於 FSD shared/ layer。
+
+Transition:
+承接 validation drift，這頁建立單一可發現 owner，同時保留 feature-specific schema。兩個案例完成對照後，下一頁只用問題轉場到第三案：app-wide auth state 究竟由誰擁有；本 ticket 不提前回答。
+
+Required details:
+三支虛線箭頭都代表 import fieldRule；Public API 只暴露穩定規則。口頭明講對照：案例一是不該共享的責任過早共享；案例二是該一致的穩定規則沒有共享。
+
+Timing:
+90 秒（21:30–23:00）。
+
+Sources:
+https://fsd.how/docs/guides/examples/types/（查核：2026-08-14；scope：schema colocation）；https://fsd.how/docs/reference/layers/（查核：2026-08-14；scope：lower-layer dependency direction、Feature／Entity validation placement）；https://fsd.how/docs/reference/public-api/（查核：2026-08-14；scope：explicit contract）；https://fsd.how/docs/guides/migration/from-custom/（查核：2026-08-14；scope：會分岔的 duplication 可保留、business logic 副本需同步的成本）；主案例二提供 drift truth boundary。
+
+Possible Q&A:
+問：field rule 應該放 shared/ 還是 entities/? 答：不能只靠名稱決定；若有 business/domain meaning，通常不應放 FSD shared/ business logic，應依實際 owner 與 reuse 放在適當 lower domain boundary。
+
+Safety boundary:
+「完整 schema 留本地、只下沉穩定 field rule」是符合 current guidance 的講者詮釋，不是 fsd.how 明文處方；不把 shared field rule 等同 Shared layer，不把完整 schema 一起下沉，也不提前實作或說明 Ticket 14 的 auth 解法。`,
 ];
 
 export const meta: SlideMeta = {
@@ -1968,4 +3161,11 @@ export default [
   SlicesAndSegments,
   DependencyAndPublicApi,
   PagesFirst,
+  PrematureSharedDecision,
+  PrematureSharedConsequence,
+  SecondConsumerProbe,
+  ResponsibilityCorrection,
+  ValidSchemaOwnership,
+  ValidationDrift,
+  StableRuleCorrection,
 ] satisfies Page[];
