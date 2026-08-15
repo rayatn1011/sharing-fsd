@@ -4,6 +4,12 @@
 
 這是我在 [v-taiwan Meetup #5](https://www.facebook.com/share/p/1Gp1GgaGbM/) 使用的演講簡報。
 
+## 線上簡報
+
+[開啟「一段程式碼，到底該放哪裡？」](https://rayatn1011.github.io/sharing-fsd/s/feature-based-to-fsd)
+
+[![「一段程式碼，到底該放哪裡？」簡報封面](assets/feature-based-to-fsd-cover.png)](https://rayatn1011.github.io/sharing-fsd/s/feature-based-to-fsd)
+
 這場演講從前端團隊很常遇到的一個問題開始：新程式碼到底該放哪裡？
 
 專案還小的時候，放在 `components/`、`composables/` 或 `utils/`，看起來都說得通。專案變大之後，資料夾位置就不只是整理檔案，而是在回答：誰負責這段程式碼、誰可以依賴它，以及需求改變時要怎麼調整結構。
